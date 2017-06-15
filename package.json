@@ -1,0 +1,25 @@
+{
+  "name": "saint_croix_river_valley",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "test": "nodemon server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SF-Felling7/saint_croix_river_valley.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SF-Felling7/saint_croix_river_valley/issues"
+  },
+  "homepage": "https://github.com/SF-Felling7/saint_croix_river_valley#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "firebase-admin": "^5.0.0"
+  }
+}
