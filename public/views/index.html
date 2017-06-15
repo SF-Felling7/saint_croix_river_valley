@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="sampleApp">
+  <head>
+    <meta charset="utf-8">
+    <title>nodeFire with Authentication</title>
+    <!-- Angular -->
+    <script src="/vendors/angular.min.js" charset="utf-8"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
+    <!-- Firebase Config -->
+    <script src="./scripts/config.js"></script>
+    <!-- Angular Application with Authentication -->
+    <script src="./scripts/client.js"></script>
+  </head>
+
+  <body ng-controller="SampleCtrl as sc">
+    <h1>Welcome Admin, to St. Croix Valley Interactive Map</h1>
+
+    <h4>email</h4>
+    <input type="text" name="" value="">
+    <h4>password</h4>
+    <input type="text" name="" value=""><br>
+
+    <button ng-click="">Register</button>
+    <button ng-click="">Sign In</button>
+    <button ng-click="sc.logIn()">Sign In with Google</button>
+    <button ng-click="sc.logOut()">Log Out</button>
+    <div>
+      {{sc.secretData}}
+    </div>
+  </body>
+</html>
