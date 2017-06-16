@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="sampleApp">
+<html>
   <head>
     <meta charset="utf-8">
-    <title>nodeFire with Authentication</title>
-    <!-- Angular -->
-    <script src="/vendors/angular.min.js" charset="utf-8"></script>
-    <!-- Firebase -->
+    <title>St. Croix River Valley Interactive Map</title>
+
+    <script type="text/javascript" src="/vendors/angular.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-route.min.js"></script>
+    <script type="text/javascript" src="/vendors/ng-map.min.js"></script>
+    <script type="text/javascript" src="./scripts/clientapp.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
@@ -13,22 +15,13 @@
     <script src="./scripts/config.js"></script>
     <!-- Angular Application with Authentication -->
     <script src="./scripts/client.js"></script>
+    <base href="/">
   </head>
 
-  <body ng-controller="SampleCtrl as sc">
-    <h1>Welcome Admin, to St. Croix Valley Interactive Map</h1>
+  <body ng-app="myApp">
+  <h1>Welcome to the St. Croix River Valley</h1>
 
-    <h4>email</h4>
-    <input type="text" name="" value="">
-    <h4>password</h4>
-    <input type="text" name="" value=""><br>
+      <main ng-view></main>
 
-    <button ng-click="">Register</button>
-    <button ng-click="">Sign In</button>
-    <button ng-click="sc.logIn()">Sign In with Google</button>
-    <button ng-click="sc.logOut()">Log Out</button>
-    <div>
-      {{sc.secretData}}
-    </div>
   </body>
 </html>
