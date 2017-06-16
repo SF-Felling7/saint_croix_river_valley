@@ -1,19 +1,20 @@
+//requires
 var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var decoder = require('./modules/decoder');
-var privateData = require ('./routes/privateData');
 
-app.get('/', function(req, res){
-  res.sendFile(path.resolve('./public/views/index.html'));
-});
+//modules
+var decoder = require('./modules/decoder');
+
+// routes
+var privateData = require ('./routes/privateData');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // Decodes the token in the request header and attaches the decoded token to the request.
-app.use(decoder.token);
+// app.use();
 
 /* Whatever you do below this is protected by your authentication.
 WARNING: So far you are returning secret data to ANYONE who is logged in.
@@ -23,7 +24,11 @@ You can use req.decodedToken and some logic to do that.
 Other branches in the nodeFire repository show how to do that. */
 
 // This is the route for your secretData. The request gets here after it has been authenticated.
-app.use("/privateData", privateData);
+app.use("/privateData", decoder.token, privateData);
+
+app.use('/*', function(req, res){
+  res.sendFile(path.resolve('./public/views/index.html'));
+});
 
 var port = process.env.PORT || 5001;
 
