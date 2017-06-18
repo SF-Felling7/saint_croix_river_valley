@@ -1,0 +1,14 @@
+#map{
+  margin-left: 25%;
+  height: 750px;
+  width: 500px;
+  border: solid 5px black;
+}
+
+.gmap{
+  text-align: center;
+}
+
+body{
+  background-color: Lightblue
+}

@@ -21,6 +21,7 @@
     "angular-route": "^1.6.4",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "firebase-admin": "^5.0.0"
+    "firebase-admin": "^5.0.0",
+    "ngmap": "^1.18.4"
   }
 }
