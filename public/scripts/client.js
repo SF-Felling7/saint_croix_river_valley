@@ -3,7 +3,8 @@ console.log('client srcd');
 myApp.controller("SampleCtrl", function($firebaseAuth, $http) {
   var auth = $firebaseAuth();
   var self = this;
-
+  self.loggedIn = false;
+  self.loggedOut = true;
 //Register with email and password
   self.registerWithEmail = function(email, password){
     if (!email || !password){
@@ -13,34 +14,49 @@ myApp.controller("SampleCtrl", function($firebaseAuth, $http) {
     console.log('registering:', email, password);
 
     auth.$createUserWithEmailAndPassword(email, password).catch(function(error) {
+      self.loggedIn = true;
+      self.loggedOut = false;
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log("sign in error", error);
+      if (error){
+        self.loggedIn = false;
+      }
       alert ('please use a valid email and password that is at least 6 characters long');
     });
   };
 //Sign in with Email
   self.signInWithEmail = function (email, password){
-    if (!email || !password){
-      alert ('email and password required');
-      return console.log('email and password required!');
-    }
-    console.log('signing in with:', email, password);
+      if (!email || !password){
+        alert ('email and password required');
+        return console.log('email and password required!');
+      }
+      console.log('signing in with:', email, password);
+      self.loggedIn = true;
+      self.loggedOut = false;
 
     auth.$signInWithEmailAndPassword(email, password).catch(function(error) {
     // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log("sign in error", error);
-    alert ('incorrect email and password');
-  });
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert ('incorrect email and password');
+      console.log("sign in error", error);
+      if (error){
+        self.loggedIn = false;
+        self.loggedOut = true;
+      }
+    });
+
+
   };
   //sign in with google!!
   // This code runs whenever the user logs in
   self.logIn = function(){
     auth.$signInWithPopup("google").then(function(firebaseUser) {
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
+      self.loggedIn = true;
+      self.loggedOut = false;
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
     });
@@ -69,13 +85,14 @@ myApp.controller("SampleCtrl", function($firebaseAuth, $http) {
       console.log('Not logged in or not authorized.');
       self.secretData = "Log in to get some secret data.";
     }
-
   });
 
   // This code runs when the user logs out
   self.logOut = function(){
     auth.$signOut().then(function(){
       console.log('Logging the user out!');
+      self.loggedIn = false;
+      self.loggedOut = true;
     });
   };
 });
