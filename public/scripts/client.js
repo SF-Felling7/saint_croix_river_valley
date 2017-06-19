@@ -4,6 +4,39 @@ myApp.controller("SampleCtrl", function($firebaseAuth, $http) {
   var auth = $firebaseAuth();
   var self = this;
 
+//Register with email and password
+  self.registerWithEmail = function(email, password){
+    if (!email || !password){
+      alert ('email and password required to register');
+      return console.log('email and password required!');
+    }
+    console.log('registering:', email, password);
+
+    auth.$createUserWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("sign in error", error);
+      alert ('please use a valid email and password that is at least 6 characters long');
+    });
+  };
+//Sign in with Email
+  self.signInWithEmail = function (email, password){
+    if (!email || !password){
+      alert ('email and password required');
+      return console.log('email and password required!');
+    }
+    console.log('signing in with:', email, password);
+
+    auth.$signInWithEmailAndPassword(email, password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log("sign in error", error);
+    alert ('incorrect email and password');
+  });
+  };
+  //sign in with google!!
   // This code runs whenever the user logs in
   self.logIn = function(){
     auth.$signInWithPopup("google").then(function(firebaseUser) {

@@ -20,12 +20,12 @@
     <h1>Welcome Admin, to St. Croix Valley Interactive Map</h1>
 
     <h4>email</h4>
-    <input type="text" name="" value="">
+    <input type="text" ng-model="sc.email">
     <h4>password</h4>
-    <input type="text" name="" value=""><br>
+    <input type="text" ng-model="sc.password"><br>
 
-    <button ng-click="">Register</button>
-    <button ng-click="">Sign In</button>
+    <button ng-click="sc.registerWithEmail(sc.email, sc.password)">Register</button>
+    <button ng-click="sc.signInWithEmail(sc.email, sc.password)">Sign In</button>
     <button ng-click="sc.logIn()">Sign In with Google</button>
     <button ng-click="sc.logOut()">Log Out</button>
     <div>
