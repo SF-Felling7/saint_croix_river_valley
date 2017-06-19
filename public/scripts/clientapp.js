@@ -9,7 +9,7 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
   $routeProvider
     .when('/', {
       templateUrl: '/views/pages/map.html',
-      controller: "FirebaseCtrl as fc"
+      controller: "MapCtrl as mc"
     })
     .when('/admin', {
       templateUrl: '/views/pages/admin.html',
