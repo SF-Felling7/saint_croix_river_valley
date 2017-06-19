@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/SF-Felling7/saint_croix_river_valley#readme",
   "dependencies": {
+    "angular": "^1.6.4",
+    "angular-animate": "^1.6.4",
+    "angular-aria": "^1.6.4",
+    "angular-material": "^1.1.4",
     "angular-route": "^1.6.4",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
