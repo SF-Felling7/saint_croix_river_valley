@@ -4,7 +4,11 @@
     <meta charset="utf-8">
     <title>St. Croix River Valley Interactive Map</title>
     <script type="text/javascript" src="/vendors/angular.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-material.min.js"></script>
     <script type="text/javascript" src="/vendors/angular-route.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-aria.min.js"></script>
+
     <script type="text/javascript" src="/vendors/ng-map.min.js"></script>
     <!-- <script src="http://maps.google.com/maps/api/js"></script> -->
     <script type="text/javascript" src="./scripts/clientapp.js"></script>
@@ -17,14 +21,14 @@
     <script src="./scripts/controllers/firebase.controller.js"></script>
     <script src="./scripts/controllers/map.controller.js" charset="utf-8"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso"></script>
+    <link rel="stylesheet" href="/vendors/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/style.css">
     <base href="/">
   </head>
-
   <body ng-app="myApp">
-  <div class="container">
-    <h1>Welcome to the St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
-    <main ng-view></main>
-  </div>
+    <div>
+      <h1>Welcome to the St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
+      <main ng-view></main>
+    </div>
   </body>
 </html>

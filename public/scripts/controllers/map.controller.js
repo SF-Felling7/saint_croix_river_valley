@@ -1,10 +1,12 @@
-myApp.controller('MapCtrl', function($http, NgMap, $interval, $http) {
+myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   var vm = this;
 
   NgMap.getMap().then(function(map) {
     console.log(map.getCenter());
     vm.map = map;
   });
+
+
   // $scope.map .. this exists after the map is initialized
 
 
