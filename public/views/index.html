@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>St. Croix River Valley Interactive Map</title>
+    <meta name="viewport" content="width=device-width"/>
     <script type="text/javascript" src="/vendors/angular.min.js"></script>
     <script type="text/javascript" src="/vendors/angular-material.min.js"></script>
     <script type="text/javascript" src="/vendors/angular-route.min.js"></script>
@@ -23,12 +24,54 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso"></script>
     <link rel="stylesheet" href="/vendors/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/style.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="/vendors/font-awesome.min.css"> -->
     <base href="/">
   </head>
   <body ng-app="myApp">
-    <div>
-      <h1>Welcome to the St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
-      <main ng-view></main>
-    </div>
+    <div  class="container-fluid" ng-controller="MapCtrl as mc">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="nav-side-menu">
+                        <div class="brand">Things to Do</div>
+                        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+                        <div class="menu-list">
+                            <ul id="menu-content" class="menu-content collapse out">
+                                <li ng-click="mc.dining()">
+                                  <i class="fa fa-cutlery fa-lg"></i> Dining
+                                </li>
+                                <li ng-click="mc.lodging()">
+                                  <i class="fa fa-bed fa-lg"></i> Lodging
+                                </li>
+                                <li ng-click="mc.nature()">
+                                  <i class="fa fa-tree fa-lg"></i> Nature
+                                </li>
+                                <li ng-click="mc.shopping()">
+                                  <i class="fa fa-shopping-bag fa-lg"></i> Shopping
+                                </li>
+                                <li data-toggle="collapse" data-target="#new" class="collapsed">
+                                    <i class="fa fa-car fa-lg"></i> Suggested Trips <span class="arrow"></span>
+                                </li>
+                                <ul class="sub-menu collapse" id="new">
+                                    <li>New New 1</li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9 col-sm-offset-3">
+                  <div>
+                    <h1>St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
+                    <main ng-view></main>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
   </body>
 </html>
