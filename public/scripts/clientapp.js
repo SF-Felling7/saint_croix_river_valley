@@ -9,11 +9,11 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
   $routeProvider
     .when('/', {
       templateUrl: '/views/pages/map.html',
-      controller: "SampleCtrl as sc"
+      controller: "MapCtrl as mc"
     })
     .when('/admin', {
       templateUrl: '/views/pages/admin.html',
-      controller: "SampleCtrl as sc"
+      controller: "FirebaseCtrl as fc"
     });
     // .otherwise({
     //   redirectTo: '/map'

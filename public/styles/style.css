@@ -6,3 +6,19 @@
 #googleButton {
 width: 20px;
 }
+
+#map{
+  height: 750px;
+  width: 500px;
+  border: solid 5px black
+}
+
+.gmap{
+  text-align: center;
+}
+
+body{
+  background-color: lightblue;
+  margin: 0px;
+  padding: 0px;
+}

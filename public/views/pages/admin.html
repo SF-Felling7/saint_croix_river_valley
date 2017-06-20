@@ -1,21 +1,31 @@
 <h1>Admin Login</h1>
-<h1>Welcome {{sc.secretData}}, to St. Croix Valley Interactive Map</h1>
-<div ng-hide="sc.loggedIn">
+<h1>Welcome {{fc.secretData}}, to St. Croix Valley Interactive Map</h1>
+<div ng-hide="fc.loggedIn">
 
   <div id="adminLogin">
     <h4>email</h4>
-    <input type="text" ng-model="sc.email">
+    <input type="text" ng-model="fc.email">
     <h4>password</h4>
-    <input type="password" ng-model="sc.password"><br>
+    <input type="password" ng-model="fc.password"><br>
 
 
-    <button ng-click="sc.signInWithEmail(sc.email, sc.password)">Sign In</button>Or
-    <button type="submit" ng-click="sc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
+    <button ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button>Or
+    <button type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
     alt="Submit">Sign in with Google</button><br>
     <h5>Or</h5>
-    <button ng-click="sc.registerWithEmail(sc.email, sc.password)">Register and Sign In as New User</button>
+    <button ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
   </div>
 
 </div>
+<button ng-click="fc.logOut()" ng-hide="fc.loggedOut">Log Out</button>
 
-<button ng-click="sc.logOut()" ng-hide="sc.loggedOut">Log Out</button>
+<!--
+    <button ng-click="">Register</button>
+    <button ng-click="">Sign In</button>
+    <button ng-click="fc.logIn()">Sign In with Google</button>
+    <button ng-click="fc.logOut()">Log Out</button>
+    <div>
+      {{fc.secretData}}
+    </div>
+   </body>
+</html> -->

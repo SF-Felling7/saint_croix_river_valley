@@ -1,6 +1,6 @@
 console.log('client srcd');
-// var app = angular.module("sampleApp", ["firebase"]);
-myApp.controller("SampleCtrl", function($firebaseAuth, $http) {
+
+myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
   var auth = $firebaseAuth();
   var self = this;
   self.loggedIn = false;
