@@ -1,4 +1,4 @@
-console.log('controller srcd');
+// console.log('controller srcd');
 
 myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
   var auth = $firebaseAuth();
