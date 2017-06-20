@@ -1,4 +1,4 @@
-console.log('client srcd');
+console.log('controller srcd');
 
 myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
   var auth = $firebaseAuth();
@@ -13,16 +13,17 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
       return console.log('email and password required!');
     }
     console.log('registering:', email, password);
+    self.loggedIn = true;
+    self.loggedOut = false;
 
     auth.$createUserWithEmailAndPassword(email, password).catch(function(error) {
-      self.loggedIn = true;
-      self.loggedOut = false;
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log("sign in error", error);
       if (error){
-        self.loggedIn = false;
+      self.loggedIn = false;
+      self.loggedOut = true;
       }
       alert ('please use a valid email and password that is at least 6 characters long');
     });
@@ -34,15 +35,14 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
         return console.log('email and password required!');
       }
       console.log('signing in with:', email, password);
-      self.loggedIn = true;
-      self.loggedOut = false;
 
     auth.$signInWithEmailAndPassword(email, password).then(function(firebaseUser) {
       console.log('firebaseUser: ', firebaseUser);
       console.log("Firebase Authenticated as: ", firebaseUser.email, firebaseUser.uid);
+      if(firebaseUser) {
       self.loggedIn = true;
       self.loggedOut = false;
-
+      }
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
     });
@@ -54,9 +54,10 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
     auth.$signInWithPopup("google").then(function(firebaseUser) {
       console.log(firebaseUser);
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName, firebaseUser.user.uid);
+      if(firebaseUser) {
       self.loggedIn = true;
       self.loggedOut = false;
-
+      }
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
     });

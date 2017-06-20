@@ -2,8 +2,6 @@ console.log('decode srcd');
 
 var admin = require("firebase-admin");
 
-// var serviceAccount = require("./server/firebase-service-account.json");
-
 admin.initializeApp({
   credential: admin.credential.cert("./server/firebase-service-account.json"),
   databaseURL: "https://interactive-map-e76e0.firebaseio.com"
