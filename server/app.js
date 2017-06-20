@@ -3,16 +3,19 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-// var pg = require( 'pg' );
+var pg = require( 'pg' );
 
 //modules
 var decoder = require('./modules/decoder');
 
 // routes
 var privateData = require ('./routes/privateData');
+var locations = require( './routes/locations.js' );
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
+
+
 
 // Decodes the token in the request header and attaches the decoded token to the request.
 // app.use();
@@ -26,6 +29,7 @@ Other branches in the nodeFire repository show how to do that. */
 
 // This is the route for your secretData. The request gets here after it has been authenticated.
 app.use("/privateData", decoder.token, privateData);
+app.use( '/locations', locations );
 
 app.use('/*', function(req, res){
   res.sendFile(path.resolve('./public/views/index.html'));
