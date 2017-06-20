@@ -5,6 +5,7 @@ myApp.controller("SampleCtrl", function($firebaseAuth, $http) {
   var self = this;
   self.loggedIn = false;
   self.loggedOut = true;
+
 //Register with email and password
   self.registerWithEmail = function(email, password){
     if (!email || !password){
@@ -36,27 +37,26 @@ myApp.controller("SampleCtrl", function($firebaseAuth, $http) {
       self.loggedIn = true;
       self.loggedOut = false;
 
-    auth.$signInWithEmailAndPassword(email, password).catch(function(error) {
-    // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert ('incorrect email and password');
-      console.log("sign in error", error);
-      if (error){
-        self.loggedIn = false;
-        self.loggedOut = true;
-      }
+    auth.$signInWithEmailAndPassword(email, password).then(function(firebaseUser) {
+      console.log('firebaseUser: ', firebaseUser);
+      console.log("Firebase Authenticated as: ", firebaseUser.email, firebaseUser.uid);
+      self.loggedIn = true;
+      self.loggedOut = false;
+
+    }).catch(function(error) {
+      console.log("Authentication failed: ", error);
     });
-
-
   };
+
   //sign in with google!!
   // This code runs whenever the user logs in
   self.logIn = function(){
     auth.$signInWithPopup("google").then(function(firebaseUser) {
-      console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
+      console.log(firebaseUser);
+      console.log("Firebase Authenticated as: ", firebaseUser.user.displayName, firebaseUser.user.uid);
       self.loggedIn = true;
       self.loggedOut = false;
+
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
     });
@@ -95,4 +95,5 @@ myApp.controller("SampleCtrl", function($firebaseAuth, $http) {
       self.loggedOut = true;
     });
   };
-});
+
+});//end controller

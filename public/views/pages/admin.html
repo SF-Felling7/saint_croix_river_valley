@@ -8,12 +8,12 @@
     <h4>password</h4>
     <input type="password" ng-model="sc.password"><br>
 
-    <button ng-click="sc.registerWithEmail(sc.email, sc.password)">Register and Sign In as New User</button>
-    <h6>Or Sign in as existing user</h6>
-    <button ng-click="sc.signInWithEmail(sc.email, sc.password)">Sign In</button> <br>
-    <h6>Or</h6>
-    <button type="submit" ng-click="sc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" alt="Submit">Sign in with Google</button>
 
+    <button ng-click="sc.signInWithEmail(sc.email, sc.password)">Sign In</button>Or
+    <button type="submit" ng-click="sc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
+    alt="Submit">Sign in with Google</button><br>
+    <h5>Or</h5>
+    <button ng-click="sc.registerWithEmail(sc.email, sc.password)">Register and Sign In as New User</button>
   </div>
 
 </div>

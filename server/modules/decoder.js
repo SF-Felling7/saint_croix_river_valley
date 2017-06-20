@@ -1,4 +1,5 @@
 console.log('decode srcd');
+
 var admin = require("firebase-admin");
 
 // var serviceAccount = require("./server/firebase-service-account.json");
@@ -16,7 +17,10 @@ var tokenDecoder = function(req, res, next){
     admin.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
       // Adding the decodedToken to the request so that downstream processes can use it
       req.decodedToken = decodedToken;
+      // SQL query to check if the user with that email is in the database
+      // if they are, then next()
       next();
+      // if they are not, res.sendStatus(403)
     })
     .catch(function(error) {
       // If the id_token isn't right, you end up in this callback function
