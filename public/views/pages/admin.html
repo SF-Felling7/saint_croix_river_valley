@@ -1,35 +1,20 @@
-<!-- <!DOCTYPE html>
-<html ng-app="sampleApp">
-  <head>
-    <meta charset="utf-8">
-    <title>St. Croix River Valley Admin Page</title> -->
-    <!-- Angular -->
-    <!-- <script src="/vendors/angular.min.js" charset="utf-8"></script> -->
-    <!-- Firebase -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script> -->
-    <!-- AngularFire -->
-    <!-- <script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script> -->
-    <!-- Firebase Config -->
-    <!-- <script src="./scripts/config.js"></script> -->
-    <!-- Angular Application with Authentication -->
-    <!-- <script src="./scripts/client.js"></script> -->
-  <!-- </head> -->
+<h1>Admin Login</h1>
+<h1>Welcome {{fc.secretData}}, to St. Croix Valley Interactive Map</h1>
+<div ng-hide="fc.loggedIn">
 
-  <!-- <body ng-controller="SampleCtrl as sc"> -->
-    <!-- <body> -->
-    <h1>Welcome Admin, to St. Croix Valley Interactive Map</h1>
-
+  <div id="adminLogin">
     <h4>email</h4>
-    <input type="text" name="" value="">
+    <input type="text" ng-model="fc.email">
     <h4>password</h4>
-    <input type="text" name="" value=""><br>
+    <input type="password" ng-model="fc.password"><br>
 
-    <button ng-click="">Register</button>
-    <button ng-click="">Sign In</button>
-    <button ng-click="fc.logIn()">Sign In with Google</button>
-    <button ng-click="fc.logOut()">Log Out</button>
-    <div>
-      {{fc.secretData}}
-    </div>
-  <!-- </body>
-</html> -->
+
+    <button ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button>Or
+    <button type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
+    alt="Submit">Sign in with Google</button><br>
+    <h5>Or</h5>
+    <button ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
+  </div>
+
+</div>
+<button ng-click="fc.logOut()" ng-hide="fc.loggedOut">Log Out</button>

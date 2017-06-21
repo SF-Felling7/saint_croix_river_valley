@@ -3,7 +3,8 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var pg = require( 'pg' );
+var pg = require ('pg');
+
 
 //modules
 var decoder = require('./modules/decoder');
@@ -30,6 +31,26 @@ Other branches in the nodeFire repository show how to do that. */
 // This is the route for your secretData. The request gets here after it has been authenticated.
 app.use("/privateData", decoder.token, privateData);
 app.use( '/locations', locations );
+
+//set up config for pool
+var config = {
+  database: 'st.croix_valley',
+  host: 'localhost',
+  port: 5432,
+  max: 20
+}; // end config
+
+//create new pool
+var pool = new pg.Pool( config );
+
+//globals
+var adminsArray=[
+  {
+    email: 'colinwymore@gmail.com',
+    password: '09078loOwymore',
+    admin: true,
+  }
+];
 
 app.use('/*', function(req, res){
   res.sendFile(path.resolve('./public/views/index.html'));
