@@ -1,5 +1,4 @@
 var myApp = angular.module('myApp', ['ngRoute', 'ngMap', 'firebase']);
-// var app = angular.module("sampleApp", ["firebase"]);
 
 /// Routes ///
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
