@@ -1,4 +1,4 @@
-myApp.controller('MapCtrl', function( NgMap, $interval, $http ) {
+myApp.controller('MapCtrl', function( $http, NgMap, $interval ) {
   var vm = this;
 
 
@@ -14,6 +14,7 @@ myApp.controller('MapCtrl', function( NgMap, $interval, $http ) {
       url: '/locations/getDining'
     }).then(function success( response ){
       console.log( 'getting dining pins', response );
+
     });//ending success
   };//ending dining function
 
@@ -24,6 +25,7 @@ myApp.controller('MapCtrl', function( NgMap, $interval, $http ) {
       url: '/locations/getLodging'
     }).then(function success( response ){
       console.log('getting lodging', response);
+      
     });//ending success
   };//ending lodging function
 
