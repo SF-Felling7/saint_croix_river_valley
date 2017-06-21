@@ -26,41 +26,34 @@
   </head>
   <body ng-app="myApp">
     <div ng-controller="MapCtrl as mc" id="mySidenav" class="sidenav">
-      <!-- <div > -->
-        <ul>
-          <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
-          <li ng-click="mc.dining()">
-            <i class="fa fa-cutlery"></i>
-            Dining
-          </li>
-          <li ng-click="mc.lodging()">
-            <i class="fa fa-bed"></i>
-            Lodging
-          </li>
-          <li ng-click="mc.nature()">
-            <i class="fa fa-tree"></i>
-            Nature
-          </li>
-          <li ng-click="mc.shopping()">
-            <i class="fa fa-shopping-bag"></i>
-            Shopping
-          </li>
-          <li ng-click="mc.suggested()">
-            <i class="fa fa-car"></i>
-            Suggested Trips
-          </li>
-        </ul>
-
-      <!-- </div> -->
+      <ul>
+        <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
+        <li ng-click="mc.dining()">
+          <i class="fa fa-cutlery"></i>
+          Dining
+        </li>
+        <li ng-click="mc.lodging()">
+          <i class="fa fa-bed"></i>
+          Lodging
+        </li>
+        <li ng-click="mc.nature()">
+          <i class="fa fa-tree"></i>
+          Nature
+        </li>
+        <li ng-click="mc.shopping()">
+          <i class="fa fa-shopping-bag"></i>
+          Shopping
+        </li>
+        <li ng-click="mc.suggested()">
+          <i class="fa fa-car"></i>
+          Suggested Trips
+        </li>
+      </ul>
     </div>
-
-    <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
     <div id="main" ng-controller="MapCtrl as mc">
-      <!-- <i class="fa fa-bars fa-3x" ng-click="mc.openNav()"></i> -->
       <i class="fa fa-bars fa-3x" ng-click="mc.openNav()"></i>
       <h1 id="title">St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
       <main ng-view></main>
     </div>
-
   </body>
 </html>
