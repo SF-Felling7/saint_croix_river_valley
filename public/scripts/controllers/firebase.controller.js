@@ -1,10 +1,9 @@
-// console.log('controller srcd');
-
 myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
   var auth = $firebaseAuth();
   var self = this;
   self.loggedIn = false;
   self.loggedOut = true;
+
 
 //Register with email and password
   self.registerWithEmail = function(email, password){
@@ -27,7 +26,8 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
       }
       alert ('please use a valid email and password that is at least 6 characters long');
     });
-  };
+  };//end register and sign in with email
+
 //Sign in with Email
   self.signInWithEmail = function (email, password){
       if (!email || !password){
@@ -45,8 +45,9 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
       }
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
+      alert ('user not found');
     });
-  };
+  };//end sign in with email
 
   //sign in with google!!
   // This code runs whenever the user logs in
@@ -61,7 +62,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
     });
-  };
+  };//end sign in with google
 
   // This code runs whenever the user changes authentication states
   // e.g. whevenever the user logs in or logs out
@@ -96,5 +97,4 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
       self.loggedOut = true;
     });
   };
-
 });//end controller
