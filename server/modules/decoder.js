@@ -4,7 +4,7 @@ var admin = require("firebase-admin");
 var pg = require ('pg');
 
 var config = {
-  database: 'st.croix_valley',
+  database: 'st-croix-valley',
   host: 'localhost',
   port: 5432,
   max: 20

@@ -3,18 +3,41 @@
 <div ng-hide="fc.loggedIn">
 
   <div id="adminLogin">
-    <h4>email</h4>
+    <h4>email:</h4>
     <input type="text" ng-model="fc.email">
-    <h4>password</h4>
-    <input type="password" ng-model="fc.password"><br>
+    <h4>password: </h4>
+    <input type="password" ng-model="fc.password"><br><br>
 
 
-    <button ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button>Or
-    <button type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
-    alt="Submit">Sign in with Google</button><br>
-    <h5>Or</h5>
-    <button ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
+    <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> or
+    <button class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
+    alt="Submit">Sign in with Google</button><br><br>
+    <h5> Not registered? </h5>
+    <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
   </div>
 
 </div>
-<button ng-click="fc.logOut()" ng-hide="fc.loggedOut">Log Out</button>
+<button class="btn" ng-click="fc.logOut()" ng-hide="fc.loggedOut">Log Out</button>
+
+<div class="container" ng-show="fc.loggedIn">
+  <div id="adminLanding">
+    <div class="form-group col-sm-3 col-sm-offset-2">
+      <label for="places" class="form-label">Places:</label>
+      <select ng-model="fc.place" class="form-control" id="places">
+        <option value="" disabled selected>Select</option>
+        <option name="addPlace">Add Place</option>
+        <option name="editDeletePlace">Edit/Delete Place</option>
+      </select>
+      <button ng-click="fc.adminPlace(fc.place)" class="btn submitbutton" type="submit" value="Submit">Go!</button>
+    </div>
+    <div class="form-group col-sm-3 col-sm-offset-1">
+      <label for="trips" class="form-label">Trips:</label>
+      <select ng-model="fc.trip" class="form-control" id="trips">
+        <option value="" disabled selected>Select</option>
+        <option name="addTrip">Add Trip</option>
+        <option name="editDeleteTrip">Edit/Delete Trip</option>
+      </select>
+      <button ng-click="fc.adminTrip(fc.trip)" class="btn submitbutton" type="submit" value="Submit">Go!</button>
+    </div>
+  </div>
+</div>

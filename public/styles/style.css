@@ -251,9 +251,7 @@ li:hover {
     margin-left: 50px;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-    transition: margin-left .5s;
+.main {
     padding: 20px;
 }
 
@@ -266,4 +264,18 @@ li:hover {
 @media screen and (max-width: 544px) {
   #main {padding: 0px;}
 
+}
+
+.form-group{
+  display:inline-block;
+}
+
+.form-label{
+  display: block;
+  text-align: center;
+  font-size: 24px;
+}
+
+.submitbutton{
+  margin: 10px
 }
