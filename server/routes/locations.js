@@ -8,7 +8,7 @@ var router = express.Router();
 
 //Config for pool
 var config = {
-  database: 'stcroixrivervalley',
+  database: 'st-croix-valley',
   host: 'localhost',
   port: 5432,
   max: 20
