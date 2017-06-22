@@ -4,10 +4,10 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   var vm = this;
 
 
-  NgMap.getMap().then(function(map) {
-    console.log(map.getCenter());
-    vm.map = map;
-  });
+  // NgMap.getMap().then(function(map) {
+  //   console.log(map.getCenter());
+  //   vm.map = map;
+  // });
 
   vm.dining = function() {
     console.log('dining button clicked');
@@ -16,9 +16,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
       url: '/locations/getDining'
     }).then(function success( response ){
       console.log( 'getting dining pins', response );
-
+      vm.diningPins = response.data;
+      console.log('vm.diningPins: ', vm.diningPins);
     });//ending success
   };//ending dining function
+  vm.dining();
 
   vm.lodging = function(){
     console.log('lodging button clicked');
@@ -27,9 +29,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
       url: '/locations/getLodging'
     }).then(function success( response ){
       console.log('getting lodging', response);
-      
+      vm.lodgingPins = response.data;
+      console.log('vm.lodgingPins: ', vm.lodgingPins);
     });//ending success
   };//ending lodging function
+  vm.lodging();
 
   vm.nature = function(){
     console.log('nature button clicked');
@@ -38,8 +42,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
       url: '/locations/getNature'
     }).then(function success( response ) {
       console.log( 'getting nature', response );
+      vm.naturePins = response.data;
+      console.log('vm.naturePins: ', vm.naturePins);
     });//ending success
   };//ending nature function
+  vm.nature();
 
   vm.shopping = function(){
     console.log('shopping button clicked');
@@ -48,8 +55,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
       url: '/locations/getShopping'
     }).then(function success( response ) {
       console.log( 'getting shopping', response );
+      vm.shoppingPins = response.data;
+      console.log('vm.shoppingPins: ', vm.shoppingPins);
     });//ending success
   };//ending shopping function
+  vm.shopping();
 
   var h = parseInt(window.innerHeight);
   var w = parseInt(window.innerWidth);
