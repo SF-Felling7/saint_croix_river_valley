@@ -97,4 +97,13 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
       self.loggedOut = true;
     });
   };
+
+  self.adminPlace = function(place){
+    console.log('admin places button clicked for action: ', place);
+  };
+
+  self.adminTrip = function(trip){
+    console.log('admin trip button clicked for action: ', trip);
+  };
+
 });//end controller
