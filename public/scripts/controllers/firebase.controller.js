@@ -1,6 +1,7 @@
 myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
   var auth = $firebaseAuth();
   var self = this;
+
   self.loggedIn = false;
   self.loggedOut = true;
 
