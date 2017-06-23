@@ -26,6 +26,9 @@
   display: inline;
 }
 
+#hamburgerMenu:hover{
+  color: cornsilk;
+}
 .gmap{
   text-align: center;
 }
