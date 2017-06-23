@@ -30,10 +30,6 @@
   color: cornsilk;
 }
 
-.tripDropdown:hover .dropdown-content {
-    display: block;
-}
-
 .gmap{
   text-align: center;
 }
@@ -298,4 +294,14 @@ li:hover {
 
 .fa-bed {
   color: blue;
+}
+.dropdown-content {
+   display: none;
+   position: absolute;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+    color: black;
 }
