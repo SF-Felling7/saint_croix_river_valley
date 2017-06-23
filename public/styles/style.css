@@ -29,6 +29,11 @@
 #hamburgerMenu:hover{
   color: cornsilk;
 }
+
+.tripDropdown:hover .dropdown-content {
+    display: block;
+}
+
 .gmap{
   text-align: center;
 }
