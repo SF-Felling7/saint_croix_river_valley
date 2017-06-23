@@ -3,7 +3,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
 
   var vm = this;
 
-
   // NgMap.getMap().then(function(map) {
   //   console.log(map.getCenter());
   //   vm.map = map;
@@ -83,8 +82,13 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   // use this code if you want to slide on top of content
   /* Set the width of the side navigation to 250px */
   vm.openNav = function() {
-      document.getElementById('mySidenav').style.width = '25%';
-      console.log('hamburger open button clicked');
+    console.log('toggle hamburger menu');
+      if (  document.getElementById('mySidenav').style.width === '25%') {
+        document.getElementById('mySidenav').style.width = '0%';
+      }
+      else {
+        document.getElementById('mySidenav').style.width = '25%';
+      }
   };
 
   /* Set the width of the side navigation to 0 */
@@ -92,7 +96,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
       document.getElementById('mySidenav').style.width = '0';
       console.log('x close button clicked');
   };
-
 
   vm.suggested = function(){
     console.log('suggested clicked');
@@ -112,7 +115,5 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   //     document.getElementById('main').style.marginLeft = '0';
   //     console.log('x close button clicked');
   // };
-
-
 
 });
