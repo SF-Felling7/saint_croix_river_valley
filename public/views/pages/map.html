@@ -5,9 +5,9 @@
 <div class="gmap">
 
   <ng-map id="map" default-style="false" zoom="10" center="[45.0750, -92.6044]">
-    <marker ng-repeat="place in mc.diningPins" position=[{{place.latitude}},{{place.longitude}}]></marker>
-    <marker ng-repeat="place in mc.lodgingPins" position=[{{place.latitude}},{{place.longitude}}]></marker>
-    <marker ng-repeat="place in mc.shoppingPins" position=[{{place.latitude}},{{place.longitude}}]></marker>
-    <marker ng-repeat="place in mc.naturePins" position=[{{place.latitude}},{{place.longitude}}]></marker>
+    <custom-marker ng-repeat="place in mc.diningPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-cutlery fa-lg"></i></custom-marker>
+    <custom-marker ng-repeat="place in mc.lodgingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-bed fa-lg"></custom-marker>
+    <custom-marker ng-repeat="place in mc.shoppingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-shopping-bag fa-lg"></custom-marker>
+    <custom-marker ng-repeat="place in mc.naturePins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-tree fa-lg"></custom-marker>
   </ng-map>
 </div>

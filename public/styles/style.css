@@ -279,3 +279,15 @@ li:hover {
 .submitbutton{
   margin: 10px
 }
+
+.fa-tree {
+  color: green;
+}
+
+.fa-shopping-bag {
+  color: magenta;
+}
+
+.fa-bed {
+  color: blue;
+}
