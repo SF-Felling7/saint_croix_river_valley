@@ -4,10 +4,9 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   var vm = this;
 
 
-  // NgMap.getMap().then(function(map) {
-  //   console.log(map.getCenter());
-  //   vm.map = map;
-  // });
+  NgMap.getMap().then(function(map) {
+    vm.map = map;
+  });
 
   vm.dining = function() {
     console.log('dining button clicked');
@@ -98,21 +97,14 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
     console.log('suggested clicked');
   };
 
-  // // use this code if you want to push content over when navbar slides in
-  // /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
-  // vm.openNavPush = function () {
-  //     document.getElementById('mySidenav').style.width = '300px';
-  //     document.getElementById('main').style.marginLeft = '300px';
-  //     console.log('open hamburger button clicked');
-  // };
-  //
-  // // /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-  // vm.closeNavPush = function () {
-  //     document.getElementById('mySidenav').style.width = '0';
-  //     document.getElementById('main').style.marginLeft = '0';
-  //     console.log('x close button clicked');
-  // };
+  vm.showDetail = function(e, place) {
+    console.log('in show detail function for ', place);
+    vm.place = place;
+    vm.map.showInfoWindow('foo-iw', vm.place.id);
+  };
 
-
+  vm.hideDetail = function() {
+    vm.map.hideInfoWindow('foo-iw');
+  };
 
 });
