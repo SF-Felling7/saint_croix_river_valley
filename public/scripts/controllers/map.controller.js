@@ -2,7 +2,7 @@
 myApp.controller('MapCtrl', function($http, NgMap, $interval) {
 
   var vm = this;
-
+  vm.showDining = true;
 
   // NgMap.getMap().then(function(map) {
   //   console.log(map.getCenter());
@@ -18,9 +18,21 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
       console.log( 'getting dining pins', response );
       vm.diningPins = response.data;
       console.log('vm.diningPins: ', vm.diningPins);
+      vm.showDining = true;
     });//ending success
   };//ending dining function
   vm.dining();
+
+
+  vm.toggleDining = function() {
+    if (vm.showDining === true) {
+    vm.showDining = false;
+    console.log( 'vm.showDining :', vm.showDining );
+    } else {
+      vm.showDining = true;
+      console.log( 'vm.showDining ',vm.showDining);
+    }
+  };
 
   vm.lodging = function(){
     console.log('lodging button clicked');
