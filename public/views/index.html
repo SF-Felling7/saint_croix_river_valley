@@ -32,33 +32,6 @@
     <base href="/">
   </head>
   <body ng-app="myApp">
-
-
-    <div ng-controller="MapCtrl as mc" id="mySidenav" class="sidenav">
-      <ul>
-        <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
-        <li ng-click="mc.toggleDining()">
-          <i class="fa fa-cutlery"></i>
-          Dining
-        </li>
-        <li ng-click="mc.lodging()">
-          <i class="fa fa-bed"></i>
-          Lodging
-        </li>
-        <li ng-click="mc.nature()">
-          <i class="fa fa-tree"></i>
-          Nature
-        </li>
-        <li ng-click="mc.shopping()">
-          <i class="fa fa-shopping-bag"></i>
-          Shopping
-        </li>
-        <li ng-click="mc.suggested()">
-          <i class="fa fa-car"></i>
-          Suggested Trips
-        </li>
-      </ul>
-    </div>
     <div class="main">
       <main ng-view></main>
     </div>

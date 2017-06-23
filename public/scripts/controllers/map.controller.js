@@ -18,20 +18,15 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
       console.log( 'getting dining pins', response );
       vm.diningPins = response.data;
       console.log('vm.diningPins: ', vm.diningPins);
-      vm.showDining = true;
+
     });//ending success
   };//ending dining function
   vm.dining();
 
 
   vm.toggleDining = function() {
-    if (vm.showDining === true) {
-    vm.showDining = false;
-    console.log( 'vm.showDining :', vm.showDining );
-    } else {
-      vm.showDining = true;
-      console.log( 'vm.showDining ',vm.showDining);
-    }
+    vm.showDining = !vm.showDining;
+    console.log(vm.showDining );
   };
 
   vm.lodging = function(){
@@ -95,14 +90,14 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   // use this code if you want to slide on top of content
   /* Set the width of the side navigation to 250px */
   vm.openNav = function() {
-      document.getElementById('mySidenav').style.width = '25%';
-      console.log('hamburger open button clicked');
+    document.getElementById('mySidenav').style.width = '25%';
+    console.log('hamburger open button clicked');
   };
 
   /* Set the width of the side navigation to 0 */
   vm.closeNav = function () {
-      document.getElementById('mySidenav').style.width = '0';
-      console.log('x close button clicked');
+    document.getElementById('mySidenav').style.width = '0';
+    console.log('x close button clicked');
   };
 
 
