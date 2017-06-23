@@ -3,6 +3,9 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   var vm = this;
 
   vm.showDining = true;
+  vm.showLodging = true;
+  vm.showNature = true;
+  vm.showShopping = true;
 
   // NgMap.getMap().then(function(map) {
   //   console.log(map.getCenter());
@@ -48,6 +51,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   }; //ending lodging function
   vm.lodging();
 
+  vm.toggleLodging = function() {
+    vm.showLodging = !vm.showLodging;
+    console.log(vm.showLodging);
+  };
+
   vm.nature = function() {
     console.log('nature button clicked');
     $http({
@@ -61,6 +69,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   }; //ending nature function
   vm.nature();
 
+  vm.toggleNature = function() {
+    vm.showNature = !vm.showNature;
+    console.log(vm.showNature);
+  };
+
   vm.shopping = function() {
     console.log('shopping button clicked');
     $http({
@@ -73,6 +86,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
     }); //ending success
   }; //ending shopping function
   vm.shopping();
+
+  vm.toggleShopping = function() {
+    vm.showShopping = !vm.showShopping;
+    console.log(vm.showShopping);
+  };
 
   var h = parseInt(window.innerHeight);
   var w = parseInt(window.innerWidth);
