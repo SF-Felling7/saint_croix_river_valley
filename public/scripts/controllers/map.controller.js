@@ -18,6 +18,21 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   });
 
 
+  vm.clicked = function() {
+    alert('Clicked a link inside infoWindow');
+  };
+
+  vm.showDetail = function(e, place) {
+    console.log('place: ', place);
+    console.log('place.id: ', place.id);
+    vm.place = place;
+    vm.map.showInfoWindow('mapwindow', 'x'+place.id);
+  };
+
+  vm.hideDetail = function() {
+    vm.map.hideInfoWindow('mapwindow');
+  };
+
   vm.dining = function() {
     console.log('dining button clicked');
     $http({
@@ -112,7 +127,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   };
 
   // use this code if you want to slide on top of content
-  /* Set the width of the side navigation to 250px */
   vm.openNav = function() {
 
     console.log('toggle hamburger menu');
@@ -133,16 +147,5 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   vm.suggested = function() {
     console.log('suggested clicked');
   };
-
-  vm.showDetail = function(e, place) {
-    console.log('in show detail function for ', place);
-    vm.place = place;
-    vm.map.showInfoWindow('foo-iw', vm.place.id);
-  };
-
-  vm.hideDetail = function() {
-    vm.map.hideInfoWindow('foo-iw');
-  };
-
 
 });
