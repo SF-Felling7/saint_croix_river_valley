@@ -1,67 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
 
-    <meta charset="utf-8">
-    <title>St. Croix River Valley Interactive Map</title>
-    <meta name="viewport" content="width=device-width"/>
-    <script type="text/javascript" src="/vendors/angular.min.js"></script>
-    <script type="text/javascript" src="/vendors/angular-material.min.js"></script>
-    <script type="text/javascript" src="/vendors/angular-route.min.js"></script>
-    <script type="text/javascript" src="/vendors/angular-animate.min.js"></script>
-    <script type="text/javascript" src="/vendors/angular-aria.min.js"></script>
+<head>
 
-    <script type="text/javascript" src="/vendors/ng-map.min.js"></script>
-    <script type="text/javascript" src="./scripts/clientapp.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
-    <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
-    <!-- Firebase Config -->
-    <script src="./scripts/config.js"></script>
-    <script src="./scripts/controllers/firebase.controller.js"></script>
-    <script src="./scripts/controllers/map.controller.js" charset="utf-8"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso"></script>
-    <link rel="stylesheet" href="/vendors/bootstrap.min.css">
-    <link rel="stylesheet" href="/styles/style.css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>St. Croix River Valley Interactive Map</title>
+  <meta name="viewport" content="width=device-width" />
+  <script type="text/javascript" src="/vendors/angular.min.js"></script>
+  <script type="text/javascript" src="/vendors/angular-material.min.js"></script>
+  <script type="text/javascript" src="/vendors/angular-route.min.js"></script>
+  <script type="text/javascript" src="/vendors/angular-animate.min.js"></script>
+  <script type="text/javascript" src="/vendors/angular-aria.min.js"></script>
 
-
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Sansita" rel="stylesheet">
-
-    <!-- <link rel="stylesheet" href="/vendors/font-awesome.min.css"> -->
-    <base href="/">
-  </head>
-  <body ng-app="myApp">
+  <script type="text/javascript" src="/vendors/ng-map.min.js"></script>
+  <script type="text/javascript" src="./scripts/clientapp.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+  <!-- AngularFire -->
+  <script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
+  <!-- Firebase Config -->
+  <script src="./scripts/config.js"></script>
+  <script src="./scripts/controllers/firebase.controller.js"></script>
+  <script src="./scripts/controllers/map.controller.js" charset="utf-8"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso"></script>
+  <link rel="stylesheet" href="/vendors/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/style.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-    <div ng-controller="MapCtrl as mc" id="mySidenav" class="sidenav">
-      <ul>
-        <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
-        <li ng-click="mc.dining()">
-          <i class="fa fa-cutlery"></i>
-          Dining
-        </li>
-        <li ng-click="mc.lodging()">
-          <i class="fa fa-bed"></i>
-          Lodging
-        </li>
-        <li ng-click="mc.nature()">
-          <i class="fa fa-tree"></i>
-          Nature
-        </li>
-        <li ng-click="mc.shopping()">
-          <i class="fa fa-shopping-bag"></i>
-          Shopping
-        </li>
-        <li ng-click="mc.suggested()">
-          <i class="fa fa-car"></i>
-          Suggested Trips
-        </li>
-      </ul>
-    </div>
-    <div class="main">
-      <main ng-view></main>
-    </div>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Sansita" rel="stylesheet">
 
-  </body>
+  <!-- <link rel="stylesheet" href="/vendors/font-awesome.min.css"> -->
+  <base href="/">
+</head>
+
+<body ng-app="myApp">
+
+  <div class="main">
+    <main ng-view></main>
+  </div>
+
+</body>
+
 </html>

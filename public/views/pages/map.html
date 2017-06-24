@@ -1,10 +1,30 @@
+<div id="mySidenav" class="sidenav">
+  <ul>
+    <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
+    <li ng-click="mc.toggleDining()">
+      <i class="fa fa-cutlery"></i> Dining
+    </li>
+    <li ng-click="mc.toggleLodging()">
+      <i class="fa fa-bed"></i> Lodging
+    </li>
+    <li ng-click="mc.toggleShopping()">
+      <i class="fa fa-tree"></i> Nature
+    </li>
+    <li ng-click="mc.toggleNature()">
+      <i class="fa fa-shopping-bag"></i> Shopping
+    </li>
+    <li ng-click="mc.suggested()">
+      <i class="fa fa-car"></i> Suggested Trips
+    </li>
+  </ul>
+</div>
 <div class="main">
   <i id="hamburgerMenu" class="fa fa-bars fa-3x" ng-click="mc.openNav()"></i>
   <h1 id="title">St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
 </div>
 <div class="gmap">
-
   <ng-map id="map" default-style="false" zoom="10" center="[45.0750, -92.6044]">
+    
     <custom-marker id="x{{place.id}}" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-cutlery"></i>
@@ -32,4 +52,10 @@
       </div>
     </info-window>
   </ng-map>
+
+    <custom-marker ng-if="mc.showDining" ng-repeat="place in mc.diningPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-cutlery fa-lg"></i></custom-marker>
+    <custom-marker ng-if="mc.showLodging" ng-repeat="place in mc.lodgingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-bed fa-lg"></custom-marker>
+      <custom-marker ng-if="mc.showNature" ng-repeat="place in mc.shoppingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-shopping-bag fa-lg"></custom-marker>
+      <custom-marker ng-if="mc.showShopping" ng-repeat="place in mc.naturePins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-tree fa-lg"></custom-marker>
+
 </div>

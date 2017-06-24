@@ -3,15 +3,15 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var pg = require ('pg');
+var pg = require('pg');
 
 
 //modules
 var decoder = require('./modules/decoder');
 
 // routes
-var privateData = require ('./routes/privateData');
-var locations = require( './routes/locations.js' );
+var privateData = require('./routes/privateData');
+var locations = require('./routes/locations.js');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -30,7 +30,7 @@ Other branches in the nodeFire repository show how to do that. */
 
 // This is the route for your secretData. The request gets here after it has been authenticated.
 app.use("/privateData", decoder.token, privateData);
-app.use( '/locations', locations );
+app.use('/locations', locations);
 
 //set up config for pool
 var config = {
@@ -41,23 +41,21 @@ var config = {
 }; // end config
 
 //create new pool
-var pool = new pg.Pool( config );
+var pool = new pg.Pool(config);
 
 //globals
-var adminsArray=[
-  {
-    email: 'colinwymore@gmail.com',
-    password: '09078loOwymore',
-    admin: true,
-  }
-];
+var adminsArray = [{
+  email: 'colinwymore@gmail.com',
+  password: '09078loOwymore',
+  admin: true,
+}];
 
-app.use('/*', function(req, res){
+app.use('/*', function(req, res) {
   res.sendFile(path.resolve('./public/views/index.html'));
 });
 
 var port = process.env.PORT || 5001;
 
-app.listen(port, function(){
+app.listen(port, function() {
   console.log("Listening on port: ", port);
 });
