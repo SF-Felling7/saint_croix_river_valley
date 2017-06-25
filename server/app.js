@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var pg = require ('pg');
+var pg = require('pg');
 
 
 //modules
@@ -39,6 +39,6 @@ app.use('/*', function(req, res){
 
 var port = process.env.PORT || 5001;
 
-app.listen(port, function(){
+app.listen(port, function() {
   console.log("Listening on port: ", port);
 });

@@ -1,34 +1,74 @@
+<div id="mySidenav" class="sidenav">
+  <ul>
+    <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
+    <li ng-click="mc.toggleDining()">
+      <i class="fa fa-cutlery"></i> Dining
+    </li>
+    <li ng-click="mc.toggleLodging()">
+      <i class="fa fa-bed"></i> Lodging
+    </li>
+    <li ng-click="mc.toggleShopping()">
+      <i class="fa fa-tree"></i> Nature
+    </li>
+    <li ng-click="mc.toggleNature()">
+      <i class="fa fa-shopping-bag"></i> Shopping
+    </li>
+    <li ng-click="mc.suggested()">
+      <i class="fa fa-car"></i> Suggested Trips
+    </li>
+  </ul>
+</div>
 <div class="main">
   <i id="hamburgerMenu" class="fa fa-bars fa-3x" ng-click="mc.openNav()"></i>
   <h1 id="title">St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
 </div>
 <div class="gmap">
+  <ng-map id="map" default-style="false" zoom="10" center="[45.0750, -92.6044]">
 
-  <ng-map ng-if="mc.naturePins.length > 3" id="map" default-style="false" zoom="10" center="[45.0750, -92.6044]">
-    
-    <custom-marker ng-repeat="place in mc.diningPins" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
+    <custom-marker id="x{{place.id}}" ng-if="mc.showDining" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-cutlery"></i>
       </div>
     </custom-marker>
-
-   <custom-marker ng-repeat="place in mc.lodgingPins" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
+    <custom-marker id="x{{place.id}}" ng-if="mc.showLodging" ng-repeat="place in mc.lodgingPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-bed"></i>
       </div>
     </custom-marker>
-
-    <custom-marker ng-repeat="place in mc.shoppingPins" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
+    <custom-marker id="x{{place.id}}" ng-if="mc.showShopping" ng-repeat="place in mc.shoppingPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-shopping-bag"></i>
       </div>
     </custom-marker>
-
-    <custom-marker ng-repeat="place in mc.naturePins" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
+    <custom-marker id="x{{place.id}}" ng-if="mc.showNature" ng-repeat="place in mc.naturePins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-tree"></i>
       </div>
     </custom-marker>
-
+    <info-window id="mapwindow">
+      <div ng-non-bindable="">
+        <h3>{{mc.place.name}}</h3><br/>
+        <a href="#" ng-click="mc.clicked(mc.place)">Click Here for More Info</a>
+      </div>
+    </info-window>
   </ng-map>
+</div>
+
+<!-- detailed info window modal -->
+<div class="detailed-info-modal container">
+  <script type="text/ng-template" id="detailedPlaceInfo.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{dpic.name}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      {{dpic.street}}</br>
+      {{dpic.city}}, {{dpic.state}}  {{dpic.zipcode}}</br>
+      {{dpic.phone}}</br>
+      <a href="dpic.website">{{dpic.website}}</a></br>
+      {{dpic.description}}</br>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="dpic.okay()">OK</button>
+    </div>
+  </script>
 </div>
