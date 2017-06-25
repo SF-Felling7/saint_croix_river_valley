@@ -22,6 +22,7 @@
 }
 
 .gmap {
+  width: 100%;
   text-align: center;
 }
 
@@ -51,7 +52,7 @@ body {
   /*border: 1px solid yellow;*/
   /*opacity: 0.9;*/
 }
-
+/*
 .nav-side-menu {
   overflow: auto;
   font-family: verdana;
@@ -82,7 +83,7 @@ body {
   padding: 0px;
   margin: 0px;
   line-height: 35px;
-  cursor: pointer;
+  cursor: pointer;*/
   /*
       .collapsed{
          .arrow:before{
@@ -97,7 +98,7 @@ body {
        }
     */
 }
-
+/*
 .nav-side-menu ul :not(collapsed) .arrow:before, .nav-side-menu li :not(collapsed) .arrow:before {
   font-family: FontAwesome;
   content: "\f078";
@@ -187,7 +188,7 @@ body {
     color: #000;
     width: 40px;
     text-align: center;
-  }
+  }*/
   .brand {
     text-align: left !important;
     font-size: 22px;
@@ -196,7 +197,7 @@ body {
   }
 }
 
-@media (min-width: 767px) {
+/*@media (min-width: 767px) {
   .nav-side-menu .menu-list .menu-content {
     display: block;
   }
@@ -205,13 +206,13 @@ body {
   padding: 0px;
   font-family: 'Open Sans', sans-serif;
   width: 1100px;
-}
+}*/
 
 h1, h2, h3 {
   font-family: 'Sansita', sans-serif;
 }
 
-ul {
+/*ul {
   list-style-type: none;
 }
 
@@ -222,48 +223,48 @@ i {
 .sidenav li {
   font-size: 18px;
   /*padding: 8px 8px 8px 32px;*/
-  transition: 0.3s
-}
+  /*transition: 0.3s
+}*/
 
-li:hover {
+/*li:hover {
   background-color: blue;
   color: white;
-}
+}*/*/
 
 
 /* The side navigation menu */
 
-.sidenav {
+/*.sidenav {
   height: 100%;
   /* 100% Full-height */
-  width: 0;
+  /*width: 0;*/
   /* 0 width - change this with JavaScript */
-  position: fixed;
+  /*position: fixed;*/
   /* Stay in place */
-  z-index: 1;
+  /*z-index: 1;*/
   /* Stay on top */
-  top: 0;
+  /*top: 0;*/
   /*left: 0;*/
-  right: 0;
+  /*right: 0;
   background-color: lightgreen;
-  overflow-x: hidden;
+  overflow-x: hidden;*/
   /* Disable horizontal scroll */
-  padding-top: 60px;
+  /*padding-top: 60px;*/
   /* Place content 60px from the top */
-  transition: 0.5s;
+  /*transition: 0.5s;*/
   /* 0.5 second transition effect to slide in the sidenav */
 }
 
 
 /* Position and style the close button (top right corner) */
 
-.sidenav .closebtn {
+/*.sidenav .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
-}
+}*/
 
 .main {
   padding: 20px;
@@ -272,7 +273,7 @@ li:hover {
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 
-@media screen and (max-height: 450px) {
+/*@media screen and (max-height: 450px) {
   .sidenav {
     padding-top: 15px;
   }
@@ -285,7 +286,7 @@ li:hover {
   #main {
     padding: 0px;
   }
-}
+}*/
 
 .form-group {
   display: inline-block;
@@ -313,7 +314,7 @@ li:hover {
   color: blue;
 }
 
-.dropdown-content {
+/*.dropdown-content {
   display: none;
   position: absolute;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -325,4 +326,59 @@ li:hover {
   color: black;
   .marker {
     font-size: 20px;
-  }
+  }*/
+
+  #menu {
+     margin: 0;
+     width: 1100px;
+     background-color: lightblue;
+     font-size: 16px;
+     font-family: Tahoma, Geneva, sans-serif;
+     font-weight: bold;
+     text-align: left;
+     padding: 8px;
+     border-radius: 8px;
+     -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+     -o-border-radius: 8px;
+}
+
+#menu ul {
+     margin: 0;
+     padding: 8px 0;
+     list-style: none;
+     height: auto;
+     text-align: center;
+}
+
+#menu li {
+     display: inline-block;
+     padding: 8px;
+}
+
+#menu i {
+     padding: 10px;
+     text-decoration: none;
+}
+
+#menu i:hover {
+     background-color: #1B191B;
+     color: #FFF;
+     border-radius: 20px;
+     -webkit-border-radius: 20px;
+     -moz-border-radius: 20px;
+     -o-border-radius: 20px;
+}
+
+#menu li .active {
+     background-color: #1B191B;
+     color: #FFF;
+     border-radius: 20px;
+     -webkit-border-radius: 20px;
+     -moz-border-radius: 20px;
+     -o-border-radius: 20px;
+}
+.logoName {
+  color: black;
+  margin-left: 10px;
+}
