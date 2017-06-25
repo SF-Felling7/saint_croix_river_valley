@@ -49,19 +49,20 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     vm.map.hideInfoWindow('mapwindow');
   };
 
-  vm.dining = function() {
+  vm.getAllPins = function() {
     console.log('dining button clicked');
     $http({
       method: 'GET',
-      url: '/locations/getDining'
+      url: '/locations/getAllPins'
     }).then(function success(response) {
-      console.log('getting dining pins', response);
-      vm.diningPins = response.data;
-      console.log('vm.diningPins: ', vm.diningPins);
+      console.log('getting all pins', response);
+      vm.allPins = response.data;
+      console.log('vm.allPins: ', vm.allPins);
 
     }); //ending success
   }; //ending dining function
-  vm.dining();
+  vm.getAllPins();
+
 
 
   vm.toggleDining = function() {
@@ -69,54 +70,18 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     console.log(vm.showDining);
   };
 
-  vm.lodging = function() {
-    console.log('lodging button clicked');
-    $http({
-      method: 'GET',
-      url: '/locations/getLodging'
-    }).then(function success(response) {
-      console.log('getting lodging', response);
-      vm.lodgingPins = response.data;
-      console.log('vm.lodgingPins: ', vm.lodgingPins);
-    }); //ending success
-  }; //ending lodging function
-  vm.lodging();
 
   vm.toggleLodging = function() {
     vm.showLodging = !vm.showLodging;
     console.log(vm.showLodging);
   };
 
-  vm.nature = function() {
-    console.log('nature button clicked');
-    $http({
-      method: 'GET',
-      url: '/locations/getNature'
-    }).then(function success(response) {
-      console.log('getting nature', response);
-      vm.naturePins = response.data;
-      console.log('vm.naturePins: ', vm.naturePins);
-    }); //ending success
-  }; //ending nature function
-  vm.nature();
 
   vm.toggleNature = function() {
     vm.showNature = !vm.showNature;
     console.log(vm.showNature);
   };
 
-  vm.shopping = function() {
-    console.log('shopping button clicked');
-    $http({
-      method: 'GET',
-      url: '/locations/getShopping'
-    }).then(function success(response) {
-      console.log('getting shopping', response);
-      vm.shoppingPins = response.data;
-      console.log('vm.shoppingPins: ', vm.shoppingPins);
-    }); //ending success
-  }; //ending shopping function
-  vm.shopping();
 
   vm.toggleShopping = function() {
     vm.showShopping = !vm.showShopping;
