@@ -62,13 +62,13 @@
 <div class="detailed-info-modal container">
   <script type="text/ng-template" id="detailedPlaceInfo.html">
     <div class="modal-header">
-      <h3 class="modal-title title" id="modal-title">{{ dpic.place.name }}</h3>
+      <h3 class="modal-title title" id="modal-title">{{dpic.name}}</h3>
     </div>
-    <div class="modal-body" id="modal-body" >
-      {{dpic.place.address}}</br>
-      {{dpic.place.city}}, {{dpic.place.state}}  {{dpic.place.zipcode}}</br>
-      {{dpic.place.phone}}</br>
-      <ng-src src="dpic.website">{{dpic.place.website}}</ng-src></br>
+    <div class="modal-body" id="modal-body">
+      {{dpic.street}}</br>
+      {{dpic.city}}, {{dpic.state}}  {{dpic.zipcode}}</br>
+      {{dpic.phone}}</br>
+      <a href="dpic.website">{{dpic.website}}</a></br>
       {{dpic.description}}</br>
     </div>
     <div class="modal-footer">

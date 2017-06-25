@@ -171,8 +171,18 @@ myApp.controller( 'detailedPlaceInfoCtrl', [ '$uibModalInstance', '$uibModal', '
 
   console.log( 'in detailed place info controller for place: ', place);
 
-  // when save button is clicked on modal
+  vm.name = place.name;
+  vm.phone = place.phone;
+  vm.street = place.street;
+  vm.city = place.city;
+  vm.state = place.state;
+  vm.zipcode = place.zipcode;
+  vm.website = place.website;
+  vm.description = place.description;
+
+  // when OK button is clicked on modal
   vm.okay = function () {
+    console.log('okay button clicked--modal closing');
     $uibModalInstance.close();
   }; // end ok
 
