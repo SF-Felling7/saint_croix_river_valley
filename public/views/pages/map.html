@@ -25,22 +25,22 @@
 <div class="gmap">
   <ng-map id="map" default-style="false" zoom="10" center="[45.0750, -92.6044]">
 
-    <custom-marker id="x{{place.id}}" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
+    <custom-marker id="x{{place.id}}" ng-if="mc.showDining" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-cutlery"></i>
       </div>
     </custom-marker>
-    <custom-marker id="x{{place.id}}" ng-repeat="place in mc.lodgingPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
+    <custom-marker id="x{{place.id}}" ng-if="mc.showLodging" ng-repeat="place in mc.lodgingPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-bed"></i>
       </div>
     </custom-marker>
-    <custom-marker id="x{{place.id}}" ng-repeat="place in mc.shoppingPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
+    <custom-marker id="x{{place.id}}" ng-if="mc.showShopping" ng-repeat="place in mc.shoppingPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-shopping-bag"></i>
       </div>
     </custom-marker>
-    <custom-marker id="x{{place.id}}" ng-repeat="place in mc.naturePins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
+    <custom-marker id="x{{place.id}}" ng-if="mc.showNature" ng-repeat="place in mc.naturePins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-tree"></i>
       </div>
@@ -52,10 +52,6 @@
       </div>
     </info-window>
   </ng-map>
-  <custom-marker ng-if="mc.showDining" ng-repeat="place in mc.diningPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-cutlery fa-lg"></i></custom-marker>
-  <custom-marker ng-if="mc.showLodging" ng-repeat="place in mc.lodgingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-bed fa-lg"></i></custom-marker>
-  <custom-marker ng-if="mc.showNature" ng-repeat="place in mc.shoppingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-shopping-bag fa-lg"></i></custom-marker>
-  <custom-marker ng-if="mc.showShopping" ng-repeat="place in mc.naturePins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-tree fa-lg"></i></custom-marker>
 </div>
 
 <!-- detailed info window modal -->
