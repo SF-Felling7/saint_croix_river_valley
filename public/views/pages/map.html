@@ -1,4 +1,4 @@
-<div id="mySidenav" class="sidenav">
+<!-- <div id="mySidenav" class="sidenav">
   <ul>
     <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
     <li ng-click="mc.toggleDining()">
@@ -17,11 +17,20 @@
       <i class="fa fa-car"></i> Suggested Trips
     </li>
   </ul>
+</div> -->
+<div id="menu">
+  <h1 class="logoName">St. Croix Valley Regional Tourism Alliance Interactive Map</h1><br>
+    <ul>
+        <li ng-click="mc.toggleDining()"><i class="fa fa-cutlery"></i>Dining</li>
+        <li ng-click="mc.toggleLodging()"><i class="fa fa-bed"></i>Lodging</li>
+        <li ng-click="mc.toggleNature()"><i class="fa fa-tree"></i>Nature</li>
+        <li ng-click="mc.toggleShopping()"><i class="fa fa-shopping-bag"></i>Shopping</li>
+    </ul>
 </div>
-<div class="main">
+<!-- <div class="main">
   <i id="hamburgerMenu" class="fa fa-bars fa-3x" ng-click="mc.openNav()"></i>
   <h1 id="title">St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
-</div>
+</div> -->
 <div class="gmap">
   <ng-map id="map" default-style="false" zoom="11" center="[45.1250, -92.6044]">
 
