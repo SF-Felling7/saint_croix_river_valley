@@ -1,4 +1,3 @@
-
 myApp.controller('MapCtrl', function($http, NgMap, $interval) {
 
   var vm = this;
@@ -110,5 +109,4 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
     vm.map.hideInfoWindow('foo-iw');
   };
 
-
-});
+});//end myapp controller

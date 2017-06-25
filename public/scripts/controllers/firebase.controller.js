@@ -5,7 +5,6 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
   self.loggedIn = false;
   self.loggedOut = true;
 
-
 //Register with email and password
   self.registerWithEmail = function(email, password){
     if (!email || !password){
@@ -123,7 +122,6 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       }
     });  // end modalInstance
   };
-
 
   self.adminTrip = function(trip, size, parentSelector){
     var parentElem = parentSelector;
