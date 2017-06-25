@@ -10,13 +10,12 @@ var pg = require('pg');
 var decoder = require('./modules/decoder');
 
 // routes
-var privateData = require('./routes/privateData');
-var locations = require('./routes/locations.js');
+var privateData = require ('./routes/privateData');
+var locations = require( './routes/locations.js' );
+var pool = require('./routes/pool');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
-
-
 
 // Decodes the token in the request header and attaches the decoded token to the request.
 // app.use();
@@ -30,27 +29,11 @@ Other branches in the nodeFire repository show how to do that. */
 
 // This is the route for your secretData. The request gets here after it has been authenticated.
 app.use("/privateData", decoder.token, privateData);
-app.use('/locations', locations);
+app.use( '/locations', locations );
+app.use( '/pool', pool );
 
-//set up config for pool
-var config = {
-  database: 'st.croix_valley',
-  host: 'localhost',
-  port: 5432,
-  max: 20
-}; // end config
 
-//create new pool
-var pool = new pg.Pool(config);
-
-//globals
-var adminsArray = [{
-  email: 'colinwymore@gmail.com',
-  password: '09078loOwymore',
-  admin: true,
-}];
-
-app.use('/*', function(req, res) {
+app.use('/*', function(req, res){
   res.sendFile(path.resolve('./public/views/index.html'));
 });
 

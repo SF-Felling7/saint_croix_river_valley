@@ -15,9 +15,7 @@ var config = {
 };
 
 //CREATE POOL
-
 var pool = new pg.Pool(config);
-
 
 router.get ('/getAllPins', function (req, res){
   console.log('hit getAllPins');
@@ -44,12 +42,5 @@ router.get ('/getAllPins', function (req, res){
     } // end no error
   }); //end pool
 }); //end dining get
-
-
-
-
-
-
-
 
 module.exports = router;
