@@ -43,6 +43,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       self.loggedIn = true;
       self.loggedOut = false;
       }
+
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
       alert ('user not found');
@@ -200,6 +201,10 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
 myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uibModal', function ( $uibModalInstance, $uibModal ) {
   var vm = this;
   vm.addTripTitle = "Add a Trip";
+  vm.success = false;
+  vm.failed = false;
+  vm.successMessage = "New trip added to database.";
+  vm.failedMessage = "New trip failed to be added to database.  Try again.";
 
   // when OK button is clicked on modal
   vm.okay = function () {

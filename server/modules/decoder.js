@@ -46,6 +46,7 @@ var tokenDecoder = function(req, res, next){
               console.log(err);
               res.sendStatus(403);
               }
+
             else{
               next();
               console.log(result);
