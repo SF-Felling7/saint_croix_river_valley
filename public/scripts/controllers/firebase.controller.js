@@ -1,10 +1,9 @@
-myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
+myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
   var auth = $firebaseAuth();
   var self = this;
 
   self.loggedIn = false;
   self.loggedOut = true;
-
 
 //Register with email and password
   self.registerWithEmail = function(email, password){
@@ -99,12 +98,47 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http) {
     });
   };
 
-  self.adminPlace = function(place){
+  self.adminPlace = function(place, size, parentSelector){
+    var parentElem = parentSelector;
     console.log('admin places button clicked for action: ', place);
+    $http ({
+      method: 'GET',
+      url: '/pool/getPlaces'
+    }).then(function success( response ){
+      self.allPlaces = response.data;
+      console.log('getting all places: ', self.allPlaces);
+    });//ending success
+
+    var modalInstance = $uibModal.open({
+      animation: self.animationsEnabled,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'addLocationModalContent.html',   // HTML in the modal.html template
+      // controller: 'AddLocationModalInstanceController',
+      // controllerAs: 'almic',
+      size: size,
+      appendTo: parentElem,
+      resolve: {
+      }
+    });  // end modalInstance
   };
 
-  self.adminTrip = function(trip){
+  self.adminTrip = function(trip, size, parentSelector){
+    var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
+
+    var modalInstance = $uibModal.open({
+      animation: self.animationsEnabled,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'addLocationModalContent.html',   // HTML in the modal.html template
+      // controller: 'AddLocationModalInstanceController',
+      // controllerAs: 'almic',
+      size: size,
+      appendTo: parentElem,
+      resolve: {
+      }
+    });  // end modalInstance
   };
 
 });//end controller

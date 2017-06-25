@@ -7,12 +7,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.showNature = true;
   vm.showShopping = true;
 
-  // NgMap.getMap().then(function(map) {
-  //   console.log(map.getCenter());
-  //   vm.map = map;
-  // });
-
-
   NgMap.getMap().then(function(map) {
     vm.map = map;
   });
@@ -166,6 +160,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
 });
 
+// modal controller
 myApp.controller( 'detailedPlaceInfoCtrl', [ '$uibModalInstance', '$uibModal', 'place', function ( $uibModalInstance, $uibModal, place ) {
   var vm = this;
 
@@ -186,4 +181,4 @@ myApp.controller( 'detailedPlaceInfoCtrl', [ '$uibModalInstance', '$uibModal', '
     $uibModalInstance.close();
   }; // end ok
 
-}]); // end activityModalInstanceCtrl
+}]); // end detailedPlaceInfoCtrl
