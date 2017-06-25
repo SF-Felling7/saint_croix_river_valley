@@ -24,7 +24,7 @@
 </div>
 <div class="gmap">
   <ng-map id="map" default-style="false" zoom="10" center="[45.0750, -92.6044]">
-    
+
     <custom-marker id="x{{place.id}}" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
       <div class="marker">
         <i class="fa fa-cutlery"></i>
@@ -48,14 +48,31 @@
     <info-window id="mapwindow">
       <div ng-non-bindable="">
         <h3>{{mc.place.name}}</h3><br/>
-        <a href="#" ng-click="mc.clicked()">Click Here for More Info</a>
+        <a href="#" ng-click="mc.clicked(mc.place)">Click Here for More Info</a>
       </div>
     </info-window>
   </ng-map>
+  <custom-marker ng-if="mc.showDining" ng-repeat="place in mc.diningPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-cutlery fa-lg"></i></custom-marker>
+  <custom-marker ng-if="mc.showLodging" ng-repeat="place in mc.lodgingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-bed fa-lg"></i></custom-marker>
+  <custom-marker ng-if="mc.showNature" ng-repeat="place in mc.shoppingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-shopping-bag fa-lg"></i></custom-marker>
+  <custom-marker ng-if="mc.showShopping" ng-repeat="place in mc.naturePins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-tree fa-lg"></i></custom-marker>
+</div>
 
-    <custom-marker ng-if="mc.showDining" ng-repeat="place in mc.diningPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-cutlery fa-lg"></i></custom-marker>
-    <custom-marker ng-if="mc.showLodging" ng-repeat="place in mc.lodgingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-bed fa-lg"></custom-marker>
-      <custom-marker ng-if="mc.showNature" ng-repeat="place in mc.shoppingPins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-shopping-bag fa-lg"></custom-marker>
-      <custom-marker ng-if="mc.showShopping" ng-repeat="place in mc.naturePins" position=[{{place.latitude}},{{place.longitude}}]><i class="fa fa-tree fa-lg"></custom-marker>
-
+<!-- detailed info window modal -->
+<div class="detailed-info-modal container">
+  <script type="text/ng-template" id="detailedPlaceInfo.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{ dpic.place.name }}</h3>
+    </div>
+    <div class="modal-body" id="modal-body" >
+      {{dpic.place.address}}</br>
+      {{dpic.place.city}}, {{dpic.place.state}}  {{dpic.place.zipcode}}</br>
+      {{dpic.place.phone}}</br>
+      <ng-src src="dpic.website">{{dpic.place.website}}</ng-src></br>
+      {{dpic.description}}</br>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="dpic.okay()">OK</button>
+    </div>
+  </script>
 </div>

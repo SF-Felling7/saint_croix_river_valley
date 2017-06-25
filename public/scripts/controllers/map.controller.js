@@ -1,4 +1,4 @@
-myApp.controller('MapCtrl', function($http, NgMap, $interval) {
+myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   var vm = this;
 
@@ -18,8 +18,24 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   });
 
 
-  vm.clicked = function() {
-    alert('Clicked a link inside infoWindow');
+  vm.clicked = function(place, size, parentSelector) {
+    var parentElem = parentSelector;
+    console.log('link clicked to see more info on: ', place);
+    var modalInstance = $uibModal.open({
+      animation: self.animationsEnabled,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'detailedPlaceInfo.html',   // HTML in the modal.html template???
+      controller: 'detailedPlaceInfoCtrl',
+      controllerAs: 'dpic',
+      size: size,
+      appendTo: parentElem,
+      resolve: {
+        place: function(){
+          return place;
+        }
+      }
+    });  // end modalInstance
   };
 
   vm.showDetail = function(e, place) {
@@ -149,3 +165,15 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval) {
   };
 
 });
+
+myApp.controller( 'detailedPlaceInfoCtrl', [ '$uibModalInstance', '$uibModal', 'place', function ( $uibModalInstance, $uibModal, place ) {
+  var vm = this;
+
+  console.log( 'in detailed place info controller for place: ', place);
+
+  // when save button is clicked on modal
+  vm.okay = function () {
+    $uibModalInstance.close();
+  }; // end ok
+
+}]); // end activityModalInstanceCtrl
