@@ -2,10 +2,17 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   var vm = this;
 
+
   vm.showDining = true;
   vm.showLodging = true;
   vm.showNature = true;
   vm.showShopping = true;
+
+
+  vm.diningPins = [];
+  vm.lodgingPins = [];
+  vm.naturePins = [];
+  vm.shoppingPins = [];
 
   // NgMap.getMap().then(function(map) {
   //   console.log(map.getCenter());
@@ -25,24 +32,24 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       animation: self.animationsEnabled,
       ariaLabelledBy: 'modal-title',
       ariaDescribedBy: 'modal-body',
-      templateUrl: 'detailedPlaceInfo.html',   // HTML in the modal.html template???
+      templateUrl: 'detailedPlaceInfo.html', // HTML in the modal.html template???
       controller: 'detailedPlaceInfoCtrl',
       controllerAs: 'dpic',
       size: size,
       appendTo: parentElem,
       resolve: {
-        place: function(){
+        place: function() {
           return place;
         }
       }
-    });  // end modalInstance
+    }); // end modalInstance
   };
 
   vm.showDetail = function(e, place) {
     console.log('place: ', place);
     console.log('place.id: ', place.id);
     vm.place = place;
-    vm.map.showInfoWindow('mapwindow', 'x'+place.id);
+    vm.map.showInfoWindow('mapwindow', 'x' + place.id);
   };
 
   vm.hideDetail = function() {
@@ -58,6 +65,25 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       console.log('getting all pins', response);
       vm.allPins = response.data;
       console.log('vm.allPins: ', vm.allPins);
+      allPins = vm.allPins;
+
+      for (var i = 0; i < allPins.length; i++) {
+        switch (allPins[i].types_id) {
+          case 1:
+            vm.diningPins.push(allPins[i]);
+            break;
+          case 2:
+            vm.shoppingPins.push(allPins[i]);
+            break;
+          case 3:
+            vm.naturePins.push(allPins[i]);
+            break;
+          case 4:
+            vm.lodgingPins.push(allPins[i]);
+            break;
+          }
+      }
+
 
     }); //ending success
   }; //ending dining function
@@ -131,10 +157,10 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
 });
 
-myApp.controller( 'detailedPlaceInfoCtrl', [ '$uibModalInstance', '$uibModal', 'place', function ( $uibModalInstance, $uibModal, place ) {
+myApp.controller('detailedPlaceInfoCtrl', ['$uibModalInstance', '$uibModal', 'place', function($uibModalInstance, $uibModal, place) {
   var vm = this;
 
-  console.log( 'in detailed place info controller for place: ', place);
+  console.log('in detailed place info controller for place: ', place);
 
   vm.name = place.name;
   vm.phone = place.phone;
@@ -146,7 +172,7 @@ myApp.controller( 'detailedPlaceInfoCtrl', [ '$uibModalInstance', '$uibModal', '
   vm.description = place.description;
 
   // when OK button is clicked on modal
-  vm.okay = function () {
+  vm.okay = function() {
     console.log('okay button clicked--modal closing');
     $uibModalInstance.close();
   }; // end ok
