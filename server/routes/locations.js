@@ -15,9 +15,7 @@ var config = {
 };
 
 //CREATE POOL
-
 var pool = new pg.Pool(config);
-
 
 router.get ('/getDining', function (req, res){
   console.log('hit getDining');
