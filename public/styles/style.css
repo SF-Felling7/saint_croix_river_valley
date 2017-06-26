@@ -378,7 +378,12 @@ i {
      -moz-border-radius: 20px;
      -o-border-radius: 20px;
 }
+
 .logoName {
   color: black;
   margin-left: 10px;
+}
+
+ul {
+  list-style: none;
 }

@@ -108,51 +108,62 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
     }).then(function success( response ){
       self.allPlaces = response.data;
       console.log('getting all places: ', self.allPlaces);
-    });//ending success
 
-    var modalInstance = $uibModal.open({
-      animation: self.animationsEnabled,
-      ariaLabelledBy: 'modal-title',
-      ariaDescribedBy: 'modal-body',
-      templateUrl: 'addPlaceModalContent.html',   // HTML in the admin.html template
-      controller: 'AddPlaceModalInstanceController',
-      controllerAs: 'apmic',
-      size: size,
-      appendTo: parentElem,
-      resolve: {
-      }
-    });  // end modalInstance
-  };
+      var modalInstance = $uibModal.open({
+        animation: self.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'addPlaceModalContent.html',   // HTML in the admin.html template
+        controller: 'AddPlaceModalInstanceController',
+        controllerAs: 'apmic',
+        size: size,
+        appendTo: parentElem,
+        resolve: {
+        }
+      });  // end modalInstance
+    });//ending success
+  }; // end adminPlace
 
   self.adminTrip = function(trip, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
 
-    var modalInstance = $uibModal.open({
-      animation: self.animationsEnabled,
-      ariaLabelledBy: 'modal-title',
-      ariaDescribedBy: 'modal-body',
-      templateUrl: 'addTripModalContent.html',   // HTML in the modal.html template
-      controller: 'AddTripModalInstanceController',
-      controllerAs: 'atmic',
-      size: size,
-      appendTo: parentElem,
-      resolve: {
-      }
-    });  // end modalInstance
-  };
+    $http ({
+      method: 'GET',
+      url: '/pool/getPlaces'
+    }).then(function success( response ){
+      self.allPlaces = response.data;
+      console.log('getting all places: ', self.allPlaces);
+      allPlaces = self.allPlaces;
 
+      var modalInstance = $uibModal.open({
+        animation: self.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'addTripModalContent.html',   // HTML in the modal.html template
+        controller: 'AddTripModalInstanceController',
+        controllerAs: 'atmic',
+        size: size,
+        appendTo: parentElem,
+        resolve: {
+          allPlaces: function() {
+            return allPlaces;
+          }
+        }
+      });  // end modalInstance
+    });//ending success
+  }; // end adminTrip
 });//end controller
 
 
 // modal controller
 myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
   var vm = this;
-  vm.addPlaceTitle = "Add a Place";
+  vm.addPlaceTitle = 'Add a Place';
   vm.success = false;
   vm.failed = false;
-  vm.successMessage = "New place added to database.";
-  vm.failedMessage = "New place failed to be added to database.  Try again.";
+  vm.successMessage = 'New place added to database.';
+  vm.failedMessage = 'New place failed to be added to database.  Try again.';
 
   vm.addNewPlace = function(place){
     console.log('place: ', place);
@@ -173,7 +184,7 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
       data: itemToSend
     }).then(function success( response ){
       console.log('response: ', response);
-      document.getElementById("addPlaceForm").reset();
+      document.getElementById('addPlaceForm').reset();
       // maybe add an if/else statement here to display a success message if response of 201 is received
       if (response.status === 200){
         vm.success = true;
@@ -184,11 +195,11 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
   };//end add Item
 
 
-  // when OK button is clicked on modal
-  vm.okay = function () {
-    console.log('okay button clicked--modal closing');
-    $uibModalInstance.close();
-  }; // end ok
+  // // when OK button is clicked on modal
+  // vm.close = function () {
+  //   console.log('okay button clicked--modal closing');
+  //   $uibModalInstance.close();
+  // }; // end ok
 
   vm.cancel = function () {
     $uibModalInstance.dismiss('cancel');
@@ -198,18 +209,26 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
 
 
 // modal controller
-myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uibModal', function ( $uibModalInstance, $uibModal ) {
+myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
   var vm = this;
-  vm.addTripTitle = "Add a Trip";
+  vm.allPlaces = allPlaces;
+  vm.addTripTitle = 'Add a Trip';
   vm.success = false;
   vm.failed = false;
-  vm.successMessage = "New trip added to database.";
-  vm.failedMessage = "New trip failed to be added to database.  Try again.";
+  vm.successMessage = 'New trip added to database.';
+  vm.failedMessage = 'New trip failed to be added to database.  Try again.';
 
-  // when OK button is clicked on modal
-  vm.okay = function () {
-    console.log('okay button clicked--modal closing');
-    $uibModalInstance.close();
-  }; // end ok
+  vm.checkedPlaces = [];
+  vm.toggleCheck = function (place) {
+      if (vm.checkedPlaces.indexOf(place) === -1) {
+          vm.checkedPlaces.push(place);
+      } else {
+          vm.checkedPlaces.splice(vm.checkedPlaces.indexOf(place), 1);
+      }
+  };
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
 
 }]); // end AddTripModalInstanceController
