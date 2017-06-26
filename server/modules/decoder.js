@@ -4,15 +4,6 @@ var admin = require("firebase-admin");
 var pg = require ('pg');
 var pool = require('../modules/mainPool');
 
-// var config = {
-//   database: 'st-croix-valley',
-//   host: 'localhost',
-//   port: 5432,
-//   max: 20
-// }; // end config
-//
-// var pool = new pg.Pool( config );
-
 admin.initializeApp({
 credential: admin.credential.cert("./server/firebase-service-account.json"),
 databaseURL: "https://interactive-map-e76e0.firebaseio.com"
