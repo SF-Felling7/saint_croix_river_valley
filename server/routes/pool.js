@@ -6,15 +6,6 @@ var path = require('path');
 var pg = require ('pg');
 var pool = require('../modules/mainPool');
 
-// var config = {
-//   database: 'st-croix-valley',
-//   host: 'localhost',
-//   port: 5432,
-//   max: 20
-// }; // end config
-//
-// var pool = new pg.Pool( config );
-
 router.get( '/getPlaces', function ( req, res ){
   console.log( 'hit getPlaces' );
 
@@ -28,7 +19,7 @@ router.get( '/getPlaces', function ( req, res ){
       }// end Error
       else{
         console.log('connected to db');
-        // send query for lodging in the 'locations' table and grab everything with types_id 4
+        // send query for everything in the 'locations' table and grab everything
         connection.query( "SELECT * FROM locations", function(err, result) {
             if(err) {
               console.log('Error selecting locations', err);
@@ -62,10 +53,38 @@ router.post( '/addPlace', function ( req, res ){
             } else {
               res.sendStatus(201);
             }
-        } );
+        });
       } // end no error
     }); //end pool
 
+});
+
+router.post( '/addTrip', function( req, res ) {
+  console.log( 'hit the addTrip ROUTE');
+
+  pool.connect( function( err, connection, done ){
+    //check if there was an Error
+    if( err ){
+      console.log( err );
+      // respond with PROBLEM!
+      res.sendStatus( 500 );
+    }// end Error
+    else{
+      console.log('connected to db');
+      console.log('req.body: ', req.body);
+      connection.query( " INSERT INTO trips (name, description) VALUES ( $1, $2 )", [req.body.name, req.body.description],
+
+      function(err, result) {
+          if(err) {
+            console.log('Error selecting locations', err);
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(201);
+          }
+      });
+    }  //ENDING ELSE
+
+  });//ENDING pool connect
 });
 
 

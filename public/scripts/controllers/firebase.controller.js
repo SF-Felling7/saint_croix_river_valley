@@ -5,10 +5,10 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
   self.loggedIn = false;
   self.loggedOut = true;
 
-//Register with email and password
-  self.registerWithEmail = function(email, password){
-    if (!email || !password){
-      alert ('email and password required to register');
+  //Register with email and password
+  self.registerWithEmail = function(email, password) {
+    if (!email || !password) {
+      alert('email and password required to register');
       return console.log('email and password required!');
     }
     console.log('registering:', email, password);
@@ -20,67 +20,67 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log("sign in error", error);
-      if (error){
-      self.loggedIn = false;
-      self.loggedOut = true;
+      if (error) {
+        self.loggedIn = false;
+        self.loggedOut = true;
       }
-      alert ('please use a valid email and password that is at least 6 characters long');
+      alert('please use a valid email and password that is at least 6 characters long');
     });
-  };//end register and sign in with email
+  }; //end register and sign in with email
 
-//Sign in with Email
-  self.signInWithEmail = function (email, password){
-      if (!email || !password){
-        alert ('email and password required');
-        return console.log('email and password required!');
-      }
-      console.log('signing in with:', email, password);
+  //Sign in with Email
+  self.signInWithEmail = function(email, password) {
+    if (!email || !password) {
+      alert('email and password required');
+      return console.log('email and password required!');
+    }
+    console.log('signing in with:', email, password);
 
     auth.$signInWithEmailAndPassword(email, password).then(function(firebaseUser) {
       console.log('firebaseUser: ', firebaseUser);
       console.log("Firebase Authenticated as: ", firebaseUser.email, firebaseUser.uid);
-      if(firebaseUser) {
-      self.loggedIn = true;
-      self.loggedOut = false;
+      if (firebaseUser) {
+        self.loggedIn = true;
+        self.loggedOut = false;
       }
 
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
-      alert ('user not found');
+      alert('user not found');
     });
-  };//end sign in with email
+  }; //end sign in with email
 
   //sign in with google!!
   // This code runs whenever the user logs in
-  self.logIn = function(){
+  self.logIn = function() {
     auth.$signInWithPopup("google").then(function(firebaseUser) {
       console.log(firebaseUser);
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName, firebaseUser.user.uid);
-      if(firebaseUser) {
-      self.loggedIn = true;
-      self.loggedOut = false;
+      if (firebaseUser) {
+        self.loggedIn = true;
+        self.loggedOut = false;
       }
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
     });
-  };//end sign in with google
+  }; //end sign in with google
 
   // This code runs whenever the user changes authentication states
   // e.g. whevenever the user logs in or logs out
   // this is where we put most of our logic so that we don't duplicate
   // the same things in the login and the logout code
-  auth.$onAuthStateChanged(function(firebaseUser){
+  auth.$onAuthStateChanged(function(firebaseUser) {
     // firebaseUser will be null if not logged in
-    if(firebaseUser) {
+    if (firebaseUser) {
       // This is where we make our call to our server
-      firebaseUser.getToken().then(function(idToken){
+      firebaseUser.getToken().then(function(idToken) {
         $http({
           method: 'GET',
           url: '/privateData',
           headers: {
             id_token: idToken
           }
-        }).then(function(response){
+        }).then(function(response) {
           self.secretData = response.data;
         });
       });
@@ -91,21 +91,21 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
   });
 
   // This code runs when the user logs out
-  self.logOut = function(){
-    auth.$signOut().then(function(){
+  self.logOut = function() {
+    auth.$signOut().then(function() {
       console.log('Logging the user out!');
       self.loggedIn = false;
       self.loggedOut = true;
     });
   };
 
-  self.adminPlace = function(place, size, parentSelector){
+  self.adminPlace = function(place, size, parentSelector) {
     var parentElem = parentSelector;
     console.log('admin places button clicked for action: ', place);
-    $http ({
+    $http({
       method: 'GET',
       url: '/pool/getPlaces'
-    }).then(function success( response ){
+    }).then(function success(response) {
       self.allPlaces = response.data;
       console.log('getting all places: ', self.allPlaces);
 
@@ -113,25 +113,24 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
         animation: self.animationsEnabled,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'addPlaceModalContent.html',   // HTML in the admin.html template
+        templateUrl: 'addPlaceModalContent.html', // HTML in the admin.html template
         controller: 'AddPlaceModalInstanceController',
         controllerAs: 'apmic',
         size: size,
         appendTo: parentElem,
-        resolve: {
-        }
-      });  // end modalInstance
-    });//ending success
+        resolve: {}
+      }); // end modalInstance
+    }); //ending success
   }; // end adminPlace
 
-  self.adminTrip = function(trip, size, parentSelector){
+  self.adminTrip = function(trip, size, parentSelector) {
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
 
-    $http ({
+    $http({
       method: 'GET',
       url: '/pool/getPlaces'
-    }).then(function success( response ){
+    }).then(function success(response) {
       self.allPlaces = response.data;
       console.log('getting all places: ', self.allPlaces);
       allPlaces = self.allPlaces;
@@ -140,7 +139,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
         animation: self.animationsEnabled,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'addTripModalContent.html',   // HTML in the modal.html template
+        templateUrl: 'addTripModalContent.html', // HTML in the modal.html template
         controller: 'AddTripModalInstanceController',
         controllerAs: 'atmic',
         size: size,
@@ -150,14 +149,14 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
             return allPlaces;
           }
         }
-      });  // end modalInstance
-    });//ending success
+      }); // end modalInstance
+    }); //ending success
   }; // end adminTrip
-});//end controller
+}); //end controller
 
 
 // modal controller
-myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
+myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibModal', '$http', function($uibModalInstance, $uibModal, $http) {
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
   vm.success = false;
@@ -165,9 +164,10 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
   vm.successMessage = 'New place added to database.';
   vm.failedMessage = 'New place failed to be added to database.  Try again.';
 
-  vm.addNewPlace = function(place){
+  vm.addNewPlace = function(place) {
     console.log('place: ', place);
     var itemToSend = {
+
       name: place.name,
       description: place.description,
       street: place.street,
@@ -178,21 +178,21 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
       website: place.website,
       types_id: place.types_id
     };
-    $http ({
+    $http({
       method: 'POST',
       url: '/pool/addPlace',
       data: itemToSend
-    }).then(function success( response ){
+    }).then(function success(response) {
       console.log('response: ', response);
       document.getElementById('addPlaceForm').reset();
       // maybe add an if/else statement here to display a success message if response of 201 is received
-      if (response.status === 200){
+      if (response.status === 200) {
         vm.success = true;
       } else {
         vm.failed = true;
       }
-    });//ending success
-  };//end add Item
+    }); //ending success
+  }; //end add Item
 
 
   // // when OK button is clicked on modal
@@ -201,7 +201,7 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
   //   $uibModalInstance.close();
   // }; // end ok
 
-  vm.cancel = function () {
+  vm.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };
 
@@ -209,7 +209,7 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
 
 
 // modal controller
-myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
+myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibModal', 'allPlaces', function($uibModalInstance, $uibModal, allPlaces) {
   var vm = this;
   vm.allPlaces = allPlaces;
   vm.addTripTitle = 'Add a Trip';
@@ -219,15 +219,31 @@ myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uib
   vm.failedMessage = 'New trip failed to be added to database.  Try again.';
 
   vm.checkedPlaces = [];
-  vm.toggleCheck = function (place) {
-      if (vm.checkedPlaces.indexOf(place) === -1) {
-          vm.checkedPlaces.push(place);
-      } else {
-          vm.checkedPlaces.splice(vm.checkedPlaces.indexOf(place), 1);
-      }
+  vm.toggleCheck = function(place) {
+    if (vm.checkedPlaces.indexOf(place) === -1) {
+      vm.checkedPlaces.push(place);
+    } else {
+      vm.checkedPlaces.splice(vm.checkedPlaces.indexOf(place), 1);
+    }
   };
 
-  vm.cancel = function () {
+  vm.submitTrip = function(trip) {
+    console.log( 'trip', trip );
+    var tripToSend = {
+      name: trip.name,
+      description: trip.description
+    };
+
+    $http({
+      method: 'POST',
+      url: '/pool/addTrip',
+      data: tripToSend
+    }).then(function success(response) {
+      vm.checkedPlaces = response.data;
+    }); //END of success
+  }; //ENDING sumbitTrip Function
+
+  vm.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };
 
