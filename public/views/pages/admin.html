@@ -19,6 +19,7 @@
 <button class="btn" ng-click="fc.logOut()" ng-hide="fc.loggedOut">Log Out</button>
 
 <div class="container" ng-show="fc.loggedIn">
+
   <div id="adminLanding">
     <div class="form-group col-sm-3 col-sm-offset-2">
       <label for="places" class="form-label">Places:</label>
@@ -40,6 +41,7 @@
       <button ng-click="fc.adminTrip(fc.trip)" class="btn submitbutton" type="submit" value="Submit">Go!</button>
     </div>
   </div>
+
 </div>
 
 <!-- add location modal -->
@@ -74,6 +76,42 @@
     <div class="modal-footer">
       <button class="btn btn-warn" type="button" ng-click="apmic.cancel()">Cancel</button>
       <button class="btn btn-primary" type="button" ng-click="apmic.addNewPlace(apmic.place)">Add Place</button>
+    </div>
+  </script>
+</div>
+
+<!-- add location modal -->
+<div class="add-trip-modal container">
+  <script type="text/ng-template" id="addTripModalContent.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{atmic.addTripTitle}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <form id="addPlaceForm">
+        Name: <input type="text" ng-model="atmic.place.name" placeholder="place name" maxlength="85" size="85"></br>
+        <!-- Street: <input type="text" ng-model="apmic.place.street" placeholder="street address" maxlength="85" size="85"></br>
+        City: <input type="text" ng-model="apmic.place.city" placeholder="city" maxlength="35" size="35"></br>
+        State: <input type="radio" ng-model="apmic.place.state" value="MN">MN<input type="radio" ng-model="apmic.state" value="WI">WI</br>
+        Zip: <input type="text" ng-model="apmic.place.zipcode" placeholder="zip code" maxlength="10" size="10"></br>
+        Phone: <input type="text" ng-model="apmic.place.phone" placeholder="phone i.e. 715-555-1111" maxlength="15" size="15"></br>
+        Website: <input type="text" ng-model="apmic.place.website" placeholder="website i.e. newplace.com" maxlength="85" size="85"></br>
+        Description: <input type="text" ng-model="apmic.place.description" placeholder="description" maxlength="1400" size="400"></br>
+        Type: <input type="radio" ng-model="apmic.place.types_id" value="1">Dining</br>
+          <input type="radio" ng-model="apmic.place.types_id" value="2">Shopping</br>
+          <input type="radio" ng-model="apmic.place.types_id" value="3">Nature</br>
+          <input type="radio" ng-model="apmic.place.types_id" value="4">Lodging</br>
+      </form> -->
+      <div ng-show="atmic.success">
+        {{apmic.successMessage}}
+      </div>
+      <div ng-show="atmic.failed">
+        {{apmic.failedMessage}}
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-warn" type="button" ng-click="atmic.cancel()">Cancel</button>
+      <button class="btn btn-primary" type="button" ng-click="atmic.addNewPlace(apmic.place)">Add Place</button>
     </div>
   </script>
 </div>
