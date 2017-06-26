@@ -234,6 +234,9 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
       description: trip.description
     };
 
+      console.log('Trip to send ->', tripToSend);
+
+
     $http({
       method: 'POST',
       url: '/pool/addTrip',
