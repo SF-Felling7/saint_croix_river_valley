@@ -4,15 +4,16 @@ var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var pg = require ('pg');
+var pool = require('../modules/mainPool');
 
-var config = {
-  database: 'st-croix-valley',
-  host: 'localhost',
-  port: 5432,
-  max: 20
-}; // end config
-
-var pool = new pg.Pool( config );
+// var config = {
+//   database: 'st-croix-valley',
+//   host: 'localhost',
+//   port: 5432,
+//   max: 20
+// }; // end config
+//
+// var pool = new pg.Pool( config );
 
 router.get( '/getPlaces', function ( req, res ){
   console.log( 'hit getPlaces' );

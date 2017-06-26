@@ -4,15 +4,21 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var pg = require('pg');
+// var mainPool = require('mainPool');
+
+
 
 
 //modules
+var mainPool = require('./modules/mainPool');
 var decoder = require('./modules/decoder');
+
 
 // routes
 var privateData = require ('./routes/privateData');
 var locations = require( './routes/locations.js' );
 var pool = require('./routes/pool');
+
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -31,6 +37,7 @@ Other branches in the nodeFire repository show how to do that. */
 app.use("/privateData", decoder.token, privateData);
 app.use( '/locations', locations );
 app.use( '/pool', pool );
+
 
 
 app.use('/*', function(req, res){
