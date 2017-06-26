@@ -82,6 +82,10 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
           }
         }).then(function(response){
           self.secretData = response.data;
+        }).catch(function(error){
+          self.logOut();
+          console.log("login error: not an admin");
+          alert("Sorry! you do not have admin status!");
         });
       });
     } else {
