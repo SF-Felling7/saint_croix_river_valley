@@ -103,7 +103,11 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
     });
   };
 
+//end firebase functions
+/////////////////////////////////////////////////////////////////////////////
   self.adminPlace = function(place, size, parentSelector){
+
+  //Add Place Modal
     var parentElem = parentSelector;
     console.log('admin places button clicked for action: ', place);
     $http ({
@@ -126,8 +130,9 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
         }
       });  // end modalInstance
     });//ending success
-  }; // end adminPlace
+  }; // end adminPlace Modal
 
+//Add Trip Function
   self.adminTrip = function(trip, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
@@ -169,7 +174,12 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
   vm.successMessage = 'New place added to database.';
   vm.failedMessage = 'New place failed to be added to database.  Try again.';
 
+// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso;
+// console.log(results);
+
+  //Add Place function
   vm.addNewPlace = function(place){
+
     console.log('place: ', place);
     var itemToSend = {
       name: place.name,
@@ -180,22 +190,45 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
       state: place.state,
       phone: place.phone,
       website: place.website,
+      latitude:'',
+      longitude:'',
       types_id: place.types_id
     };
+
+    //geocode address that is entered by admin
     $http ({
-      method: 'POST',
-      url: '/pool/addPlace',
-      data: itemToSend
+      method: 'GET',
+      url: 'https://maps.googleapis.com/maps/api/geocode/json',
+      params:{address: place.street + place.city + place.state,
+            key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
+            }
     }).then(function success( response ){
-      console.log('response: ', response);
-      document.getElementById('addPlaceForm').reset();
-      // maybe add an if/else statement here to display a success message if response of 201 is received
-      if (response.status === 200){
-        vm.success = true;
-      } else {
-        vm.failed = true;
-      }
-    });//ending success
+      console.log(response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
+
+      //set latitude and logitude in item to send equal to geocoded response
+      itemToSend.latitude = response.data.results[0].geometry.location.lat;
+      itemToSend.longitude = response.data.results[0].geometry.location.lng;
+      console.log(itemToSend);
+
+      //post new item with latitude and logitude to DB
+      $http ({
+        method: 'POST',
+        url: '/pool/addPlace',
+        data: itemToSend
+      }).then(function success( response ){
+        console.log('response: ', response);
+        document.getElementById('addPlaceForm').reset();
+        if (response.status === 200){
+          vm.success = true;
+        } else {
+          vm.failed = true;
+        }
+      });//ending success
+
+    }, function error(response){
+      console.log('nope');
+    });//end geocode
+
   };//end add Item
 
 
@@ -210,7 +243,6 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
   };
 
 }]); // end AddPlaceModalInstanceController
-
 
 // modal controller
 myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {

@@ -53,9 +53,9 @@ router.post( '/addPlace', function ( req, res ){
         res.sendStatus( 500 );
       }// end Error
       else{
-        console.log('connected to db');
-        console.log('req.body: ', req.body);
-        connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, types_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.types_id] , function(err, result) {
+        console.log('in add place');
+        console.log('adding place:', req.body);
+        connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, latitude, longitude, types_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.latitude, req.body.longitude, req.body.types_id] , function(err, result) {
             if(err) {
               console.log('Error selecting locations', err);
               res.sendStatus(500);
