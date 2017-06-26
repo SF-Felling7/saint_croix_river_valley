@@ -351,7 +351,7 @@ i {
      text-align: center;
 }
 
-#menu li {
+#menu button {
      display: inline-block;
      padding: 8px;
 }
@@ -361,7 +361,7 @@ i {
      text-decoration: none;
 }
 
-#menu i:hover {
+#menu button:hover {
      background-color: #1B191B;
      color: #FFF;
      border-radius: 20px;
@@ -370,7 +370,7 @@ i {
      -o-border-radius: 20px;
 }
 
-#menu li .active {
+#menu button .active {
      background-color: #1B191B;
      color: #FFF;
      border-radius: 20px;
@@ -386,4 +386,13 @@ i {
 
 ul {
   list-style: none;
+}
+
+.navButton {
+  background-color: #1B191B;
+  color: #FFF;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -o-border-radius: 20px;
 }
