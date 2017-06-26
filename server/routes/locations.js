@@ -5,17 +5,18 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var pg = require( 'pg' );
 var router = express.Router();
+var pool = require('../modules/mainPool');
 
-//Config for pool
-var config = {
-  database: 'st-croix-valley',
-  host: 'localhost',
-  port: 5432,
-  max: 20
-};
+// //Config for pool
+// var config = {
+//   database: 'st-croix-valley',
+//   host: 'localhost',
+//   port: 5432,
+//   max: 20
+// };
 
 //CREATE POOL
-var pool = new pg.Pool(config);
+// var pool = new pg.Pool(config);
 
 router.get ('/getAllPins', function (req, res){
   console.log('hit getAllPins');
