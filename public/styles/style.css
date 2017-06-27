@@ -385,6 +385,10 @@ i {
      -o-border-radius: 20px;
 }
 
+#placeImg{
+  width: 200px;
+}
+
 .logoName {
   color: black;
   text-align: center;

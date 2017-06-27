@@ -9,7 +9,7 @@
     <input type="password" ng-model="fc.password"><br><br>
 
     <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> <span class="space"></span>or<span class="space"></span>
-    <button id="signInGoogle" class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" alt="Submit"> | Sign in with Google</button><br><br>
+    <button id="signInGoogle" class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" alt="Submit"> Sign in with Google</button><br><br>
     <h5> Not registered? </h5>
     <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
   </div>
@@ -60,6 +60,7 @@
         Zip: <input type="text" ng-model="apmic.place.zipcode" placeholder="zip code" maxlength="10" size="10"></br>
         Phone: <input type="text" ng-model="apmic.place.phone" placeholder="phone i.e. 715-555-1111" maxlength="15" size="15"></br>
         Website: <input type="text" ng-model="apmic.place.website" placeholder="website i.e. newplace.com" maxlength="85" size="68"></br>
+        ImageUrl: <input type="text" ng-model="apmic.place.imageurl" placeholder="website i.e. googleimageurl.com" maxlength="2000" size="68"></br>
         Description: <input type="text" ng-model="apmic.place.description" placeholder="description" maxlength="1400" size="78"></br>
         Place Type: <span class="space"></span>
           <input type="radio" ng-model="apmic.place.types_id" value="1">  Dining<span class="space"></span>
@@ -101,6 +102,7 @@
         Phone: <input type="text" ng-model="edp.place.phone" maxlength="15" size="15"></br>
         Website: <input type="text" ng-model="edp.place.website" maxlength="85" size="68"></br>
         Description: <input type="text" ng-model="edp.place.description" maxlength="1400" size="78"></br>
+        ImageUrl: <input type="text" ng-model="edp.place.imageurl" placeholder="website i.e. googleimageurl.com" maxlength="2000" size="68"></br>
         Latitude: <input type="text" ng-model="edp.place.latitude" maxlength="25" size="50"></br>
         Longitude: <input type="text" ng-model="edp.place.longitude" maxlength="25" size="50"></br>
         Place Type:<span class="space"></span>
@@ -138,7 +140,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-danger" type="button" ng-click="atmic.cancel()">Cancel/Close</button>
-      <button class="btn btn-primary" type="button" ng-click="atmic.addNewPlace(apmic.place)">Add Place</button>
+      <button class="btn btn-primary" type="button" ng-click="atmic.addNewPlace(apmic.place)">Add Trip</button>
     </div>
   </script>
 </div>

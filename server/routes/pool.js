@@ -51,7 +51,7 @@ router.post( '/addPlace', function ( req, res ){
       else{
         console.log('in add place');
         console.log('adding place:', req.body);
-        connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, latitude, longitude, types_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.latitude, req.body.longitude, req.body.types_id] , function(err, result) {
+        connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, imageurl, latitude, longitude, types_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.imageurl, req.body.latitude, req.body.longitude, req.body.types_id] , function(err, result) {
             if(err) {
               console.log('Error selecting locations', err);
               res.sendStatus(500);
@@ -100,7 +100,7 @@ router.put( '/editPlace/', function ( req, res ){
       console.log('connected to db');
       console.log('req.body', req.body);
       // need to revise to edit
-      connection.query( "UPDATE locations SET name=$1, street=$2, city=$3, state=$4, zipcode=$5, phone=$6, website=$7, description=$8, latitude=$9, longitude=$10, types_id=$11 WHERE id=$12" , [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.phone, req.body.website, req.body.description, req.body.latitude, req.body.longitude, req.body.types_id, req.body.id] , function(err, result) {
+      connection.query( "UPDATE locations SET name=$1, street=$2, city=$3, state=$4, zipcode=$5, phone=$6, website=$7, description=$8, latitude=$9, longitude=$10, types_id=$11, imageurl=$12 WHERE id=" + req.body.id, [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.phone, req.body.website, req.body.description, req.body.latitude, req.body.longitude, req.body.types_id, req.body.imageurl] , function(err, result) {
         if(err) {
           console.log('Error selecting locations', err);
           res.sendStatus(500);
