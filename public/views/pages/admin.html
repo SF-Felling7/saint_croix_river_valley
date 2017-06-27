@@ -55,7 +55,8 @@
         Name: <input type="text" ng-model="apmic.place.name" placeholder="place name" maxlength="85" size="85"></br>
         Street: <input type="text" ng-model="apmic.place.street" placeholder="street address" maxlength="85" size="85"></br>
         City: <input type="text" ng-model="apmic.place.city" placeholder="city" maxlength="35" size="35"></br>
-        State: <input type="radio" ng-model="apmic.place.state" value="MN">MN<br/>
+        State: </br>
+          <input type="radio" ng-model="apmic.place.state" value="MN">MN<br/>
           <input type="radio" ng-model="apmic.state" value="WI">WI</br>
         Zip: <input type="text" ng-model="apmic.place.zipcode" placeholder="zip code" maxlength="10" size="10"></br>
         Phone: <input type="text" ng-model="apmic.place.phone" placeholder="phone i.e. 715-555-1111" maxlength="15" size="15"></br>
@@ -67,13 +68,6 @@
           <input type="radio" ng-model="apmic.place.types_id" value="3">Nature</br>
           <input type="radio" ng-model="apmic.place.types_id" value="4">Lodging</br>
       </form>
-      <div ng-show="apmic.success">
-        {{apmic.successMessage}}
-      </div>
-      <div ng-show="apmic.failed">
-        {{apmic.failedMessage}}
-      </div>
-
     </div>
     <div class="modal-footer">
       <button class="btn btn-danger" type="button" ng-click="apmic.cancel()">Cancel/Close</button>
@@ -91,42 +85,35 @@
     <div class="modal-body" id="modal-body">
       <table ng-hide="edp.edit">
         <tr ng-repeat="place in edp.allPlaces">
-          <!-- <td><label><input type="radio" ng-model="$parent.selected" value="{{place}}"/> {{place.name}}</label></td> -->
           <td ng-model="$parent.selected">{{place.name}}</td>
           <td><button class="btn btn-primary" type="button" ng-click="edp.editInPlace(place)">Edit Place</button></td>
           <td><button class="btn btn-danger" type="button" ng-click="edp.delete(place.id)">Delete Place</button></td>
         </tr>
       </table>
       <div ng-show="edp.edit">
-        Locations ID: {{edp.place.id}}
-        Name: <input type="text" ng-model="edp.place.name" value="{{edp.place.name}}"></br>
-        Street: <input type="text" ng-model="edp.place.street" value="{{edp.place.street}}"></br>
-        City: <input type="text" ng-model="edp.place.city" value="{{edp.place.city}}"></br>
-        State: <input type="text" ng-model="edp.place.state" value="{{edp.place.state}}"></br>
-        Zip Code: <input type="text" ng-model="edp.place.zipcode" value="{{edp.place.zipcode}}"></br>
-        Phone: <input type="text" ng-model="edp.place.phone" value="{{edp.place.phone}}"></br>
-        Website: <input type="text" ng-model="edp.place.website" value="{{edp.place.website}}"></br>
-        Description: <input type="text" ng-model="edp.place.description" value="{{edp.place.description}}"></br>
-        Latitude: <input type="text" ng-model="edp.place.latitude" value="{{edp.place.latitude}}"></br>
-        Longitude: <input type="text" ng-model="edp.place.longitude" value="{{edp.place.longitude}}"></br>
-        Place Type: </br>
-        <input type="radio" ng-model="edp.place.types_id" value="1">Dining</br>
-        <input type="radio" ng-model="edp.place.types_id" value="2">Shopping</br>
-        <input type="radio" ng-model="edp.place.types_id" value="3">Nature</br>
-        <input type="radio" ng-model="edp.place.types_id" value="4">Lodging</br>
-        <button class="btn btn-success" type="button" ng-click="edp.saveEdits(edp.place)">Save Edits</button>
+        Locations ID: {{edp.place.id}}</br>
+        Name: <input type="text" ng-model="edp.place.name" maxlength="85" size="70"></br>
+        Street: <input type="text" ng-model="edp.place.street" maxlength="85" size="70"></br>
+        City: <input type="text" ng-model="edp.place.city" maxlength="35" size="35"></br>
+        State:<span class="space"></span>
+          <input type="radio" ng-model="edp.place.state" ng-value="MN">  MN<span class="space"></span>
+          <input type="radio" ng-model="edp.place.state" ng-value="WI">  WI</br>
+        Zip Code: <input type="text" ng-model="edp.place.zipcode" maxlength="10" size="10"></br>
+        Phone: <input type="text" ng-model="edp.place.phone" maxlength="15" size="15"></br>
+        Website: <input type="text" ng-model="edp.place.website" maxlength="85" size="70"></br>
+        Description: <input type="text" ng-model="edp.place.description" maxlength="1400" size="78"></br>
+        Latitude: <input type="text" ng-model="edp.place.latitude" maxlength="25" size="25"></br>
+        Longitude: <input type="text" ng-model="edp.place.longitude" maxlength="25" size="25"></br>
+        Place Type:<span class="space"></span>
+        <input type="radio" ng-model="edp.place.types_id" ng-value="1">  Dining<span class="space"></span>
+        <input type="radio" ng-model="edp.place.types_id" ng-value="2">  Shopping<span class="space"></span>
+        <input type="radio" ng-model="edp.place.types_id" ng-value="3">  Nature<span class="space"></span>
+        <input type="radio" ng-model="edp.place.types_id" ng-value="4">  Lodging</br>
       </div>
-      <div ng-show="edp.success">
-        {{edp.successMessage}}
-      </div>
-      <div ng-show="edp.failed">
-        {{edp.failedMessage}}
-      </div>
-
     </div>
     <div class="modal-footer">
+      <button class="btn btn-success" type="button" ng-click="edp.saveEdits(edp.place)">Save Edits</button>
       <button class="btn btn-danger" type="button" ng-click="edp.cancel()">Cancel/Close</button>
-      <!-- <button class="btn btn-primary" type="button" ng-click="edp.addNewPlace(apmic.place)">Submit Changes</button> -->
     </div>
   </script>
 </div>
@@ -149,13 +136,6 @@
           </ol>
         </div>
       </ul>
-      <div ng-show="atmic.success">
-        {{atmic.successMessage}}
-      </div>
-      <div ng-show="atmic.failed">
-        {{atmic.failedMessage}}
-      </div>
-
     </div>
     <div class="modal-footer">
       <button class="btn btn-danger" type="button" ng-click="atmic.cancel()">Cancel/Close</button>
