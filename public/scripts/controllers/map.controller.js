@@ -12,6 +12,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.naturePins = [];
   vm.shoppingPins = [];
 
+  vm.diningClass = 'navButton';
+  vm.shoppingClass = 'navButton';
+  vm.natureClass = 'navButton';
+  vm.lodgingClass = 'navButton';
+
   NgMap.getMap().then(function(map) {
     vm.map = map;
   });
@@ -80,29 +85,47 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   }; //ending dining function
   vm.getAllPins();
 
-
-
   vm.toggleDining = function() {
     vm.showDining = !vm.showDining;
     console.log(vm.showDining);
+    if (vm.diningClass === 'navButton') {
+      vm.diningClass = 'off';
+    } else {
+      vm.diningClass = 'navButton';
+    }
   };
 
 
   vm.toggleLodging = function() {
     vm.showLodging = !vm.showLodging;
     console.log(vm.showLodging);
+    if (vm.lodgingClass === 'navButton') {
+      vm.lodgingClass = 'off';
+    } else {
+      vm.lodgingClass = 'navButton';
+    }
   };
 
 
   vm.toggleNature = function() {
     vm.showNature = !vm.showNature;
     console.log(vm.showNature);
+    if (vm.natureClass === 'navButton') {
+      vm.natureClass = 'off';
+    } else {
+      vm.natureClass = 'navButton';
+    }
   };
 
 
   vm.toggleShopping = function() {
     vm.showShopping = !vm.showShopping;
     console.log(vm.showShopping);
+    if (vm.shoppingClass === 'navButton') {
+      vm.shoppingClass = 'off';
+    } else {
+      vm.shoppingClass = 'navButton';
+    }
   };
 
   var h = parseInt(window.innerHeight);

@@ -104,10 +104,10 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
   };
 
 //end firebase functions
-/////////////////////////////////////////////////////////////////////////////
-  self.adminPlace = function(place, size, parentSelector){
 
-  //Add Place Modal
+
+// Admin Place function
+  self.adminPlace = function(place, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin places button clicked for action: ', place);
     $http ({
@@ -129,7 +129,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
           appendTo: parentElem,
           resolve: {
           }
-        });  // end modalInstance
+        });  // end add plac modalInstance
       } else {
         var editDeleteModalInstance = $uibModal.open({
           animation: self.animationsEnabled,
@@ -145,13 +145,13 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
               return allPlaces;
             }
           }
-        });  // end modalInstance
+        });  // end edit delete modal Instance
       }
 
     });//ending success
-  }; // end adminPlace Modal
+  }; // end admin Place Modal
 
-//Add Trip Function
+// Admin Trip Function
   self.adminTrip = function(trip, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
