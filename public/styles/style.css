@@ -4,6 +4,12 @@
 
 #googleButton {
   width: 20px;
+  background-color: ivory;
+}
+
+#signInGoogle{
+  background-color: dodgerBlue;
+  color: ivory;
 }
 
 #map {
@@ -395,4 +401,17 @@ ul {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -o-border-radius: 20px;
+}
+
+td {
+  padding: 5px;
+}
+
+span.space {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+input {
+  margin: 5px
 }

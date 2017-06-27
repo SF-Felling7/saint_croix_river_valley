@@ -103,7 +103,11 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
     });
   };
 
+//end firebase functions
+/////////////////////////////////////////////////////////////////////////////
   self.adminPlace = function(place, size, parentSelector){
+
+  //Add Place Modal
     var parentElem = parentSelector;
     console.log('admin places button clicked for action: ', place);
     $http ({
@@ -112,22 +116,42 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
     }).then(function success( response ){
       self.allPlaces = response.data;
       console.log('getting all places: ', self.allPlaces);
+      allPlaces = self.allPlaces;
+      if (place === 'Add Place') {
+        var modalInstance = $uibModal.open({
+          animation: self.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'addPlaceModalContent.html',   // HTML in the admin.html template
+          controller: 'AddPlaceModalInstanceController',
+          controllerAs: 'apmic',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+          }
+        });  // end modalInstance
+      } else {
+        var editDeleteModalInstance = $uibModal.open({
+          animation: self.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'editDeletePlaceModal.html',   // HTML in the admin.html template
+          controller: 'EditDeletePlace',
+          controllerAs: 'edp',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+            allPlaces: function() {
+              return allPlaces;
+            }
+          }
+        });  // end modalInstance
+      }
 
-      var modalInstance = $uibModal.open({
-        animation: self.animationsEnabled,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: 'addPlaceModalContent.html',   // HTML in the admin.html template
-        controller: 'AddPlaceModalInstanceController',
-        controllerAs: 'apmic',
-        size: size,
-        appendTo: parentElem,
-        resolve: {
-        }
-      });  // end modalInstance
     });//ending success
-  }; // end adminPlace
+  }; // end adminPlace Modal
 
+//Add Trip Function
   self.adminTrip = function(trip, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
@@ -144,7 +168,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
         animation: self.animationsEnabled,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'addTripModalContent.html',   // HTML in the modal.html template
+        templateUrl: 'addTripModalContent.html',
         controller: 'AddTripModalInstanceController',
         controllerAs: 'atmic',
         size: size,
@@ -164,12 +188,10 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
 myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
-  vm.success = false;
-  vm.failed = false;
-  vm.successMessage = 'New place added to database.';
-  vm.failedMessage = 'New place failed to be added to database.  Try again.';
 
+  //Add Place function
   vm.addNewPlace = function(place){
+
     console.log('place: ', place);
     var itemToSend = {
       name: place.name,
@@ -180,30 +202,50 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
       state: place.state,
       phone: place.phone,
       website: place.website,
+      latitude:'',
+      longitude:'',
       types_id: place.types_id
     };
+
+    //geocode address that is entered by admin
     $http ({
-      method: 'POST',
-      url: '/pool/addPlace',
-      data: itemToSend
+      method: 'GET',
+      url: 'https://maps.googleapis.com/maps/api/geocode/json',
+      params:{address: place.street + place.city + place.state,
+            key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
+            }
     }).then(function success( response ){
-      console.log('response: ', response);
+      console.log(response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
+
+      //set latitude and logitude in item to send equal to geocoded response
+      itemToSend.latitude = response.data.results[0].geometry.location.lat;
+      itemToSend.longitude = response.data.results[0].geometry.location.lng;
+      console.log(itemToSend);
+
+      //post new item with latitude and logitude to DB
+      $http ({
+        method: 'POST',
+        url: '/pool/addPlace',
+        data: itemToSend
+      }).then(function success( response ){
+        console.log('response: ', response);
+        document.getElementById('addPlaceForm').reset();
+        if (response.status === 201){
+          swal("Success!", "You added a place to the map!", "success");
+            $uibModalInstance.close();
+        } else {
+          swal("Uh-oh!", "Your changes were not submitted to the map. Try again.");
+          }
+      });//ending success
+
+    }, function error(response){
+      console.log('nope');
+
       document.getElementById('addPlaceForm').reset();
-      // maybe add an if/else statement here to display a success message if response of 201 is received
-      if (response.status === 200){
-        vm.success = true;
-      } else {
-        vm.failed = true;
-      }
-    });//ending success
-  };//end add Item
 
 
-  // // when OK button is clicked on modal
-  // vm.close = function () {
-  //   console.log('okay button clicked--modal closing');
-  //   $uibModalInstance.close();
-  // }; // end ok
+    });//end geocode
+  };//end add place
 
   vm.cancel = function () {
     $uibModalInstance.dismiss('cancel');
@@ -211,16 +253,98 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
 
 }]); // end AddPlaceModalInstanceController
 
+// edit delete place modal controller
+myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPlaces', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPlaces, $routeParams ) {
+  var vm = this;
+  vm.title = 'Edit or Delete a Place';
+  vm.allPlaces = allPlaces;
 
-// modal controller
+  vm.delete = function(id) {
+    console.log('id to delete', id);
+    swal({
+      title: "Are you sure?",
+      text: "This will remove this location from the map!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    },
+    function(){
+      $http ({
+        method: 'DELETE',
+        url: '/pool/deletePlace/' + id
+      }).then(function success( response ){
+        console.log('response: ', response);
+        // maybe add an if/else statement here to display a success message if response of 201 is received
+        if (response.status === 200){
+          swal("Deleted!", "The location was been deleted.", "success");
+            $uibModalInstance.close();
+        } else {
+          swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+        }
+      }
+    );//ending success
+  });
+};//end delete Item
+
+  vm.edit = false;
+  vm.editInPlace = function(place) {
+    vm.edit = true;
+    vm.place = place;
+    console.log('vm.place: ', vm.place);
+  };
+
+
+  vm.saveEdits = function(place) {
+    console.log('edited place to submit to db', place.name);
+    var editsToSend = {
+      id: place.id,
+      name: place.name,
+      street: place.street,
+      city: place.city,
+      state: place.state,
+      zipcode: place.zipcode,
+      website: place.website,
+      phone: place.phone,
+      description: place.description,
+      latitude: place.latitude,
+      longitude: place.longitude,
+      types_id: place.types_id
+    };
+    $http ({
+      method: 'PUT',
+      url: '/pool/editPlace',
+      data: editsToSend
+    }).then(function success( response ){
+      console.log('response: ', response);
+      vm.edit = false;
+      // maybe add an if/else statement here to display a success message if response of 200 is received
+      if (response.status === 200){
+        swal("Success!", "Your changes were submitted to the map!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+      }
+    });//ending success
+  };//end save edits for place
+
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+}]); // end Edit Delete PlaceModalInstanceController
+
+// add trip modal controller
 myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
   var vm = this;
   vm.allPlaces = allPlaces;
   vm.addTripTitle = 'Add a Trip';
   vm.success = false;
   vm.failed = false;
-  vm.successMessage = 'New trip added to database.';
-  vm.failedMessage = 'New trip failed to be added to database.  Try again.';
+  vm.successMessage = 'Success!  New trip added to database.';
+  vm.failedMessage = 'Uh-oh!  New trip failed to be added to database.  Try again.';
 
   vm.checkedPlaces = [];
   vm.toggleCheck = function (place) {
