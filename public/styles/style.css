@@ -308,6 +308,10 @@ i {
   margin: 10px
 }
 
+.fa-cutlery {
+  color: black;
+}
+
 .fa-tree {
   color: green;
 }
@@ -369,7 +373,6 @@ i {
 }
 
 #menu button:hover {
-  /*background-color: green;*/
   color: #FFF;
   border-radius: 10px;
   border: solid 3px green;
