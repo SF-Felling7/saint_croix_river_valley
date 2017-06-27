@@ -2,7 +2,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   var vm = this;
 
-
   vm.showDining = true;
   vm.showLodging = true;
   vm.showNature = true;

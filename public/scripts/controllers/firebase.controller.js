@@ -82,6 +82,10 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
           }
         }).then(function(response){
           self.secretData = response.data;
+        }).catch(function(error){
+          self.logOut();
+          console.log("login error: not an admin");
+          alert("Sorry! you do not have admin status!");
         });
       });
     } else {
@@ -99,7 +103,11 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
     });
   };
 
+//end firebase functions
+/////////////////////////////////////////////////////////////////////////////
   self.adminPlace = function(place, size, parentSelector){
+
+  //Add Place Modal
     var parentElem = parentSelector;
     console.log('admin places button clicked for action: ', place);
     $http ({
@@ -141,8 +149,9 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       }
 
     });//ending success
-  }; // end adminPlace
+  }; // end adminPlace Modal
 
+//Add Trip Function
   self.adminTrip = function(trip, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
@@ -180,7 +189,12 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
 
+// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso;
+// console.log(results);
+
+  //Add Place function
   vm.addNewPlace = function(place){
+
     console.log('place: ', place);
     var itemToSend = {
       name: place.name,
@@ -191,13 +205,20 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
       state: place.state,
       phone: place.phone,
       website: place.website,
+      latitude:'',
+      longitude:'',
       types_id: place.types_id
     };
+
+    //geocode address that is entered by admin
     $http ({
-      method: 'POST',
-      url: '/pool/addPlace',
-      data: itemToSend
+      method: 'GET',
+      url: 'https://maps.googleapis.com/maps/api/geocode/json',
+      params:{address: place.street + place.city + place.state,
+            key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
+            }
     }).then(function success( response ){
+
       console.log('response: ', response);
       document.getElementById('addPlaceForm').reset();
       if (response.status === 201){
@@ -207,20 +228,42 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
         swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
       }
     });//ending success
+
+      console.log(response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
+
+      //set latitude and logitude in item to send equal to geocoded response
+      itemToSend.latitude = response.data.results[0].geometry.location.lat;
+      itemToSend.longitude = response.data.results[0].geometry.location.lng;
+      console.log(itemToSend);
+
+      //post new item with latitude and logitude to DB
+      $http ({
+        method: 'POST',
+        url: '/pool/addPlace',
+        data: itemToSend
+      }).then(function success( response ){
+        console.log('response: ', response);
+        document.getElementById('addPlaceForm').reset();
+        if (response.status === 200){
+          vm.success = true;
+        } else {
+          vm.failed = true;
+        }
+      });//ending success
+
+    }, function error(response){
+      console.log('nope');
+    });//end geocode
+
+
   };//end add Item
-
-
-  // // when OK button is clicked on modal
-  // vm.close = function () {
-  //   console.log('okay button clicked--modal closing');
-  //   $uibModalInstance.close();
-  // }; // end ok
 
   vm.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
 
 }]); // end AddPlaceModalInstanceController
+
 
 // edit delete place modal controller
 myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPlaces', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPlaces, $routeParams ) {
@@ -304,8 +347,6 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
   };
 
 }]); // end Edit Delete PlaceModalInstanceController
-
-
 
 // add trip modal controller
 myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
