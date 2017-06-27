@@ -209,7 +209,7 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
 
 
 // modal controller
-myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibModal', 'allPlaces', function($uibModalInstance, $uibModal, allPlaces) {
+myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibModal', 'allPlaces', '$http', function($uibModalInstance, $uibModal, allPlaces, $http) {
   var vm = this;
   vm.allPlaces = allPlaces;
   vm.addTripTitle = 'Add a Trip';

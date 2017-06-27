@@ -94,7 +94,7 @@
        <div>
          <p>Trip Places (in order):</p>
          <ol>
-           <li ng-repeat="place in atmic.checkedPlaces">{{place.name}}</li>
+           <li ng-repeat="place in atmic.checkedPlaces track by $index">{{place.name}}</li>
          </ol>
        </div>
       <ul>
@@ -103,15 +103,6 @@
         </li>
 
       </ul>
-
-        <!-- <label><input type='checkbox' ng-repeat="name in atmic.allPlaces" ng-checked="atmic.checkedPlaces.indexOf(place) != -1" ng-click="atmic.toggleCheck(place)">{{place}}</label> -->
-      <!-- <p>Trip Places: {{atmic.checkedPlaces}}</p> -->
-
-      <!-- <form id="addTripForm">
-        <select name="Trip Locations">
-          <option ng-repeat="place in atmic.allPlaces" value="place.name">{{place.name}}</option>
-        </select>
-      </form> -->
       <div ng-show="atmic.success">
         {{atmic.successMessage}}
       </div>
