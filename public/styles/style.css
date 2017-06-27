@@ -4,6 +4,12 @@
 
 #googleButton {
   width: 20px;
+  background-color: ivory;
+}
+
+#signInGoogle{
+  background-color: dodgerBlue;
+  color: ivory;
 }
 
 #map {
