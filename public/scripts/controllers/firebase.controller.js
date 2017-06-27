@@ -179,10 +179,6 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
 myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
-  vm.success = false;
-  vm.failed = false;
-  vm.successMessage = 'Success!  New place added to database.';
-  vm.failedMessage = 'Uh-oh!  New place failed to be added to database.  Try again.';
 
   vm.addNewPlace = function(place){
     console.log('place: ', place);
@@ -204,11 +200,11 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
     }).then(function success( response ){
       console.log('response: ', response);
       document.getElementById('addPlaceForm').reset();
-      // maybe add an if/else statement here to display a success message if response of 201 is received
       if (response.status === 201){
-        vm.success = true;
+        swal("Success!", "You added a place to the database!", "success");
+          $uibModalInstance.close();
       } else {
-        vm.failed = true;
+        swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
       }
     });//ending success
   };//end add Item
@@ -230,27 +226,36 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
 myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPlaces', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPlaces, $routeParams ) {
   var vm = this;
   vm.title = 'Edit or Delete a Place';
-  vm.success = false;
-  vm.failed = false;
-  vm.successMessage = 'Success!  Your changes were submitted to database.';
-  vm.failedMessage = 'Uh-oh!  Your changes were not submitted to the database.  Try again.';
   vm.allPlaces = allPlaces;
 
   vm.delete = function(id) {
     console.log('id to delete', id);
-    $http ({
-      method: 'DELETE',
-      url: '/pool/deletePlace/' + id
-    }).then(function success( response ){
-      console.log('response: ', response);
-      // maybe add an if/else statement here to display a success message if response of 201 is received
-      if (response.status === 200){
-        vm.success = true;
-      } else {
-        vm.failed = true;
+    swal({
+      title: "Are you sure?",
+      text: "This will remove this location from the map!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    },
+    function(){
+      $http ({
+        method: 'DELETE',
+        url: '/pool/deletePlace/' + id
+      }).then(function success( response ){
+        console.log('response: ', response);
+        // maybe add an if/else statement here to display a success message if response of 201 is received
+        if (response.status === 200){
+          swal("Deleted!", "The location was been deleted.", "success");
+            $uibModalInstance.close();
+        } else {
+          swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+        }
       }
-    });//ending success
-  };//end delete Item
+    );//ending success
+  });
+};//end delete Item
 
   vm.edit = false;
   vm.editInPlace = function(place) {
@@ -285,9 +290,10 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
       vm.edit = false;
       // maybe add an if/else statement here to display a success message if response of 200 is received
       if (response.status === 200){
-        vm.success = true;
+        swal("Success!", "Your changes were submitted to the database!", "success");
+          $uibModalInstance.close();
       } else {
-        vm.failed = true;
+        swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
       }
     });//ending success
   };//end save edits for place
