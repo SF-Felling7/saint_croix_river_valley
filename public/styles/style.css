@@ -373,7 +373,7 @@ i {
 }
 
 #menu button:hover {
-  color: #FFF;
+  color: ivory;
   border-radius: 10px;
   border: solid 3px green;
 }
@@ -418,4 +418,23 @@ span.space {
 
 input {
   margin: 5px
+}
+
+.reset{
+  background-color: FireBrick;
+  color: black;
+  border-radius: 10px;
+  margin-right: 10px;
+  border: solid 3px;
+}
+
+#logo{
+  height: 100px;
+  border: solid 3px black;
+  border-radius: 10px;
+}
+
+#logo:hover {
+  border: solid 3px green;
+  border-radius: 10px;
 }

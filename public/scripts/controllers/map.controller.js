@@ -155,6 +155,10 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     }
   };
 
+  vm.resetMap = function() {
+    location.reload();
+  };
+
   var h = parseInt(window.innerHeight);
   var w = parseInt(window.innerWidth);
 
