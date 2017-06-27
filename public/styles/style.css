@@ -378,6 +378,10 @@ i {
   border: solid 3px green;
 }
 
+#placeImg{
+  width: 200px;
+}
+
 .logoName {
   color: black;
   text-align: center;

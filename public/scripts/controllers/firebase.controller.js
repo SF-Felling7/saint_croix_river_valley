@@ -202,6 +202,7 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
       state: place.state,
       phone: place.phone,
       website: place.website,
+      imageurl: place.imageurl,
       latitude:'',
       longitude:'',
       types_id: place.types_id
@@ -308,6 +309,7 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
       website: place.website,
       phone: place.phone,
       description: place.description,
+      imageurl: place.imageurl,
       latitude: place.latitude,
       longitude: place.longitude,
       types_id: place.types_id

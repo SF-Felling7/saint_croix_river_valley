@@ -34,12 +34,14 @@
         <i class="fa fa-tree"></i>
       </div>
     </custom-marker>
+
     <info-window id="mapwindow">
       <div ng-non-bindable="">
         <h3>{{mc.place.name}}</h3><br/>
         <a href="#" ng-click="mc.clicked(mc.place)">Click Here for More Info</a>
       </div>
     </info-window>
+
   </ng-map>
 </div>
 
@@ -55,6 +57,7 @@
       {{dpic.phone}}</br>
       <a href="dpic.website">{{dpic.website}}</a></br>
       {{dpic.description}}</br>
+      <img id="placeImg" ng-src="{{dpic.imageurl}}"/>
     </div>
     <div class="modal-footer">
       <button class="btn btn-primary" type="button" ng-click="dpic.okay()">OK</button>
