@@ -168,7 +168,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
         animation: self.animationsEnabled,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'addTripModalContent.html',   // HTML in the modal.html template
+        templateUrl: 'addTripModalContent.html',
         controller: 'AddTripModalInstanceController',
         controllerAs: 'atmic',
         size: size,
@@ -188,9 +188,6 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
 myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
-
-// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso;
-// console.log(results);
 
   //Add Place function
   vm.addNewPlace = function(place){
@@ -218,17 +215,6 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
             key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
             }
     }).then(function success( response ){
-
-      console.log('response: ', response);
-      document.getElementById('addPlaceForm').reset();
-      if (response.status === 201){
-        swal("Success!", "You added a place to the database!", "success");
-          $uibModalInstance.close();
-      } else {
-        swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
-      }
-    });//ending success
-
       console.log(response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
 
       //set latitude and logitude in item to send equal to geocoded response
@@ -244,26 +230,28 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
       }).then(function success( response ){
         console.log('response: ', response);
         document.getElementById('addPlaceForm').reset();
-        if (response.status === 200){
-          vm.success = true;
+        if (response.status === 201){
+          swal("Success!", "You added a place to the map!", "success");
+            $uibModalInstance.close();
         } else {
-          vm.failed = true;
-        }
+          swal("Uh-oh!", "Your changes were not submitted to the map. Try again.");
+          }
       });//ending success
 
     }, function error(response){
       console.log('nope');
+
+      document.getElementById('addPlaceForm').reset();
+
+
     });//end geocode
-
-
-  };//end add Item
+  };//end add place
 
   vm.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
 
 }]); // end AddPlaceModalInstanceController
-
 
 // edit delete place modal controller
 myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPlaces', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPlaces, $routeParams ) {
@@ -333,7 +321,7 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
       vm.edit = false;
       // maybe add an if/else statement here to display a success message if response of 200 is received
       if (response.status === 200){
-        swal("Success!", "Your changes were submitted to the database!", "success");
+        swal("Success!", "Your changes were submitted to the map!", "success");
           $uibModalInstance.close();
       } else {
         swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");

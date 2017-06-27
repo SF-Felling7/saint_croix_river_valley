@@ -9,8 +9,8 @@
     <input type="password" ng-model="fc.password"><br><br>
 
     <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> or
-    <button class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
-    alt="Submit">Sign in with Google</button><br><br>
+    <button id="signInGoogle" class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
+    alt="Submit"> | Sign in with Google</button><br><br>
     <h5> Not registered? </h5>
     <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
   </div>
@@ -52,16 +52,16 @@
     </div>
     <div class="modal-body" id="modal-body">
       <form id="addPlaceForm">
-        Name: <input type="text" ng-model="apmic.place.name" placeholder="place name" maxlength="85" size="85"></br>
-        Street: <input type="text" ng-model="apmic.place.street" placeholder="street address" maxlength="85" size="85"></br>
+        Name: <input type="text" ng-model="apmic.place.name" placeholder="place name" maxlength="85" size="78"></br>
+        Street: <input type="text" ng-model="apmic.place.street" placeholder="street address" maxlength="85" size="78"></br>
         City: <input type="text" ng-model="apmic.place.city" placeholder="city" maxlength="35" size="35"></br>
         State: </br>
-          <input type="radio" ng-model="apmic.place.state" value="MN">MN<br/>
-          <input type="radio" ng-model="apmic.state" value="WI">WI</br>
+          <input type="radio" name="state" ng-model="apmic.place.state" value="MN">MN<br/>
+          <input type="radio" name="state" ng-model="apmic.state" value="WI">WI</br>
         Zip: <input type="text" ng-model="apmic.place.zipcode" placeholder="zip code" maxlength="10" size="10"></br>
         Phone: <input type="text" ng-model="apmic.place.phone" placeholder="phone i.e. 715-555-1111" maxlength="15" size="15"></br>
-        Website: <input type="text" ng-model="apmic.place.website" placeholder="website i.e. newplace.com" maxlength="85" size="85"></br>
-        Description: <input type="text" ng-model="apmic.place.description" placeholder="description" maxlength="1400" size="400"></br>
+        Website: <input type="text" ng-model="apmic.place.website" placeholder="website i.e. newplace.com" maxlength="85" size="78"></br>
+        Description: <input type="text" ng-model="apmic.place.description" placeholder="description" maxlength="1400" size="78"></br>
         Type: <br/>
           <input type="radio" ng-model="apmic.place.types_id" value="1">Dining</br>
           <input type="radio" ng-model="apmic.place.types_id" value="2">Shopping</br>
@@ -96,8 +96,8 @@
         Street: <input type="text" ng-model="edp.place.street" maxlength="85" size="70"></br>
         City: <input type="text" ng-model="edp.place.city" maxlength="35" size="35"></br>
         State:<span class="space"></span>
-          <input type="radio" ng-model="edp.place.state" ng-value="MN">  MN<span class="space"></span>
-          <input type="radio" ng-model="edp.place.state" ng-value="WI">  WI</br>
+          <input type="radio" name='state' ng-model="edp.place.state" ng-value="MN">  MN<span class="space"></span>
+          <input type="radio" name='state' ng-model="edp.place.state" ng-value="WI">  WI</br>
         Zip Code: <input type="text" ng-model="edp.place.zipcode" maxlength="10" size="10"></br>
         Phone: <input type="text" ng-model="edp.place.phone" maxlength="15" size="15"></br>
         Website: <input type="text" ng-model="edp.place.website" maxlength="85" size="70"></br>
