@@ -80,7 +80,7 @@
 <div class="edit-delete-place-modal container">
   <script type="text/ng-template" id="editDeletePlaceModal.html">
     <div class="modal-header">
-      <h3 class="modal-title title" id="modal-title">{{edp.title}}<span ng-show="edp.typeSelected"> - {{edp.placeType}}</h3>
+      <h3 class="modal-title title" id="modal-title">{{edp.title}}<span ng-show="edp.typeSelected"> - <i class="fa {{edp.placeIcon}}"></i> {{edp.placeType}}</span></h3>
     </div>
     <div class="modal-body" id="modal-body">
       <div ng-hide="edp.typeSelected">

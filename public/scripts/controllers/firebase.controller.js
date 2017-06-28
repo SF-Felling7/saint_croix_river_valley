@@ -320,6 +320,7 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
   vm.lodgingPins = lodgingPins;
   vm.typeSelected = false;
   vm.placeType='';
+  vm.placeIcon='';
 
   vm.selectType = function (types_id){
     console.log('types_id: ', types_id);
@@ -328,21 +329,25 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
         vm.allPlaces = vm.diningPins;
         vm.typeSelected = true;
         vm.placeType = 'Dining';
+        vm.placeIcon = 'fa-cutlery';
         break;
       case '2':
         vm.allPlaces = vm.shoppingPins;
         vm.typeSelected = true;
         vm.placeType = 'Shopping';
+        vm.placeIcon = 'fa-shopping-bag';
         break;
       case '3':
         vm.allPlaces = vm.naturePins;
         vm.typeSelected = true;
         vm.placeType = 'Nature';
+        vm.placeIcon = 'fa-tree';
         break;
       case '4':
         vm.allPlaces = vm.lodgingPins;
         vm.typeSelected = true;
         vm.placeType = 'Lodging';
+        vm.placeIcon = 'fa-bed';
         break;
     }
   };
