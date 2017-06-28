@@ -246,9 +246,13 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
       url: '/pool/addTrip',
       data: tripToSend
     }).then(function success(response) {
-      vm.checkedPlaces = response.data;
       console.log('response ->', response);
-
+      if (response.status === 200) {
+        swal("Success!", "You added a trip!", "success");
+        $uibModalInstance.dismiss('cancel');
+      } else {
+        swal("Uh-oh!", "Your changes were not submitted. Try again.");
+      }
     }); //END of success
   }; //ENDING sumbitTrip Function
 
