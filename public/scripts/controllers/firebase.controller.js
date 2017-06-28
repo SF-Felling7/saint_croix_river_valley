@@ -129,7 +129,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
           appendTo: parentElem,
           resolve: {
           }
-        });  // end add plac modalInstance
+        });  // end add place modalInstance
       } else {
         var editDeleteModalInstance = $uibModal.open({
           animation: self.animationsEnabled,
@@ -145,7 +145,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
               return allPlaces;
             }
           }
-        });  // end edit delete modal Instance
+        });  // end edit delete place modal Instance
       }
 
     });//ending success
@@ -164,21 +164,43 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       console.log('getting all places: ', self.allPlaces);
       allPlaces = self.allPlaces;
 
-      var modalInstance = $uibModal.open({
-        animation: self.animationsEnabled,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: 'addTripModalContent.html',
-        controller: 'AddTripModalInstanceController',
-        controllerAs: 'atmic',
-        size: size,
-        appendTo: parentElem,
-        resolve: {
-          allPlaces: function() {
-            return allPlaces;
+      // important--yet to do!
+      // not sure if you can have two things in resolve in modalInstance???
+      // likely also need to run a getTrips $http call here and assign to self.allTrips then declare allTrips=self.allTrips so it can be passed through in resolve
+
+      if (trip === 'Add Trip'){
+        var modalInstance = $uibModal.open({
+          animation: self.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'addTripModalContent.html',
+          controller: 'AddTripModalInstanceController',
+          controllerAs: 'atmic',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+            allPlaces: function() {
+              return allPlaces;
+            }
           }
-        }
-      });  // end modalInstance
+      });  // end add trip modal Instance
+      } else {
+        var editDeleteModalInstance = $uibModal.open({
+          animation: self.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'editDeleteTripModal.html',   // HTML in the admin.html template
+          controller: 'EditDeleteTrip',
+          controllerAs: 'edt',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+            allPlaces: function() {
+              return allPlaces;
+            }
+          }
+        });  // end edit delete place modal Instance
+      }  // end else
     });//ending success
   }; // end adminTrip
 });//end controller
@@ -355,6 +377,25 @@ myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uib
       } else {
           vm.checkedPlaces.splice(vm.checkedPlaces.indexOf(place), 1);
       }
+  };
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+}]); // end AddTripModalInstanceController
+
+// edit / delete trip modal controller
+myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
+  var vm = this;
+  vm.allPlaces = allPlaces;
+  vm.allTrips = allTrips;
+  vm.editDeleteTripTitle = 'Edit or Delete a Trip';
+
+  vm.changeTrip = function(trip){
+    console.log('trip');
+    console.log('Go! button selected to start edit/delete trip procedure');
+    // likely $http call here to get
   };
 
   vm.cancel = function () {

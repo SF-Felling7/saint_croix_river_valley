@@ -96,8 +96,8 @@
         Street: <input type="text" ng-model="edp.place.street" maxlength="85" size="70"></br>
         City: <input type="text" ng-model="edp.place.city" maxlength="35" size="35"></br>
         State:<span class="space"></span>
-          <input type="radio" name='state' ng-model="edp.place.state" ng-value="MN">  MN<span class="space"></span>
-          <input type="radio" name='state' ng-model="edp.place.state" ng-value="WI">  WI</br>
+          <input type="radio" name="state" ng-model="edp.place.state" ng-value="MN">  MN<span class="space"></span>
+          <input type="radio" name="state" ng-model="edp.place.state" ng-value="WI">  WI</br>
         Zip Code: <input type="text" ng-model="edp.place.zipcode" maxlength="10" size="10"></br>
         Phone: <input type="text" ng-model="edp.place.phone" maxlength="15" size="15"></br>
         Website: <input type="text" ng-model="edp.place.website" maxlength="85" size="68"></br>
@@ -140,7 +140,30 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-danger" type="button" ng-click="atmic.cancel()">Cancel/Close</button>
-      <button class="btn btn-primary" type="button" ng-click="atmic.addNewPlace(apmic.place)">Add Trip</button>
+      <button class="btn btn-primary" type="button" ng-click="atmic.addNewTrip(atmic.checkedPlaces)">Add Trip</button>
+    </div>
+  </script>
+</div>
+
+
+
+<!-- edit / delete trip modal -->
+<div class="edit-delete-trip-modal container">
+  <script type="text/ng-template" id="editDeleteTripModal.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{edt.editDeleteTripTitle}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <select ng-model="edt.trip">
+        <option value="" disabled selected>Select Trip</option>
+        <option value="Wine Tour" selected>Wine Tour</option>
+        <option ng-repeat="trip in edt.allTrips" name="trip">{{trip.name}}</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" type="button" ng-click="edt.changeTrip(edt.trip)">Go!</button>
+      <!-- <button class="btn btn-danger" type="button" ng-click="edt.cancel()">Cancel/Close</button>
+      <button class="btn btn-primary" type="button" ng-click="">Save Trip Changes</button> -->
     </div>
   </script>
 </div>
