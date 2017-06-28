@@ -70,8 +70,6 @@ router.post( '/addTrip', function( req, res ) {
       res.sendStatus( 500 );
     }// end Error
     else{
-      console.log('connected to db');
-      console.log('req.body: ', req.body);
       connection.query( " INSERT INTO trips (name, description)  VALUES ( $1, $2 ) RETURNING id", [req.body.name, req.body.description],
 
       function(err, result) {
@@ -80,16 +78,15 @@ router.post( '/addTrip', function( req, res ) {
           res.sendStatus(500);
         } else {
           for (var i = 0; i < req.body.locations.length; i++) {
-            connection.query("INSERT INTO locations_trips (locations_id, trips_id) VALUES ($1, $2)", [req.body.locations[i].id, result.rows[0].id],
+            connection.query("INSERT INTO locations_trips (locations_id, trips_id, stop_number) VALUES ($1, $2, $3)", [req.body.locations[i].id, result.rows[0].id, i + 1],
             function (err, result) {
               if(err) {
-              res.sendStatus(500);
-            } else {
-              // res.sendStatus(200);
-                };
+                res.sendStatus(500);
+              }
             });      // end second query function
 
-        } // end for loop
+          } // end for loop
+          res.sendStatus(200);
         } // end medium else
       }); // end first query function
     }  //ENDING  big ELSE
