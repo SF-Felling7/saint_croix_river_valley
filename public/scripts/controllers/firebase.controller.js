@@ -228,10 +228,14 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
   };
 
   vm.submitTrip = function(trip) {
+    console.log('checked place ->', vm.checkedPlaces);
     console.log( 'trip', trip );
+    console.log('place ->', vm.checkedPlaces);
+
     var tripToSend = {
       name: trip.name,
-      description: trip.description
+      description: trip.description,
+      locations: vm.checkedPlaces
     };
 
       console.log('Trip to send ->', tripToSend);
@@ -243,6 +247,8 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
       data: tripToSend
     }).then(function success(response) {
       vm.checkedPlaces = response.data;
+      console.log('response ->', response);
+
     }); //END of success
   }; //ENDING sumbitTrip Function
 
