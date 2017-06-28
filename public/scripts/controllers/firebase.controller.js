@@ -105,18 +105,39 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
 
 //end firebase functions
 
+self.diningPins = [];
+self.lodgingPins = [];
+self.naturePins = [];
+self.shoppingPins = [];
 
 // Admin Place function
   self.adminPlace = function(place, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin places button clicked for action: ', place);
-    $http ({
+    $http({
       method: 'GET',
-      url: '/pool/getPlaces'
-    }).then(function success( response ){
-      self.allPlaces = response.data;
-      console.log('getting all places: ', self.allPlaces);
-      allPlaces = self.allPlaces;
+      url: '/locations/getAllPins'
+    }).then(function success(response) {
+      console.log('getting all pins', response);
+      self.allPins = response.data;
+      console.log('self.allPins: ', self.allPins);
+      allPins = self.allPins;
+      for (var i = 0; i < allPins.length; i++) {
+        switch (allPins[i].types_id) {
+          case 1:
+            self.diningPins.push(allPins[i]);
+            break;
+          case 2:
+            self.shoppingPins.push(allPins[i]);
+            break;
+          case 3:
+            self.naturePins.push(allPins[i]);
+            break;
+          case 4:
+            self.lodgingPins.push(allPins[i]);
+            break;
+        }
+      }
       if (place === 'Add Place') {
         var modalInstance = $uibModal.open({
           animation: self.animationsEnabled,
@@ -129,7 +150,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
           appendTo: parentElem,
           resolve: {
           }
-        });  // end add plac modalInstance
+        });  // end add place modalInstance
       } else {
         var editDeleteModalInstance = $uibModal.open({
           animation: self.animationsEnabled,
@@ -141,11 +162,23 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
           size: size,
           appendTo: parentElem,
           resolve: {
-            allPlaces: function() {
-              return allPlaces;
-            }
+            allPins: function() {
+              return allPins;
+            },
+            diningPins: function() {
+              return self.diningPins;
+            },
+            shoppingPins: function() {
+              return self.shoppingPins;
+            },
+            naturePins: function() {
+              return self.naturePins;
+            },
+            lodgingPins: function() {
+              return self.lodgingPins;
+            },
           }
-        });  // end edit delete modal Instance
+        });  // end edit delete place modal Instance
       }
 
     });//ending success
@@ -164,21 +197,42 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       console.log('getting all places: ', self.allPlaces);
       allPlaces = self.allPlaces;
 
-      var modalInstance = $uibModal.open({
-        animation: self.animationsEnabled,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: 'addTripModalContent.html',
-        controller: 'AddTripModalInstanceController',
-        controllerAs: 'atmic',
-        size: size,
-        appendTo: parentElem,
-        resolve: {
-          allPlaces: function() {
-            return allPlaces;
+      // important--yet to do!
+      // likely also need to run a getTrips $http call here and assign to self.allTrips then declare allTrips=self.allTrips so it can be passed through in resolve
+
+      if (trip === 'Add Trip'){
+        var modalInstance = $uibModal.open({
+          animation: self.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'addTripModalContent.html',
+          controller: 'AddTripModalInstanceController',
+          controllerAs: 'atmic',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+            allPlaces: function() {
+              return allPlaces;
+            }
           }
-        }
-      });  // end modalInstance
+      });  // end add trip modal Instance
+      } else {
+        var editDeleteModalInstance = $uibModal.open({
+          animation: self.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'editDeleteTripModal.html',   // HTML in the admin.html template
+          controller: 'EditDeleteTrip',
+          controllerAs: 'edt',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+            allPlaces: function() {
+              return allPlaces;
+            }
+          }
+        });  // end edit delete place modal Instance
+      }  // end else
     });//ending success
   }; // end adminTrip
 });//end controller
@@ -255,10 +309,48 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
 }]); // end AddPlaceModalInstanceController
 
 // edit delete place modal controller
-myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPlaces', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPlaces, $routeParams ) {
+myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPins', 'diningPins', 'shoppingPins', 'naturePins', 'lodgingPins', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPins, diningPins, shoppingPins, naturePins, lodgingPins, $routeParams ) {
   var vm = this;
   vm.title = 'Edit or Delete a Place';
-  vm.allPlaces = allPlaces;
+  // vm.allPlaces = allPlaces;
+  vm.allPins = allPins;
+  vm.diningPins = diningPins;
+  vm.shoppingPins = shoppingPins;
+  vm.naturePins = naturePins;
+  vm.lodgingPins = lodgingPins;
+  vm.typeSelected = false;
+  vm.placeType='';
+  vm.placeIcon='';
+
+  vm.selectType = function (types_id){
+    console.log('types_id: ', types_id);
+    switch (types_id) {
+      case '1':
+        vm.allPlaces = vm.diningPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Dining';
+        vm.placeIcon = 'fa-cutlery';
+        break;
+      case '2':
+        vm.allPlaces = vm.shoppingPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Shopping';
+        vm.placeIcon = 'fa-shopping-bag';
+        break;
+      case '3':
+        vm.allPlaces = vm.naturePins;
+        vm.typeSelected = true;
+        vm.placeType = 'Nature';
+        vm.placeIcon = 'fa-tree';
+        break;
+      case '4':
+        vm.allPlaces = vm.lodgingPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Lodging';
+        vm.placeIcon = 'fa-bed';
+        break;
+    }
+  };
 
   vm.delete = function(id) {
     console.log('id to delete', id);
@@ -355,6 +447,25 @@ myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uib
       } else {
           vm.checkedPlaces.splice(vm.checkedPlaces.indexOf(place), 1);
       }
+  };
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+}]); // end AddTripModalInstanceController
+
+// edit / delete trip modal controller
+myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
+  var vm = this;
+  vm.allPlaces = allPlaces;
+  // vm.allTrips = allTrips;
+  vm.editDeleteTripTitle = 'Edit or Delete a Trip';
+
+  vm.changeTrip = function(trip){
+    console.log('trip');
+    console.log('Go! button selected to start edit/delete trip procedure');
+    // likely $http call here to get
   };
 
   vm.cancel = function () {
