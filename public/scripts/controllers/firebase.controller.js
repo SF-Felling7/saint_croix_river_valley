@@ -198,7 +198,6 @@ self.shoppingPins = [];
       allPlaces = self.allPlaces;
 
       // important--yet to do!
-      // not sure if you can have two things in resolve in modalInstance???
       // likely also need to run a getTrips $http call here and assign to self.allTrips then declare allTrips=self.allTrips so it can be passed through in resolve
 
       if (trip === 'Add Trip'){
@@ -455,7 +454,7 @@ myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uib
 myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
   var vm = this;
   vm.allPlaces = allPlaces;
-  vm.allTrips = allTrips;
+  // vm.allTrips = allTrips;
   vm.editDeleteTripTitle = 'Edit or Delete a Trip';
 
   vm.changeTrip = function(trip){
