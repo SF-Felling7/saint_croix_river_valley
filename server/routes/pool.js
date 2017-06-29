@@ -130,12 +130,15 @@ router.post( '/addTrip', function( req, res ) {
             connection.query("INSERT INTO locations_trips (locations_id, trips_id, stop_number) VALUES ($1, $2, $3)", [req.body.locations[i].id, result.rows[0].id, i + 1],
             function (err, result) {
               if(err) {
-                res.sendStatus(500);
+                console.log('error inserting into database', err );
+                // res.sendStatus(500);
+              } else if (i == req.body.locations.length - 1) {
+                res.sendStatus(200);
               }
             });      // end second query function
 
           } // end for loop
-          res.sendStatus(200);
+
         } // end medium else
       }); // end first query function
     }  //ENDING  big ELSE
