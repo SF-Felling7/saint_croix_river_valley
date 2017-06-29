@@ -443,3 +443,12 @@ input {
 .types_select {
   width: 250px;
 }
+
+.adminHeader {
+  text-align: center;
+}
+
+.adminBtn{
+  display: inline block;
+  margin-left: 25px;
+}

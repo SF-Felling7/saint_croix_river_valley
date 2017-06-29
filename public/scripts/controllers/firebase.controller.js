@@ -28,6 +28,7 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
     });
   }; //end register and sign in with email
 
+
   //Sign in with Email
   self.signInWithEmail = function(email, password) {
     if (!email || !password) {
@@ -80,17 +81,18 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
           headers: {
             id_token: idToken
           }
+
         }).then(function(response) {
-          self.secretData = response.data;
+          self.adminName = response.data;
+
         }).catch(function(error){
           self.logOut();
           console.log("login error: not an admin");
-          alert("Sorry! you do not have admin status!");
+          alert("Sorry! You do not have admin status!");
         });
       });
     } else {
       console.log('Not logged in or not authorized.');
-      self.secretData = "Log in to get some secret data.";
     }
   });
 
@@ -102,8 +104,53 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       self.loggedOut = true;
     });
   };
+//end firebase  functions
 
-//end firebase functions
+self.addAdmin = function(size, parentSelector){
+  console.log('clicked add admin button');
+  var parentElem = parentSelector;
+  var modalInstance = $uibModal.open({
+    animation: self.animationsEnabled,
+    ariaLabelledBy: 'modal-title',
+    ariaDescribedBy: 'modal-body',
+    templateUrl: 'addAdmin.html',   // HTML in the admin.html template
+    controller: 'AddAdmin',
+    controllerAs: 'aa',
+    size: size,
+    appendTo: parentElem,
+    resolve: {
+    }
+  });  // end add admin modalInstance
+};
+
+self.editAdmin = function(size, parentSelector){
+  console.log('clicked edit / delete admin button');
+  $http({
+    method: 'GET',
+    url: '/pool/admin'
+  }).then(function success(response) {
+    console.log('getting all admins', response);
+    self.allAdmins = response.data.rows;
+    console.log('self.allAdmins: ', self.allAdmins);
+    allAdmins = self.allAdmins;
+    var parentElem = parentSelector;
+    var modalInstance = $uibModal.open({
+      animation: self.animationsEnabled,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'editAdmin.html',   // HTML in the admin.html template
+      controller: 'EditAdmin',
+      controllerAs: 'ea',
+      size: size,
+      appendTo: parentElem,
+      resolve: {
+        allAdmins: function() {
+          return allAdmins;
+        },
+      }
+    });  // end add admin modalInstance
+  });
+};
 
 self.diningPins = [];
 self.lodgingPins = [];
@@ -233,9 +280,150 @@ self.shoppingPins = [];
           }
         });  // end edit delete place modal Instance
       }  // end else
-    });//ending success
+    });//ending then success
   }; // end adminTrip
+
+});  // end firebase controller
+
+
+// add admin modal controller
+myApp.controller( 'AddAdmin', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
+  var vm = this;
+  vm.addAdminTitle = 'Add an Admin';
+
+  //Add Place function
+  vm.addAdminUser = function(email){
+    console.log('email: ', email);
+    if (email===undefined) {
+      swal("Email address not entered.", "Admin was not created. Try again.");
+      $uibModalInstance.dismiss('cancel');
+    }
+    var itemToSend = {
+      email: email,
+      admin: true
+    };
+    $http ({
+      method: 'POST',
+      url: '/pool/admin',
+      data: itemToSend
+    }).then(function success( response ){
+      console.log('response: ', response);
+      document.getElementById('addAdminForm').reset();
+      if (response.status === 201){
+        swal("Success!", "You added an admin!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Admin was not created. Try again.");
+        }
+    });//ending success
+  };//end add admin user
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+}]); // end Add Admin ModalInstanceController
+
+// edit admin controller
+myApp.controller( 'EditAdmin', [ '$uibModalInstance', '$uibModal','$http', 'allAdmins', function ( $uibModalInstance, $uibModal, $http, allAdmins) {
+  var vm = this;
+  vm.editAdminTitle = 'Edit or Delete an Admin';
+  vm.allAdmins = allAdmins;
+
+  //Edit/Delete Admin function
+  vm.editAdminUser = function(email){
+    console.log('email: ', email);
+
+    var itemToSend = {
+      id: id,
+      email: email,
+      admin: true
+    };
+    $http ({
+      method: 'PUT',
+      url: '/pool/admin',
+      data: itemToSend
+    }).then(function success( response ){
+      console.log('response: ', response);
+      // document.getElementById('addAdminForm').reset();
+      if (response.status === 200){
+        swal("Success!", "Your changes were submitted!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Admin changes were not submitted. Try again.");
+        }
+    });//ending success
+  };//end add admin user
+
+  vm.edit = false;
+  vm.editInPlace = function(admin) {
+    vm.edit = true;
+    vm.admin = admin;
+    console.log('vm.admin: ', vm.admin);
+  };
+
+  vm.saveEdits = function(admin) {
+    console.log('edited admin to submit to db', admin);
+    var editsToSend = {
+      id: admin.id,
+      email: admin.email,
+      admin: admin.admin,
+    };
+    $http ({
+      method: 'PUT',
+      url: '/pool/admin',
+      data: editsToSend
+    }).then(function success( response ){
+      console.log('response: ', response);
+      vm.edit = false;
+      // maybe add an if/else statement here to display a success message if response of 200 is received
+      if (response.status === 200){
+        swal("Success!", "Your changes were submitted to the database!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+      }
+    });//ending success
+  };//end save edits for place
+
+  vm.delete = function(id) {
+    console.log('id to delete', id);
+    swal({
+      title: "Are you sure?",
+      text: "This will remove this admin from the database!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    },
+    function(){
+      $http ({
+        method: 'DELETE',
+        url: '/pool/admin/' + id
+      }).then(function success( response ){
+        console.log('response: ', response);
+        // maybe add an if/else statement here to display a success message if response of 201 is received
+        if (response.status === 200){
+          swal("Deleted!", "The admin was been deleted.", "success");
+            $uibModalInstance.close();
+        } else {
+          swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+        }
+      }
+    );//ending success
+  });
+};//end delete Item
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+}]); // end edit delete Admin ModalInstanceController
+
+
 }); //end controller
+
 
 
 // modal controller
