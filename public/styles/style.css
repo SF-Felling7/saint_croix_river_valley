@@ -4,6 +4,12 @@
 
 #googleButton {
   width: 20px;
+  background-color: ivory;
+}
+
+#signInGoogle{
+  background-color: dodgerBlue;
+  color: ivory;
 }
 
 #map {
@@ -229,7 +235,7 @@ i {
 /*li:hover {
   background-color: blue;
   color: white;
-}*/*/
+}*/
 
 
 /* The side navigation menu */
@@ -302,6 +308,10 @@ i {
   margin: 10px
 }
 
+.fa-cutlery {
+  color: black;
+}
+
 .fa-tree {
   color: green;
 }
@@ -313,6 +323,7 @@ i {
 .fa-bed {
   color: blue;
 }
+
 
 /*.dropdown-content {
   display: none;
@@ -351,9 +362,10 @@ i {
      text-align: center;
 }
 
-#menu li {
+#menu button {
      display: inline-block;
      padding: 8px;
+     margin: 10px;
 }
 
 #menu i {
@@ -361,22 +373,14 @@ i {
      text-decoration: none;
 }
 
-#menu i:hover {
-     background-color: #1B191B;
-     color: #FFF;
-     border-radius: 20px;
-     -webkit-border-radius: 20px;
-     -moz-border-radius: 20px;
-     -o-border-radius: 20px;
+#menu button:hover {
+  color: ivory;
+  border-radius: 10px;
+  border: solid 3px green;
 }
 
-#menu li .active {
-     background-color: #1B191B;
-     color: #FFF;
-     border-radius: 20px;
-     -webkit-border-radius: 20px;
-     -moz-border-radius: 20px;
-     -o-border-radius: 20px;
+#placeImg{
+  width: 200px;
 }
 
 .logoName {
@@ -386,4 +390,56 @@ i {
 
 ul {
   list-style: none;
+}
+
+.navButton {
+  background-color:#cbe6a3;
+  color: black;
+  border-radius: 10px;
+  margin-right: 10px;
+  border: solid 3px;
+}
+
+.off {
+  background-color: #e9e8e5;
+  color: black;
+  border-radius: 10px;
+  margin-right: 10px;
+  border: solid 3px;
+}
+
+td {
+  padding: 5px;
+}
+
+span.space {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+input {
+  margin: 5px
+}
+
+.reset{
+  background-color: FireBrick;
+  color: black;
+  border-radius: 10px;
+  margin-right: 10px;
+  border: solid 3px;
+}
+
+#logo{
+  height: 100px;
+  border: solid 3px black;
+  border-radius: 10px;
+}
+
+#logo:hover {
+  border: solid 3px green;
+  border-radius: 10px;
+}
+
+.types_select {
+  width: 250px;
 }

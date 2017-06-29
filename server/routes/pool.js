@@ -6,10 +6,9 @@ var path = require('path');
 var pg = require ('pg');
 var pool = require('../modules/mainPool');
 
+// get (all) places
 router.get( '/getPlaces', function ( req, res ){
   console.log( 'hit getPlaces' );
-
-
   pool.connect( function( err, connection, done ){
     //check if there was an Error
     if( err ){
@@ -30,12 +29,36 @@ router.get( '/getPlaces', function ( req, res ){
       } );
     } // end no error
   }); //end pool
+});  // end get (all) places
 
-});
-
+// post place
 router.post( '/addPlace', function ( req, res ){
   console.log( 'hit addPlace' );
+    pool.connect( function( err, connection, done ){
+      //check if there was an Error
+      if( err ){
+        console.log( err );
+        // respond with PROBLEM!
+        res.sendStatus( 500 );
+      }// end Error
+      else{
+        console.log('in add place');
+        console.log('adding place:', req.body);
+        connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, imageurl, latitude, longitude, types_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.imageurl, req.body.latitude, req.body.longitude, req.body.types_id] , function(err, result) {
+            if(err) {
+              console.log('Error selecting locations', err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(201);
+            }
+        } );
+      } // end no error
+    }); //end pool
+});  // end post place
 
+// put (edit) place
+router.put( '/editPlace/', function ( req, res ){
+  console.log( 'hit edit place' );
   pool.connect( function( err, connection, done ){
     //check if there was an Error
     if( err ){
@@ -45,20 +68,46 @@ router.post( '/addPlace', function ( req, res ){
     }// end Error
     else{
       console.log('connected to db');
-      console.log('req.body: ', req.body);
-      connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, types_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.types_id] , function(err, result) {
+      console.log('req.body', req.body);
+      // need to revise to edit
+      connection.query( "UPDATE locations SET name=$1, street=$2, city=$3, state=$4, zipcode=$5, phone=$6, website=$7, description=$8, latitude=$9, longitude=$10, types_id=$11, imageurl=$12 WHERE id=" + req.body.id, [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.phone, req.body.website, req.body.description, req.body.latitude, req.body.longitude, req.body.types_id, req.body.imageurl] , function(err, result) {
         if(err) {
           console.log('Error selecting locations', err);
           res.sendStatus(500);
         } else {
-          res.sendStatus(201);
+          res.sendStatus(200);
         }
       });
-    } // end no error
-  }); //end pool
+    }
+  });  // end pool
+}); //end put
 
-});
+// delete place
+router.delete( '/deletePlace/:id', function ( req, res ){
+  console.log( 'hit delete place' );
+    pool.connect( function( err, connection, done ){
+      //check if there was an Error
+      if( err ){
+        console.log( err );
+        // respond with PROBLEM!
+        res.sendStatus( 500 );
+      }// end Error
+      else{
+        console.log('connected to db');
+        console.log('req.params.id: ', req.params.id);
+        connection.query( "DELETE FROM locations WHERE id = $1" , [req.params.id] , function(err, result) {
+            if(err) {
+              console.log('Error selecting locations', err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+        } );
+      } // end no error
+    }); //end pool
+});  // end delete place
 
+// post trip
 router.post( '/addTrip', function( req, res ) {
   console.log( 'hit the addTrip ROUTE');
 
@@ -92,7 +141,6 @@ router.post( '/addTrip', function( req, res ) {
     }  //ENDING  big ELSE
 
   });//ENDING pool connect
-});
-
+});  // end post trip
 
 module.exports = router;
