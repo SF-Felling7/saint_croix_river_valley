@@ -281,7 +281,11 @@ self.shoppingPins = [];
         });  // end edit delete place modal Instance
       }  // end else
     });//ending then success
+
+    
   }; // end adminTrip
+
+
 
 });  // end firebase controller
 
@@ -427,8 +431,9 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
 
-  vm.addNewPlace = function(place) {
-    console.log('place: ', place);
+  //Add Place function
+  vm.addNewPlace = function(place){
+
     var itemToSend = {
 
       name: place.name,
@@ -439,12 +444,14 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
       state: place.state,
       phone: place.phone,
       website: place.website,
-      imageurl: place.imageurl,
+      imageurl: '',
       latitude:'',
       longitude:'',
-      types_id: place.types_id
+      types_id: place.types_id,
+
     };
 
+    console.log('sending place to google to get coordinates: ', place);
     //geocode address that is entered by admin
     $http ({
       method: 'GET',
@@ -453,28 +460,48 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
             key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
             }
     }).then(function success( response ){
-      console.log(response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
+      console.log(response.data.results);
+      console.log("returned coordinates:",response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
 
       //set latitude and logitude in item to send equal to geocoded response
       itemToSend.latitude = response.data.results[0].geometry.location.lat;
       itemToSend.longitude = response.data.results[0].geometry.location.lng;
-      console.log(itemToSend);
+      var locationToSend = [response.data.results[0].geometry.location.lat,response.data.results[0].geometry.location.lng];
 
-      //post new item with latitude and logitude to DB
+
+      //send itemToSend to server for google places api
       $http ({
-        method: 'POST',
-        url: '/pool/addPlace',
-        data: itemToSend
-      }).then(function success( response ){
-        console.log('response: ', response);
-        document.getElementById('addPlaceForm').reset();
-        if (response.status === 201){
-          swal("Success!", "You added a place to the map!", "success");
-            $uibModalInstance.close();
-        } else {
-          swal("Uh-oh!", "Your changes were not submitted to the map. Try again.");
-          }
-      });//ending success
+        method: 'GET',
+        url: '/googlePlaces',
+        params: {
+          location: locationToSend,
+          query: place.street,
+          key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
+        }
+      }).then(function success(response ){
+        console.log("magic photo url link:",response.data);
+
+        itemToSend.imageurl = response.data;
+        console.log("saving Object",itemToSend);
+
+
+        //post new item with latitude and logitude to DB
+        $http ({
+          method: 'POST',
+          url: '/pool/addPlace',
+          data: itemToSend
+        }).then(function success( response ){
+          console.log('response: ', response);
+          document.getElementById('addPlaceForm').reset();
+          if (response.status === 201){
+            swal("Success!", "You added a place to the map!", "success");
+              $uibModalInstance.close();
+          } else {
+            swal("Uh-oh!", "Your changes were not submitted to the map. Try again.");
+            }
+        });//ending success
+      });
+      //end send to server for google places
 
     }, function error(response){
       console.log('nope');

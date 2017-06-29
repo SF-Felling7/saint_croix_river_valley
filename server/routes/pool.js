@@ -143,6 +143,28 @@ router.post( '/addTrip', function( req, res ) {
   });//ENDING pool connect
 });  // end post trip
 
+// get trips
+router.get('/getTrips', function (req, res) {
+  console.log('in Get Trips route');
+pool.connect(function (err, connection, done) {
+  if(err) {
+    console.log(err);
+    res.sendStatus(500);
+  } else {
+    console.log('no err for get trips');
+    connection.query("SELECT * FROM trips", function (err, results) {
+      if(err){
+        console.log('Error grabbing trips', err);
+        res.sendStatus(500);
+      } else {
+        res.send(results.rows);
+      }
+    });
+  }
+});
+});
+
+
 router.post( '/admin', function ( req, res ){
   console.log( 'hit addAdmin' );
     pool.connect( function( err, connection, done ){

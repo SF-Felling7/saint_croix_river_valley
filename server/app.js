@@ -4,9 +4,6 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var pg = require('pg');
-// var mainPool = require('mainPool');
-
-
 
 
 //modules
@@ -18,6 +15,7 @@ var decoder = require('./modules/decoder');
 var privateData = require ('./routes/privateData');
 var locations = require( './routes/locations.js' );
 var pool = require('./routes/pool');
+var googlePlaces = require ('./routes/googlePlaces');
 
 
 app.use(express.static('public'));
@@ -36,8 +34,8 @@ Other branches in the nodeFire repository show how to do that. */
 // This is the route for your secretData. The request gets here after it has been authenticated.
 app.use("/privateData", decoder.token, privateData);
 app.use( '/locations', locations );
+app.use('/googlePlaces', googlePlaces);
 app.use( '/pool', pool );
-
 
 
 app.use('/*', function(req, res){
