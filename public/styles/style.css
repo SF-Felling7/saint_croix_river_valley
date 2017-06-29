@@ -1,15 +1,20 @@
   #adminLogin {
-  margin-left: 400px;
+  margin-left: 420px;
 }
 
 #googleButton {
-  width: 20px;
+  width: 60px;
   background-color: ivory;
+  border-radius: 10px;
 }
 
 #signInGoogle{
   background-color: dodgerBlue;
   color: ivory;
+  height: 100px;
+  width: 250px;
+  font-size: 18px;
+  margin-top: 16px;
 }
 
 #map {
