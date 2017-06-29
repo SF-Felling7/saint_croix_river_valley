@@ -19,7 +19,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   NgMap.getMap().then(function(map) {
     vm.map = map;
-
   });
 
   vm.clicked = function(place, size, parentSelector) {

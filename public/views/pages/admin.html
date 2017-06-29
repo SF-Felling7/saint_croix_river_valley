@@ -1,24 +1,29 @@
-<h1>Admin Login</h1>
-<h1>Welcome {{fc.secretData}}, to St. Croix Valley Interactive Map</h1>
+<div class="jumbotron">
+  <h1 class="adminHeader">St. Croix Valley Regional Tourism Alliance</h1>
+  <h2 class="adminHeader">Interactive Map Admin Page</h2><br>
+  <p class="adminHeader" ng-show="fc.loggedIn">Welcome, {{fc.adminName}}!
+  <button class="btn btn-warning" ng-click="fc.addAdmin()" ng-show="fc.loggedIn" class="adminBtn">Add Admin</button>
+  <button class="btn btn-danger" ng-click="fc.logOut()" ng-show="fc.loggedIn" class="adminBtn">Log Out</button></p>
+</div>
 
-<div ng-hide="fc.loggedIn">
-  <div id="adminLogin">
-    <h4>email:</h4>
-    <input type="text" ng-model="fc.email">
-    <h4>password: </h4>
-    <input type="password" ng-model="fc.password"><br><br>
+<div class="container">
+  <div ng-hide="fc.loggedIn">
+    <div id="adminLogin">
+      <h4>email:</h4>
+      <input type="text" ng-model="fc.email">
+      <h4>password: </h4>
+      <input type="password" ng-model="fc.password"><br><br>
 
-    <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> <span class="space"></span>or<span class="space"></span>
-    <button id="signInGoogle" class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" alt="Submit"> Sign in with Google</button><br><br>
-    <h5> Not registered? </h5>
-    <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
+      <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> <span class="space"></span>or<span class="space"></span>
+      <button id="signInGoogle" class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" alt="Submit"> Sign in with Google</button><br><br>
+      <h5> Not registered? </h5>
+      <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
+    </div>
   </div>
 </div>
 
-<button class="btn" ng-click="fc.logOut()" ng-hide="fc.loggedOut">Log Out</button>
 
 <div class="container" ng-show="fc.loggedIn">
-
   <div id="adminLanding">
     <div class="form-group col-sm-3 col-sm-offset-2">
       <label for="places" class="form-label">Places:</label>
@@ -40,7 +45,24 @@
       <button ng-click="fc.adminTrip(fc.trip)" class="btn submitbutton btn-success" type="submit" value="Submit">Go!</button>
     </div>
   </div>
+</div>
 
+<!-- add admin modal -->
+<div class="add-admin-modal container">
+  <script type="text/ng-template" id="addAdmin.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{aa.addAdminTitle}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <form id="addAdminForm">
+        Name: <input type="text" ng-model="aa.email" placeholder="email address" maxlength="50" size="50"></br>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" type="button" ng-click="aa.cancel()">Cancel/Close</button>
+      <button class="btn btn-primary" type="button" ng-click="aa.addAdminUser(aa.email)">Add Admin</button>
+    </div>
+  </script>
 </div>
 
 <!-- add place modal -->

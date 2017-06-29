@@ -81,16 +81,15 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
             id_token: idToken
           }
         }).then(function(response){
-          self.secretData = response.data;
+          self.adminName = response.data;
         }).catch(function(error){
           self.logOut();
           console.log("login error: not an admin");
-          alert("Sorry! you do not have admin status!");
+          alert("Sorry! You do not have admin status!");
         });
       });
     } else {
       console.log('Not logged in or not authorized.');
-      self.secretData = "Log in to get some secret data.";
     }
   });
 
@@ -104,6 +103,23 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
   };
 
 //end firebase functions
+
+self.addAdmin = function(size, parentSelector){
+  console.log('clicked add admin button');
+  var parentElem = parentSelector;
+  var modalInstance = $uibModal.open({
+    animation: self.animationsEnabled,
+    ariaLabelledBy: 'modal-title',
+    ariaDescribedBy: 'modal-body',
+    templateUrl: 'addAdmin.html',   // HTML in the admin.html template
+    controller: 'AddAdmin',
+    controllerAs: 'aa',
+    size: size,
+    appendTo: parentElem,
+    resolve: {
+    }
+  });  // end add place modalInstance
+};
 
 self.diningPins = [];
 self.lodgingPins = [];
@@ -236,6 +252,41 @@ self.shoppingPins = [];
     });//ending success
   }; // end adminTrip
 });//end controller
+
+// modal controller
+myApp.controller( 'AddAdmin', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
+  var vm = this;
+  vm.addAdminTitle = 'Add a Place';
+
+  //Add Place function
+  vm.addAdminUser = function(email){
+    console.log('email: ', email);
+    var itemToSend = {
+      email: email,
+      admin: true
+    };
+    $http ({
+      method: 'POST',
+      url: '/pool/addAdmin',
+      data: itemToSend
+    }).then(function success( response ){
+      console.log('response: ', response);
+      document.getElementById('addAdminForm').reset();
+      if (response.status === 200){
+        swal("Success!", "You added an admin!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Admin was not created. Try again.");
+        }
+    });//ending success
+  };//end add admin user
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+}]); // end AddPlaceModalInstanceController
+
 
 
 // modal controller
