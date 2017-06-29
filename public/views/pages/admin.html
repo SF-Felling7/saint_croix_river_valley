@@ -2,8 +2,9 @@
   <h1 class="adminHeader">St. Croix Valley Regional Tourism Alliance</h1>
   <h2 class="adminHeader">Interactive Map Admin Page</h2><br>
   <p class="adminHeader" ng-show="fc.loggedIn">Welcome, {{fc.adminName}}!
-  <button class="btn btn-warning" ng-click="fc.addAdmin()" ng-show="fc.loggedIn" class="adminBtn">Add Admin</button>
-  <button class="btn btn-danger" ng-click="fc.logOut()" ng-show="fc.loggedIn" class="adminBtn">Log Out</button></p>
+  <button class="btn btn-warning adminBtn" ng-click="fc.addAdmin()" ng-show="fc.loggedIn">Add Admin</button>
+  <button class="btn btn-warning adminBtn" ng-click="fc.editAdmin()" ng-show="fc.loggedIn">Edit/Delete Admin</button>
+  <button class="btn btn-danger adminBtn" ng-click="fc.logOut()" ng-show="fc.loggedIn">Log Out</button></p>
 </div>
 
 <div class="container">
@@ -65,6 +66,35 @@
   </script>
 </div>
 
+<!-- edit / delete admin modal -->
+<div class="edit-delete-admin-modal container">
+  <script type="text/ng-template" id="editAdmin.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{ea.editAdminTitle}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <table ng-hide="ea.edit">
+        <tr ng-repeat="admin in ea.allAdmins">
+          <td>{{admin.email}}</td>
+          <td><button class="btn btn-primary" type="button" ng-click="ea.editInPlace(admin)">Edit Admin</button></td>
+          <td><button class="btn btn-danger" type="button" ng-click="ea.delete(admin.id)">Delete Admin</button></td>
+        </tr>
+      </table>
+    </div>
+    <div class="container" ng-show="ea.edit">
+      Locations ID: {{ea.admin.id}}</br>
+      Email: <input type="text" ng-model="ea.admin.email" maxlength="50" size="50"></br>
+      Admin Privileges?<span class="space"></span>
+        <input type="radio" name="admin" ng-model="ea.admin.admin" ng-value="true">  YES<span class="space"></span>
+        <input type="radio" name="admin" ng-model="ea.admin.admin" ng-value="false">  NO</br>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" type="button" ng-click="ea.cancel()">Cancel/Close</button>
+      <button class="btn btn-primary" type="button" ng-click="ea.saveEdits(ea.admin)">Make Admin Changes</button>
+    </div>
+  </script>
+</div>
+
 <!-- add place modal -->
 <div class="add-place-modal container">
   <script type="text/ng-template" id="addPlaceModalContent.html">
@@ -78,7 +108,7 @@
         City: <input type="text" ng-model="apmic.place.city" placeholder="city" maxlength="35" size="35"></br>
         State: <span class="space"></span>
           <input type="radio" name="state" ng-model="apmic.place.state" value="MN">  MN<span class="space"></span>
-          <input type="radio" name="state" ng-model="apmic.state" value="WI">  WI</br>
+          <input type="radio" name="state" ng-model="apmic.place.state" value="WI">  WI</br>
         Zip: <input type="text" ng-model="apmic.place.zipcode" placeholder="zip code" maxlength="10" size="10"></br>
         Phone: <input type="text" ng-model="apmic.place.phone" placeholder="phone i.e. 715-555-1111" maxlength="15" size="15"></br>
         Website: <input type="text" ng-model="apmic.place.website" placeholder="website i.e. newplace.com" maxlength="85" size="68"></br>

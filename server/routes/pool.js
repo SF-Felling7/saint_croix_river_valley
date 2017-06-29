@@ -112,7 +112,7 @@ router.put( '/editPlace/', function ( req, res ){
   });  // end pool
 }); //end put
 
-router.post( '/addAdmin', function ( req, res ){
+router.post( '/admin', function ( req, res ){
   console.log( 'hit addAdmin' );
     pool.connect( function( err, connection, done ){
       //check if there was an Error
@@ -134,5 +134,77 @@ router.post( '/addAdmin', function ( req, res ){
       } // end no error
     }); //end pool
 });
+
+router.get( '/admin', function ( req, res ){
+  console.log( 'hit get admin route' );
+    pool.connect( function( err, connection, done ){
+      //check if there was an Error
+      if( err ){
+        console.log( err );
+        // respond with PROBLEM!
+        res.sendStatus( 500 );
+      }// end Error
+      else{
+        console.log('in get admins');
+        connection.query( "SELECT * FROM admins", function(err, result) {
+            if(err) {
+              console.log('Error selecting locations', err);
+              res.sendStatus(500);
+            } else {
+              res.send(result);
+            }
+        } );
+      } // end no error
+    }); //end pool
+});
+
+router.delete( '/admin/:id', function ( req, res ){
+  console.log( 'hit delete admin' );
+    pool.connect( function( err, connection, done ){
+      //check if there was an Error
+      if( err ){
+        console.log( err );
+        // respond with PROBLEM!
+        res.sendStatus( 500 );
+      }// end Error
+      else{
+        console.log('connected to db');
+        console.log('req.params.id: ', req.params.id);
+        connection.query( "DELETE FROM admins WHERE id = $1" , [req.params.id] , function(err, result) {
+            if(err) {
+              console.log('Error selecting locations', err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+        } );
+      } // end no error
+    }); //end pool
+});
+
+router.put( '/admin/', function ( req, res ){
+  console.log( 'hit edit admin' );
+  pool.connect( function( err, connection, done ){
+    //check if there was an Error
+    if( err ){
+      console.log( err );
+      // respond with PROBLEM!
+      res.sendStatus( 500 );
+    }// end Error
+    else{
+      console.log('connected to db');
+      console.log('req.body', req.body);
+      // need to revise to edit
+      connection.query( "UPDATE admins SET email=$1, admin=$2 WHERE id=" + req.body.id, [req.body.email, req.body.admin] , function(err, result) {
+        if(err) {
+          console.log('Error selecting locations', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    }
+  });  // end pool
+}); //end put
 
 module.exports = router;

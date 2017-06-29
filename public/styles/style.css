@@ -448,7 +448,7 @@ input {
   text-align: center;
 }
 
-#adminBtn{
+.adminBtn{
   display: inline block;
   margin-left: 25px;
 }
