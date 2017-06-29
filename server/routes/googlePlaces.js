@@ -29,8 +29,10 @@ request('https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + re
     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
     var placeInfo = JSON.parse(body);
     console.log(placeInfo.results[0]);
-    console.log('PHOTO REFERENCE:',placeInfo.results[0].photos[0].photo_reference);
-
+    // console.log('PHOTO REFERENCE:',placeInfo.results[0].photos[0].photo_reference);
+    if (placeInfo.results[0].photos===undefined) {
+      res.send(' ');
+    } else {
     // 3. CREATE HTTP REQUEST WITH PHOTO REFERENCE
     var photodata = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference=' + placeInfo.results[0].photos[0].photo_reference + '&key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso';
     console.log("SAVE THIS TO DB AS PHOTO LINK",photodata);
@@ -42,7 +44,7 @@ request('https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + re
           console.log('/////////////////////////////REQUEST TO GET IMAGE URL//////////////////////', response.request.href);
           res.send(response.request.href);//RETURN TO CLIENT!
         }); // end request to get specif url (4)
-
+      }
   });//end request to get ohoto reference (2)
 
 });//end request to get basic info on original search (1)
