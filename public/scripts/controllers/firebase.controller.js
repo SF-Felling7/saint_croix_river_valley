@@ -272,7 +272,7 @@ myApp.controller( 'AddAdmin', [ '$uibModalInstance', '$uibModal','$http', functi
     }).then(function success( response ){
       console.log('response: ', response);
       document.getElementById('addAdminForm').reset();
-      if (response.status === 200){
+      if (response.status === 201){
         swal("Success!", "You added an admin!", "success");
           $uibModalInstance.close();
       } else {

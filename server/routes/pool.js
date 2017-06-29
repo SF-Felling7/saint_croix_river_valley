@@ -112,4 +112,27 @@ router.put( '/editPlace/', function ( req, res ){
   });  // end pool
 }); //end put
 
+router.post( '/addAdmin', function ( req, res ){
+  console.log( 'hit addAdmin' );
+    pool.connect( function( err, connection, done ){
+      //check if there was an Error
+      if( err ){
+        console.log( err );
+        // respond with PROBLEM!
+        res.sendStatus( 500 );
+      }// end Error
+      else{
+        console.log('in add admin-->adding admin:', req.body.email);
+        connection.query( "INSERT INTO admins (email, admin) VALUES ($1, $2)", [req.body.email, req.body.admin] , function(err, result) {
+            if(err) {
+              console.log('Error selecting locations', err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(201);
+            }
+        } );
+      } // end no error
+    }); //end pool
+});
+
 module.exports = router;
