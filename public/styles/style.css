@@ -324,6 +324,7 @@ i {
   color: blue;
 }
 
+
 /*.dropdown-content {
   display: none;
   position: absolute;
@@ -437,4 +438,17 @@ input {
 #logo:hover {
   border: solid 3px green;
   border-radius: 10px;
+}
+
+.types_select {
+  width: 250px;
+}
+
+.adminHeader {
+  text-align: center;
+}
+
+.adminBtn{
+  display: inline block;
+  margin-left: 25px;
 }

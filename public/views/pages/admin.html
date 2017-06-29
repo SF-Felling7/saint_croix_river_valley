@@ -1,24 +1,32 @@
-<h1>Admin Login</h1>
-<h1>Welcome {{fc.secretData}}, to St. Croix Valley Interactive Map</h1>
+<div class="jumbotron">
+  <h1 class="adminHeader">St. Croix Valley Regional Tourism Alliance</h1>
+  <h2 class="adminHeader">Interactive Map Admin Page</h2><br>
+  <p class="adminHeader" ng-show="fc.loggedIn">Welcome, {{fc.adminName}}!
+  <button class="btn btn-warning adminBtn" ng-click="fc.addAdmin()" ng-show="fc.loggedIn">Add Admin</button>
+  <button class="btn btn-warning adminBtn" ng-click="fc.editAdmin()" ng-show="fc.loggedIn">Edit/Delete Admin</button>
+  <button class="btn btn-danger adminBtn" ng-click="fc.logOut()" ng-show="fc.loggedIn">Log Out</button></p>
+</div>
 
-<div ng-hide="fc.loggedIn">
-  <div id="adminLogin">
-    <h4>email:</h4>
-    <input type="text" ng-model="fc.email">
-    <h4>password: </h4>
-    <input type="password" ng-model="fc.password"><br><br>
+<div class="container">
+  <div ng-hide="fc.loggedIn">
+    <div id="adminLogin">
+      <h4>email:</h4>
+      <input type="text" ng-model="fc.email">
+      <h4>password: </h4>
+      <input type="password" ng-model="fc.password"><br><br>
 
-    <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> <span class="space"></span>or<span class="space"></span>
-    <button id="signInGoogle" class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" alt="Submit"> Sign in with Google</button><br><br>
-    <h5> Not registered? </h5>
-    <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
+
+      <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> <span class="space"></span>or<span class="space"></span>
+      <button id="signInGoogle" class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" alt="Submit"> Sign in with Google</button><br><br>
+      <h5> Not registered? </h5>
+      <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
+    </div>
+
   </div>
 </div>
 
-<button class="btn" ng-click="fc.logOut()" ng-hide="fc.loggedOut">Log Out</button>
 
 <div class="container" ng-show="fc.loggedIn">
-
   <div id="adminLanding">
     <div class="form-group col-sm-3 col-sm-offset-2">
       <label for="places" class="form-label">Places:</label>
@@ -27,7 +35,7 @@
         <option name="addPlace">Add Place</option>
         <option name="editDeletePlace">Edit/Delete Place</option>
       </select>
-      <button ng-click="fc.adminPlace(fc.place)" class="btn submitbutton btn-success" type="submit" value="Submit">Go!</button>
+      <button ng-click="fc.adminPlace(fc.place)" class="btn submitbutton" type="submit" value="Submit">Go!</button>
     </div>
 
     <div class="form-group col-sm-3 col-sm-offset-1">
@@ -37,13 +45,59 @@
         <option name="addTrip">Add Trip</option>
         <option name="editDeleteTrip">Edit/Delete Trip</option>
       </select>
-      <button ng-click="fc.adminTrip(fc.trip)" class="btn submitbutton btn-success" type="submit" value="Submit">Go!</button>
+      <button ng-click="fc.adminTrip(fc.trip)" class="btn submitbutton" type="submit" value="Submit">Go!</button>
     </div>
   </div>
-
 </div>
 
-<!-- add place modal -->
+<!-- add admin modal -->
+<div class="add-admin-modal container">
+  <script type="text/ng-template" id="addAdmin.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{aa.addAdminTitle}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <form id="addAdminForm">
+        Name: <input type="text" ng-model="aa.email" placeholder="email address" maxlength="50" size="50"></br>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" type="button" ng-click="aa.cancel()">Cancel/Close</button>
+      <button class="btn btn-primary" type="button" ng-click="aa.addAdminUser(aa.email)">Add Admin</button>
+    </div>
+  </script>
+</div>
+
+<!-- edit / delete admin modal -->
+<div class="edit-delete-admin-modal container">
+  <script type="text/ng-template" id="editAdmin.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{ea.editAdminTitle}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <table ng-hide="ea.edit">
+        <tr ng-repeat="admin in ea.allAdmins">
+          <td>{{admin.email}}</td>
+          <td><button class="btn btn-primary" type="button" ng-click="ea.editInPlace(admin)">Edit Admin</button></td>
+          <td><button class="btn btn-danger" type="button" ng-click="ea.delete(admin.id)">Delete Admin</button></td>
+        </tr>
+      </table>
+    </div>
+    <div class="container" ng-show="ea.edit">
+      Locations ID: {{ea.admin.id}}</br>
+      Email: <input type="text" ng-model="ea.admin.email" maxlength="50" size="50"></br>
+      Admin Privileges?<span class="space"></span>
+        <input type="radio" name="admin" ng-model="ea.admin.admin" ng-value="true">  YES<span class="space"></span>
+        <input type="radio" name="admin" ng-model="ea.admin.admin" ng-value="false">  NO</br>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" type="button" ng-click="ea.cancel()">Cancel/Close</button>
+      <button class="btn btn-primary" type="button" ng-click="ea.saveEdits(ea.admin)">Make Admin Changes</button>
+    </div>
+  </script>
+</div>
+
+<!-- add location modal -->
 <div class="add-place-modal container">
   <script type="text/ng-template" id="addPlaceModalContent.html">
     <div class="modal-header">
@@ -51,26 +105,34 @@
     </div>
     <div class="modal-body" id="modal-body">
       <form id="addPlaceForm">
-        Name: <input type="text" ng-model="apmic.place.name" placeholder="place name" maxlength="85" size="70"></br>
-        Street: <input type="text" ng-model="apmic.place.street" placeholder="street address" maxlength="85" size="70"></br>
+        Name: <input type="text" ng-model="apmic.place.name" placeholder="place name" maxlength="85" size="85"></br>
+        Street: <input type="text" ng-model="apmic.place.street" placeholder="street address" maxlength="85" size="85"></br>
         City: <input type="text" ng-model="apmic.place.city" placeholder="city" maxlength="35" size="35"></br>
+
         State: <span class="space"></span>
           <input type="radio" name="state" ng-model="apmic.place.state" value="MN">  MN<span class="space"></span>
-          <input type="radio" name="state" ng-model="apmic.state" value="WI">  WI</br>
+          <input type="radio" name="state" ng-model="apmic.place.state" value="WI">  WI</br>
+
         Zip: <input type="text" ng-model="apmic.place.zipcode" placeholder="zip code" maxlength="10" size="10"></br>
         Phone: <input type="text" ng-model="apmic.place.phone" placeholder="phone i.e. 715-555-1111" maxlength="15" size="15"></br>
-        Website: <input type="text" ng-model="apmic.place.website" placeholder="website i.e. newplace.com" maxlength="85" size="68"></br>
-        <!-- ImageUrl: <input type="text" ng-model="apmic.place.imageurl" placeholder="website i.e. googleimageurl.com" maxlength="2000" size="68"></br> -->
-        Description: <input type="text" ng-model="apmic.place.description" placeholder="description" maxlength="1400" size="78"></br>
-        Place Type: <span class="space"></span>
-          <input type="radio" ng-model="apmic.place.types_id" value="1">  Dining<span class="space"></span>
-          <input type="radio" ng-model="apmic.place.types_id" value="2">  Shopping<span class="space"></span>
-          <input type="radio" ng-model="apmic.place.types_id" value="3">  Nature<span class="space"></span>
-          <input type="radio" ng-model="apmic.place.types_id" value="4">  Lodging</br>
+        Website: <input type="text" ng-model="apmic.place.website" placeholder="website i.e. newplace.com" maxlength="85" size="85"></br>
+        Description: <input type="text" ng-model="apmic.place.description" placeholder="description" maxlength="1400" size="400"></br>
+        Type: <input type="radio" ng-model="apmic.place.types_id" value="1">Dining</br>
+          <input type="radio" ng-model="apmic.place.types_id" value="2">Shopping</br>
+          <input type="radio" ng-model="apmic.place.types_id" value="3">Nature</br>
+          <input type="radio" ng-model="apmic.place.types_id" value="4">Lodging</br>
+
       </form>
+      <div ng-show="apmic.success">
+        {{apmic.successMessage}}
+      </div>
+      <div ng-show="apmic.failed">
+        {{apmic.failedMessage}}
+      </div>
+
     </div>
     <div class="modal-footer">
-      <button class="btn btn-danger" type="button" ng-click="apmic.cancel()">Cancel/Close</button>
+      <button class="btn btn-warn" type="button" ng-click="apmic.cancel()">Cancel/Close</button>
       <button class="btn btn-primary" type="button" ng-click="apmic.addNewPlace(apmic.place)">Add Place</button>
     </div>
   </script>
@@ -80,10 +142,22 @@
 <div class="edit-delete-place-modal container">
   <script type="text/ng-template" id="editDeletePlaceModal.html">
     <div class="modal-header">
-      <h3 class="modal-title title" id="modal-title">{{edp.title}}</h3>
+      <h3 class="modal-title title" id="modal-title">{{edp.title}}<span ng-show="edp.typeSelected"> - {{edp.placeType}}</h3>
     </div>
     <div class="modal-body" id="modal-body">
-      <table ng-hide="edp.edit">
+      <div ng-hide="edp.typeSelected">
+        <label for="places">Select a Category:</label>
+        <select ng-model="edp.types_id" class="form-control types_select">
+          <option value="" disabled selected class="types_select">Select</option>
+          <option value="1" name="Dining" class="types_select">Dining</option>
+          <option value="2" name="Shopping" class="types_select">Shopping</option>
+          <option value="3" name="Nature" class="types_select">Nature</option>
+          <option value="4" name="Lodging" class="types_select">Lodging</option>
+        </select>
+        <button ng-click="edp.selectType(edp.types_id)" class="btn submitbutton btn-success" type="submit" value="Submit">Go!</button>
+      </div>
+
+      <table ng-show="edp.typeSelected" ng-hide="edp.edit">
         <tr ng-repeat="place in edp.allPlaces">
           <td ng-model="$parent.selected">{{place.name}}</td>
           <td><button class="btn btn-primary" type="button" ng-click="edp.editInPlace(place)">Edit Place</button></td>
@@ -96,8 +170,8 @@
         Street: <input type="text" ng-model="edp.place.street" maxlength="85" size="70"></br>
         City: <input type="text" ng-model="edp.place.city" maxlength="35" size="35"></br>
         State:<span class="space"></span>
-          <input type="radio" name='state' ng-model="edp.place.state" ng-value="MN">  MN<span class="space"></span>
-          <input type="radio" name='state' ng-model="edp.place.state" ng-value="WI">  WI</br>
+          <input type="radio" name="state" ng-model="edp.place.state" ng-value="MN">  MN<span class="space"></span>
+          <input type="radio" name="state" ng-model="edp.place.state" ng-value="WI">  WI</br>
         Zip Code: <input type="text" ng-model="edp.place.zipcode" maxlength="10" size="10"></br>
         Phone: <input type="text" ng-model="edp.place.phone" maxlength="15" size="15"></br>
         Website: <input type="text" ng-model="edp.place.website" maxlength="85" size="68"></br>
@@ -112,8 +186,8 @@
         <input type="radio" ng-model="edp.place.types_id" ng-value="4">  Lodging</br>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-success" type="button" ng-click="edp.saveEdits(edp.place)">Save Edits</button>
+    <div class="modal-footer" ng-show="edp.typeSelected">
+      <button class="btn btn-success" type="button" ng-show="edp.edit" ng-click="edp.saveEdits(edp.place)">Save Edits</button>
       <button class="btn btn-danger" type="button" ng-click="edp.cancel()">Cancel/Close</button>
     </div>
   </script>
@@ -126,21 +200,56 @@
       <h3 class="modal-title title" id="modal-title">{{atmic.addTripTitle}}</h3>
     </div>
     <div class="modal-body" id="modal-body">
+      <div>
+          Name:<input type="text" ng-model="atmic.trip.name"/>
+          Description:<input type="text" ng-model="atmic.trip.description"/><br><br>
+       </div>
+       <div>
+         <p>Trip Places (in order):</p>
+         <ol>
+           <li ng-repeat="place in atmic.checkedPlaces track by $index">{{place.name}}</li>
+         </ol>
+       </div>
       <ul>
         <li ng-repeat="place in atmic.allPlaces">
           <label><input type='checkbox' ng-checked="atmic.checkedPlaces.indexOf(place) != -1" ng-click="atmic.toggleCheck(place)" /> {{place.name}}</label>
         </li>
-        <div>
-          <p>Trip Places (in order):</p>
-          <ol>
-            <li ng-repeat="place in atmic.checkedPlaces">{{place.name}}</li>
-          </ol>
-        </div>
+
       </ul>
+      <div ng-show="atmic.success">
+        {{atmic.successMessage}}
+      </div>
+      <div ng-show="atmic.failed">
+        {{atmic.failedMessage}}
+      </div>
+
     </div>
     <div class="modal-footer">
-      <button class="btn btn-danger" type="button" ng-click="atmic.cancel()">Cancel/Close</button>
-      <button class="btn btn-primary" type="button" ng-click="atmic.addNewPlace(apmic.place)">Add Trip</button>
+      <button class="btn btn-warn" type="button" ng-click="atmic.cancel()">Cancel/Close</button>
+
+      <button class="btn btn-primary" type="button" ng-click="atmic.submitTrip(atmic.trip)">Add Trip</button>
+
+    </div>
+  </script>
+</div>
+
+<!-- edit / delete trip modal -->
+<div class="edit-delete-trip-modal container">
+  <script type="text/ng-template" id="editDeleteTripModal.html">
+    <div class="modal-header">
+      <h3 class="modal-title title" id="modal-title">{{edt.editDeleteTripTitle}}</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <select ng-model="edt.trip">
+        <option value="" disabled selected>Select Trip</option>
+        <option value="Wine Tour" selected>Wine Tour</option>
+        <option ng-repeat="trip in edt.allTrips" name="trip">{{trip.name}}</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" type="button" ng-click="edt.changeTrip(edt.trip)">Go!</button>
+      <!-- <button class="btn btn-danger" type="button" ng-click="edt.cancel()">Cancel/Close</button>
+      <button class="btn btn-primary" type="button" ng-click="">Save Trip Changes</button> -->
     </div>
   </script>
 </div>

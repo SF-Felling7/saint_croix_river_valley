@@ -19,7 +19,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   NgMap.getMap().then(function(map) {
     vm.map = map;
-
   });
 
   vm.clicked = function(place, size, parentSelector) {
@@ -104,12 +103,10 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
           case 4:
             vm.lodgingPins.push(allPins[i]);
             break;
-          }
+        }
       }
-
-
     }); //ending success
-  }; //ending dining function
+  }; //ending get allPins function
   vm.getAllPins();
 
   vm.toggleDining = function() {

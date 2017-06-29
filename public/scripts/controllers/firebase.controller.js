@@ -5,10 +5,10 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
   self.loggedIn = false;
   self.loggedOut = true;
 
-//Register with email and password
-  self.registerWithEmail = function(email, password){
-    if (!email || !password){
-      alert ('email and password required to register');
+  //Register with email and password
+  self.registerWithEmail = function(email, password) {
+    if (!email || !password) {
+      alert('email and password required to register');
       return console.log('email and password required!');
     }
     console.log('registering:', email, password);
@@ -20,103 +20,171 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log("sign in error", error);
-      if (error){
-      self.loggedIn = false;
-      self.loggedOut = true;
+      if (error) {
+        self.loggedIn = false;
+        self.loggedOut = true;
       }
-      alert ('please use a valid email and password that is at least 6 characters long');
+      alert('please use a valid email and password that is at least 6 characters long');
     });
-  };//end register and sign in with email
+  }; //end register and sign in with email
 
-//Sign in with Email
-  self.signInWithEmail = function (email, password){
-      if (!email || !password){
-        alert ('email and password required');
-        return console.log('email and password required!');
-      }
-      console.log('signing in with:', email, password);
+
+  //Sign in with Email
+  self.signInWithEmail = function(email, password) {
+    if (!email || !password) {
+      alert('email and password required');
+      return console.log('email and password required!');
+    }
+    console.log('signing in with:', email, password);
 
     auth.$signInWithEmailAndPassword(email, password).then(function(firebaseUser) {
       console.log('firebaseUser: ', firebaseUser);
       console.log("Firebase Authenticated as: ", firebaseUser.email, firebaseUser.uid);
-      if(firebaseUser) {
-      self.loggedIn = true;
-      self.loggedOut = false;
+      if (firebaseUser) {
+        self.loggedIn = true;
+        self.loggedOut = false;
       }
 
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
-      alert ('user not found');
+      alert('user not found');
     });
-  };//end sign in with email
+  }; //end sign in with email
 
   //sign in with google!!
   // This code runs whenever the user logs in
-  self.logIn = function(){
+  self.logIn = function() {
     auth.$signInWithPopup("google").then(function(firebaseUser) {
       console.log(firebaseUser);
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName, firebaseUser.user.uid);
-      if(firebaseUser) {
-      self.loggedIn = true;
-      self.loggedOut = false;
+      if (firebaseUser) {
+        self.loggedIn = true;
+        self.loggedOut = false;
       }
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
     });
-  };//end sign in with google
+  }; //end sign in with google
 
   // This code runs whenever the user changes authentication states
   // e.g. whevenever the user logs in or logs out
   // this is where we put most of our logic so that we don't duplicate
   // the same things in the login and the logout code
-  auth.$onAuthStateChanged(function(firebaseUser){
+  auth.$onAuthStateChanged(function(firebaseUser) {
     // firebaseUser will be null if not logged in
-    if(firebaseUser) {
+    if (firebaseUser) {
       // This is where we make our call to our server
-      firebaseUser.getToken().then(function(idToken){
+      firebaseUser.getToken().then(function(idToken) {
         $http({
           method: 'GET',
           url: '/privateData',
           headers: {
             id_token: idToken
           }
-        }).then(function(response){
-          self.secretData = response.data;
+
+        }).then(function(response) {
+          self.adminName = response.data;
+
         }).catch(function(error){
           self.logOut();
           console.log("login error: not an admin");
-          alert("Sorry! you do not have admin status!");
+          alert("Sorry! You do not have admin status!");
         });
       });
     } else {
       console.log('Not logged in or not authorized.');
-      self.secretData = "Log in to get some secret data.";
     }
   });
 
   // This code runs when the user logs out
-  self.logOut = function(){
-    auth.$signOut().then(function(){
+  self.logOut = function() {
+    auth.$signOut().then(function() {
       console.log('Logging the user out!');
       self.loggedIn = false;
       self.loggedOut = true;
     });
   };
+//end firebase  functions
 
-//end firebase functions
+self.addAdmin = function(size, parentSelector){
+  console.log('clicked add admin button');
+  var parentElem = parentSelector;
+  var modalInstance = $uibModal.open({
+    animation: self.animationsEnabled,
+    ariaLabelledBy: 'modal-title',
+    ariaDescribedBy: 'modal-body',
+    templateUrl: 'addAdmin.html',   // HTML in the admin.html template
+    controller: 'AddAdmin',
+    controllerAs: 'aa',
+    size: size,
+    appendTo: parentElem,
+    resolve: {
+    }
+  });  // end add admin modalInstance
+};
 
+self.editAdmin = function(size, parentSelector){
+  console.log('clicked edit / delete admin button');
+  $http({
+    method: 'GET',
+    url: '/pool/admin'
+  }).then(function success(response) {
+    console.log('getting all admins', response);
+    self.allAdmins = response.data.rows;
+    console.log('self.allAdmins: ', self.allAdmins);
+    allAdmins = self.allAdmins;
+    var parentElem = parentSelector;
+    var modalInstance = $uibModal.open({
+      animation: self.animationsEnabled,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'editAdmin.html',   // HTML in the admin.html template
+      controller: 'EditAdmin',
+      controllerAs: 'ea',
+      size: size,
+      appendTo: parentElem,
+      resolve: {
+        allAdmins: function() {
+          return allAdmins;
+        },
+      }
+    });  // end add admin modalInstance
+  });
+};
+
+self.diningPins = [];
+self.lodgingPins = [];
+self.naturePins = [];
+self.shoppingPins = [];
 
 // Admin Place function
   self.adminPlace = function(place, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin places button clicked for action: ', place);
-    $http ({
+    $http({
       method: 'GET',
-      url: '/pool/getPlaces'
-    }).then(function success( response ){
-      self.allPlaces = response.data;
-      console.log('getting all places: ', self.allPlaces);
-      allPlaces = self.allPlaces;
+      url: '/locations/getAllPins'
+    }).then(function success(response) {
+      console.log('getting all pins', response);
+      self.allPins = response.data;
+      console.log('self.allPins: ', self.allPins);
+      allPins = self.allPins;
+      for (var i = 0; i < allPins.length; i++) {
+        switch (allPins[i].types_id) {
+          case 1:
+            self.diningPins.push(allPins[i]);
+            break;
+          case 2:
+            self.shoppingPins.push(allPins[i]);
+            break;
+          case 3:
+            self.naturePins.push(allPins[i]);
+            break;
+          case 4:
+            self.lodgingPins.push(allPins[i]);
+            break;
+        }
+      }
       if (place === 'Add Place') {
         var modalInstance = $uibModal.open({
           animation: self.animationsEnabled,
@@ -141,11 +209,23 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
           size: size,
           appendTo: parentElem,
           resolve: {
-            allPlaces: function() {
-              return allPlaces;
-            }
+            allPins: function() {
+              return allPins;
+            },
+            diningPins: function() {
+              return self.diningPins;
+            },
+            shoppingPins: function() {
+              return self.shoppingPins;
+            },
+            naturePins: function() {
+              return self.naturePins;
+            },
+            lodgingPins: function() {
+              return self.lodgingPins;
+            },
           }
-        });  // end edit delete modal Instance
+        });  // end edit delete place modal Instance
       }
 
     });//ending success
@@ -156,42 +236,202 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
 
-    $http ({
+    $http({
       method: 'GET',
       url: '/pool/getPlaces'
-    }).then(function success( response ){
+    }).then(function success(response) {
       self.allPlaces = response.data;
       console.log('getting all places: ', self.allPlaces);
       allPlaces = self.allPlaces;
 
-      var modalInstance = $uibModal.open({
-        animation: self.animationsEnabled,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: 'addTripModalContent.html',
-        controller: 'AddTripModalInstanceController',
-        controllerAs: 'atmic',
-        size: size,
-        appendTo: parentElem,
-        resolve: {
-          allPlaces: function() {
-            return allPlaces;
+      // important--yet to do!
+      // likely also need to run a getTrips $http call here and assign to self.allTrips then declare allTrips=self.allTrips so it can be passed through in resolve
+
+      if (trip === 'Add Trip'){
+        var modalInstance = $uibModal.open({
+          animation: self.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'addTripModalContent.html',
+          controller: 'AddTripModalInstanceController',
+          controllerAs: 'atmic',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+            allPlaces: function() {
+              return allPlaces;
+            }
           }
-        }
-      });  // end modalInstance
-    });//ending success
+      });  // end add trip modal Instance
+      } else {
+        var editDeleteModalInstance = $uibModal.open({
+          animation: self.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'editDeleteTripModal.html',   // HTML in the admin.html template
+          controller: 'EditDeleteTrip',
+          controllerAs: 'edt',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+            allPlaces: function() {
+              return allPlaces;
+            }
+          }
+        });  // end edit delete place modal Instance
+      }  // end else
+    });//ending then success
   }; // end adminTrip
-});//end controller
+
+});  // end firebase controller
+
+
+// add admin modal controller
+myApp.controller( 'AddAdmin', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
+  var vm = this;
+  vm.addAdminTitle = 'Add an Admin';
+
+  //Add Place function
+  vm.addAdminUser = function(email){
+    console.log('email: ', email);
+    if (email===undefined) {
+      swal("Email address not entered.", "Admin was not created. Try again.");
+      $uibModalInstance.dismiss('cancel');
+    }
+    var itemToSend = {
+      email: email,
+      admin: true
+    };
+    $http ({
+      method: 'POST',
+      url: '/pool/admin',
+      data: itemToSend
+    }).then(function success( response ){
+      console.log('response: ', response);
+      document.getElementById('addAdminForm').reset();
+      if (response.status === 201){
+        swal("Success!", "You added an admin!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Admin was not created. Try again.");
+        }
+    });//ending success
+  };//end add admin user
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+}]); // end Add Admin ModalInstanceController
+
+// edit admin controller
+myApp.controller( 'EditAdmin', [ '$uibModalInstance', '$uibModal','$http', 'allAdmins', function ( $uibModalInstance, $uibModal, $http, allAdmins) {
+  var vm = this;
+  vm.editAdminTitle = 'Edit or Delete an Admin';
+  vm.allAdmins = allAdmins;
+
+  //Edit/Delete Admin function
+  vm.editAdminUser = function(email){
+    console.log('email: ', email);
+
+    var itemToSend = {
+      id: id,
+      email: email,
+      admin: true
+    };
+    $http ({
+      method: 'PUT',
+      url: '/pool/admin',
+      data: itemToSend
+    }).then(function success( response ){
+      console.log('response: ', response);
+      // document.getElementById('addAdminForm').reset();
+      if (response.status === 200){
+        swal("Success!", "Your changes were submitted!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Admin changes were not submitted. Try again.");
+        }
+    });//ending success
+  };//end add admin user
+
+  vm.edit = false;
+  vm.editInPlace = function(admin) {
+    vm.edit = true;
+    vm.admin = admin;
+    console.log('vm.admin: ', vm.admin);
+  };
+
+  vm.saveEdits = function(admin) {
+    console.log('edited admin to submit to db', admin);
+    var editsToSend = {
+      id: admin.id,
+      email: admin.email,
+      admin: admin.admin,
+    };
+    $http ({
+      method: 'PUT',
+      url: '/pool/admin',
+      data: editsToSend
+    }).then(function success( response ){
+      console.log('response: ', response);
+      vm.edit = false;
+      // maybe add an if/else statement here to display a success message if response of 200 is received
+      if (response.status === 200){
+        swal("Success!", "Your changes were submitted to the database!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+      }
+    });//ending success
+  };//end save edits for place
+
+  vm.delete = function(id) {
+    console.log('id to delete', id);
+    swal({
+      title: "Are you sure?",
+      text: "This will remove this admin from the database!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    },
+    function(){
+      $http ({
+        method: 'DELETE',
+        url: '/pool/admin/' + id
+      }).then(function success( response ){
+        console.log('response: ', response);
+        // maybe add an if/else statement here to display a success message if response of 201 is received
+        if (response.status === 200){
+          swal("Deleted!", "The admin was been deleted.", "success");
+            $uibModalInstance.close();
+        } else {
+          swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+        }
+      }
+    );//ending success
+  });
+};//end delete Item
+
+  vm.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+}]); // end edit delete Admin ModalInstanceController
 
 
 // modal controller
-myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
+myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibModal', '$http', function($uibModalInstance, $uibModal, $http) {
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
 
   //Add Place function
   vm.addNewPlace = function(place){
+
     var itemToSend = {
+
       name: place.name,
       description: place.description,
       street: place.street,
@@ -275,10 +515,48 @@ myApp.controller( 'AddPlaceModalInstanceController', [ '$uibModalInstance', '$ui
 }]); // end AddPlaceModalInstanceController
 
 // edit delete place modal controller
-myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPlaces', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPlaces, $routeParams ) {
+myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPins', 'diningPins', 'shoppingPins', 'naturePins', 'lodgingPins', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPins, diningPins, shoppingPins, naturePins, lodgingPins, $routeParams ) {
   var vm = this;
   vm.title = 'Edit or Delete a Place';
-  vm.allPlaces = allPlaces;
+  // vm.allPlaces = allPlaces;
+  vm.allPins = allPins;
+  vm.diningPins = diningPins;
+  vm.shoppingPins = shoppingPins;
+  vm.naturePins = naturePins;
+  vm.lodgingPins = lodgingPins;
+  vm.typeSelected = false;
+  vm.placeType='';
+  vm.placeIcon='';
+
+  vm.selectType = function (types_id){
+    console.log('types_id: ', types_id);
+    switch (types_id) {
+      case '1':
+        vm.allPlaces = vm.diningPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Dining';
+        vm.placeIcon = 'fa-cutlery';
+        break;
+      case '2':
+        vm.allPlaces = vm.shoppingPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Shopping';
+        vm.placeIcon = 'fa-shopping-bag';
+        break;
+      case '3':
+        vm.allPlaces = vm.naturePins;
+        vm.typeSelected = true;
+        vm.placeType = 'Nature';
+        vm.placeIcon = 'fa-tree';
+        break;
+      case '4':
+        vm.allPlaces = vm.lodgingPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Lodging';
+        vm.placeIcon = 'fa-bed';
+        break;
+    }
+  };
 
   vm.delete = function(id) {
     console.log('id to delete', id);
@@ -352,14 +630,14 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
   };//end save edits for place
 
 
-  vm.cancel = function () {
+  vm.cancel = function() {
     $uibModalInstance.dismiss('cancel');
   };
 
 }]); // end Edit Delete PlaceModalInstanceController
 
 // add trip modal controller
-myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
+myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibModal', 'allPlaces', '$http', function($uibModalInstance, $uibModal, allPlaces, $http) {
   var vm = this;
   vm.allPlaces = allPlaces;
   vm.addTripTitle = 'Add a Trip';
@@ -369,12 +647,55 @@ myApp.controller( 'AddTripModalInstanceController', [ '$uibModalInstance', '$uib
   vm.failedMessage = 'Uh-oh!  New trip failed to be added to database.  Try again.';
 
   vm.checkedPlaces = [];
-  vm.toggleCheck = function (place) {
-      if (vm.checkedPlaces.indexOf(place) === -1) {
-          vm.checkedPlaces.push(place);
+  vm.toggleCheck = function(place) {
+    if (vm.checkedPlaces.indexOf(place) === -1) {
+      vm.checkedPlaces.push(place);
+    } else {
+      vm.checkedPlaces.splice(vm.checkedPlaces.indexOf(place), 1);
+    }
+  };
+
+  vm.submitTrip = function(trip) {
+    console.log('checked place ->', vm.checkedPlaces);
+    console.log( 'trip', trip );
+    console.log('place ->', vm.checkedPlaces);
+    var tripToSend = {
+      name: trip.name,
+      description: trip.description,
+      locations: vm.checkedPlaces
+    };
+    console.log('Trip to send ->', tripToSend);
+    $http({
+      method: 'POST',
+      url: '/pool/addTrip',
+      data: tripToSend
+    }).then(function success(response) {
+      console.log('response ->', response);
+      if (response.status === 200) {
+        swal("Success!", "You added a trip!", "success");
+        $uibModalInstance.dismiss('cancel');
       } else {
-          vm.checkedPlaces.splice(vm.checkedPlaces.indexOf(place), 1);
+        swal("Uh-oh!", "Your changes were not submitted. Try again.");
       }
+    }); //END of success
+  }; //ENDING sumbitTrip Function
+
+  vm.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+}]); // end AddTripModalInstanceController
+
+// edit / delete trip modal controller
+myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
+  var vm = this;
+  vm.allPlaces = allPlaces;
+  // vm.allTrips = allTrips;
+  vm.editDeleteTripTitle = 'Edit or Delete a Trip';
+
+  vm.changeTrip = function(trip){
+    console.log('trip');
+    console.log('Go! button selected to start edit/delete trip procedure');
+    // likely $http call here to get
   };
 
   vm.cancel = function () {
