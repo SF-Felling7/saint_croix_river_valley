@@ -6,14 +6,6 @@ var path = require('path');
 var pg = require ('pg');
 var pool = require('../modules/mainPool');
 
-// var config = {
-//   database: 'st-croix-valley',
-//   host: 'localhost',
-//   port: 5432,
-//   max: 20
-// }; // end config
-//
-// var pool = new pg.Pool( config );
 
 router.get( '/getPlaces', function ( req, res ){
   console.log( 'hit getPlaces' );
@@ -51,7 +43,7 @@ router.post( '/addPlace', function ( req, res ){
       else{
         console.log('in add place');
         console.log('adding place:', req.body);
-        connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, imageurl, latitude, longitude, types_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.imageurl, req.body.latitude, req.body.longitude, req.body.types_id] , function(err, result) {
+        connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, latitude, longitude, types_id, imageurl) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.latitude, req.body.longitude, req.body.types_id, req.body.imageurl] , function(err, result) {
             if(err) {
               console.log('Error selecting locations', err);
               res.sendStatus(500);
