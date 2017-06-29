@@ -422,10 +422,6 @@ myApp.controller( 'EditAdmin', [ '$uibModalInstance', '$uibModal','$http', 'allA
 }]); // end edit delete Admin ModalInstanceController
 
 
-}); //end controller
-
-
-
 // modal controller
 myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibModal', '$http', function($uibModalInstance, $uibModal, $http) {
   var vm = this;
