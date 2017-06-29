@@ -281,7 +281,11 @@ self.shoppingPins = [];
         });  // end edit delete place modal Instance
       }  // end else
     });//ending then success
+
+    
   }; // end adminTrip
+
+
 
 });  // end firebase controller
 
