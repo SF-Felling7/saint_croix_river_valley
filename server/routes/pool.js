@@ -6,39 +6,32 @@ var path = require('path');
 var pg = require ('pg');
 var pool = require('../modules/mainPool');
 
-// var config = {
-//   database: 'st-croix-valley',
-//   host: 'localhost',
-//   port: 5432,
-//   max: 20
-// }; // end config
-//
-// var pool = new pg.Pool( config );
-
+// get (all) places
 router.get( '/getPlaces', function ( req, res ){
   console.log( 'hit getPlaces' );
-    pool.connect( function( err, connection, done ){
-      //check if there was an Error
-      if( err ){
-        console.log( err );
-        // respond with PROBLEM!
-        res.sendStatus( 500 );
-      }// end Error
-      else{
-        console.log('connected to db');
-        // send query for lodging in the 'locations' table and grab everything with types_id 4
-        connection.query( "SELECT * FROM locations", function(err, result) {
-            if(err) {
-              console.log('Error selecting locations', err);
-              res.sendStatus(500);
-            } else {
-              res.send(result.rows);
-            }
-        } );
-      } // end no error
-    }); //end pool
-});
+  pool.connect( function( err, connection, done ){
+    //check if there was an Error
+    if( err ){
+      console.log( err );
+      // respond with PROBLEM!
+      res.sendStatus( 500 );
+    }// end Error
+    else{
+      console.log('connected to db');
+      // send query for everything in the 'locations' table and grab everything
+      connection.query( "SELECT * FROM locations", function(err, result) {
+        if(err) {
+          console.log('Error selecting locations', err);
+          res.sendStatus(500);
+        } else {
+          res.send(result.rows);
+        }
+      } );
+    } // end no error
+  }); //end pool
+});  // end get (all) places
 
+// post place
 router.post( '/addPlace', function ( req, res ){
   console.log( 'hit addPlace' );
     pool.connect( function( err, connection, done ){
@@ -61,32 +54,9 @@ router.post( '/addPlace', function ( req, res ){
         } );
       } // end no error
     }); //end pool
-});
+});  // end post place
 
-router.delete( '/deletePlace/:id', function ( req, res ){
-  console.log( 'hit delete place' );
-    pool.connect( function( err, connection, done ){
-      //check if there was an Error
-      if( err ){
-        console.log( err );
-        // respond with PROBLEM!
-        res.sendStatus( 500 );
-      }// end Error
-      else{
-        console.log('connected to db');
-        console.log('req.params.id: ', req.params.id);
-        connection.query( "DELETE FROM locations WHERE id = $1" , [req.params.id] , function(err, result) {
-            if(err) {
-              console.log('Error selecting locations', err);
-              res.sendStatus(500);
-            } else {
-              res.sendStatus(200);
-            }
-        } );
-      } // end no error
-    }); //end pool
-});
-
+// put (edit) place
 router.put( '/editPlace/', function ( req, res ){
   console.log( 'hit edit place' );
   pool.connect( function( err, connection, done ){
@@ -111,5 +81,66 @@ router.put( '/editPlace/', function ( req, res ){
     }
   });  // end pool
 }); //end put
+
+// delete place
+router.delete( '/deletePlace/:id', function ( req, res ){
+  console.log( 'hit delete place' );
+    pool.connect( function( err, connection, done ){
+      //check if there was an Error
+      if( err ){
+        console.log( err );
+        // respond with PROBLEM!
+        res.sendStatus( 500 );
+      }// end Error
+      else{
+        console.log('connected to db');
+        console.log('req.params.id: ', req.params.id);
+        connection.query( "DELETE FROM locations WHERE id = $1" , [req.params.id] , function(err, result) {
+            if(err) {
+              console.log('Error selecting locations', err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+        } );
+      } // end no error
+    }); //end pool
+});  // end delete place
+
+// post trip
+router.post( '/addTrip', function( req, res ) {
+  console.log( 'hit the addTrip ROUTE');
+
+  pool.connect( function( err, connection, done ){
+    //check if there was an Error
+    if( err ){
+      console.log( err );
+      // respond with PROBLEM!
+      res.sendStatus( 500 );
+    }// end Error
+    else{
+      connection.query( " INSERT INTO trips (name, description)  VALUES ( $1, $2 ) RETURNING id", [req.body.name, req.body.description],
+
+      function(err, result) {
+        if(err) {
+          console.log('Error selecting locations', err);
+          res.sendStatus(500);
+        } else {
+          for (var i = 0; i < req.body.locations.length; i++) {
+            connection.query("INSERT INTO locations_trips (locations_id, trips_id, stop_number) VALUES ($1, $2, $3)", [req.body.locations[i].id, result.rows[0].id, i + 1],
+            function (err, result) {
+              if(err) {
+                res.sendStatus(500);
+              }
+            });      // end second query function
+
+          } // end for loop
+          res.sendStatus(200);
+        } // end medium else
+      }); // end first query function
+    }  //ENDING  big ELSE
+
+  });//ENDING pool connect
+});  // end post trip
 
 module.exports = router;
