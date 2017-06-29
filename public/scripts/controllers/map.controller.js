@@ -16,6 +16,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.shoppingClass = 'navButton';
   vm.natureClass = 'navButton';
   vm.lodgingClass = 'navButton';
+  vm.tripsClass = 'navButton';
 
   NgMap.getMap().then(function(map) {
     vm.map = map;
@@ -183,6 +184,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       document.getElementById('mySidenav').style.width = '0%';
     } else {
       document.getElementById('mySidenav').style.width = '25%';
+    }
+    if (vm.tripsClass === 'navButton') {
+      vm.tripsClass = 'off';
+    } else {
+      vm.tripsClass = 'navButton';
     }
 
   };
