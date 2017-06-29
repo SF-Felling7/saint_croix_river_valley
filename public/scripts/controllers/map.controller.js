@@ -22,34 +22,10 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     vm.map = map;
   });
 
+// detailed place info modal
   vm.clicked = function(place, size, parentSelector) {
-    //use google place to search for place and return photo reference
-    // $http ({
-    //   method: 'GET',
-    //   url: 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso',
-    //   // params:{query: 200,
-    //   //       key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
-    //   //       }
-    // }).then(function success( response ){
-    //   console.log(response);
-    // });
-
-    // use google places to grab photos with returned photoreference
-    // $http ({
-    //   method: 'GET',
-    //   url: 'https://maps.googleapis.com/maps/api/place/photo',
-    //   params:{maxwidth: 200,
-    //             photoreference:'CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU',
-    //         key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
-    //         }
-    // }).then(function success( response ){
-    //   console.log(response);
-    // });
-
     var parentElem = parentSelector;
     console.log('link clicked to see more info on: ', place);
-
-
     var modalInstance = $uibModal.open({
       animation: self.animationsEnabled,
       ariaLabelledBy: 'modal-title',
@@ -157,25 +133,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     location.reload();
   };
 
-  var h = parseInt(window.innerHeight);
-  var w = parseInt(window.innerWidth);
-
-  vm.openRightOne = function() {
-    if (w <= 544) {
-      vm.openNav();
-    } else {
-      vm.openNavPush();
-    }
-  };
-
-  vm.closeRightOne = function() {
-    if (w <= 544) {
-      vm.closeNav();
-    } else {
-      vm.closeNavPush();
-    }
-  };
-
   // use this code if you want to slide on top of content
   vm.openNav = function() {
 
@@ -191,6 +148,15 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.tripsClass = 'navButton';
     }
 
+    $http({
+      method: 'GET',
+      url: '/pool/getTrips/'
+    }).then(function success(response) {
+      console.log('getting all trips', response);
+      vm.allTrips = response.data;
+      console.log('vm.allTrips: ', vm.allTrips);
+      allTrips = vm.allTrips;
+    });
   };
 
   /* Set the width of the side navigation to 0 */
