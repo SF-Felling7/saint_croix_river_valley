@@ -51,6 +51,14 @@
   border-radius: 10px;
 }
 
+ul li ul li {
+    display: none;
+}
+
+ul li:hover ul li {
+    display: block;
+}
+
 .gmap {
   width: 100%;
   text-align: center;
@@ -65,6 +73,10 @@ body {
 .fa {
   margin-right: 5px;
   margin-left: 5px;
+}
+
+i {
+  padding: 10px;
 }
 
 .marker {
@@ -120,9 +132,11 @@ body {
   border: solid 3px green;
 }
 
+.main {
+  padding: 20px;
+}
 
 /* The side navigation menu */
-
 .sidenav {
   height: 100%;
   /* 100% Full-height */
@@ -144,7 +158,6 @@ body {
   /* 0.5 second transition effect to slide in the sidenav */
 }
 
-
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {
   position: absolute;
@@ -154,11 +167,7 @@ body {
   margin-left: 50px;
 }
 
-.main {
-  padding: 20px;
-}
-
-.nav-side-menu {
+/*.nav-side-menu {
   overflow: auto;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
@@ -189,19 +198,6 @@ body {
   margin: 0px;
   line-height: 35px;
   cursor: pointer;
-  /*
-      .collapsed{
-         .arrow:before{
-                   font-family: FontAwesome;
-                   content: "\f053";
-                   display: inline-block;
-                   padding-left:10px;
-                   padding-right: 10px;
-                   vertical-align: middle;
-                   float:right;
-              }
-       }
-    */
 }
 
 
@@ -301,6 +297,9 @@ body {
     padding-left: 20px;
     line-height: 50px !important;
   }
+  .main {
+    padding: 0px;
+  }
 }
 
 @media (min-width: 767px) {
@@ -312,18 +311,14 @@ body {
   padding: 0px;
   font-family: 'Open Sans', sans-serif;
   width: 1100px;
-}
+}*/
 
 h1, h2, h3 {
   font-family: 'Sansita', sans-serif;
 }
 
-ul {
+ul, li {
   list-style-type: none;
-}
-
-i {
-  padding: 15px;
 }
 
 .sidenav li {
