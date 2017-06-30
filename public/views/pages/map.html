@@ -21,6 +21,16 @@
       <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()"><i class="fa fa-shopping-bag"></i>Shopping<span class="space"></span></button>
       <button ng-class="mc.tripsClass" ng-click="mc.openNav()"><i class="fa fa-car"></i>Trips<span class="space"></span></button>
       <button class="reset" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
+
+  </ul>
+</div>
+<!-- <div class="main">
+  <i id="hamburgerMenu" class="fa fa-bars fa-3x" ng-click="mc.openNav()"></i>
+  <h1 id="title">St. Croix Valley Regional Tourism Alliance Interactive Map</h1>
+</div> -->
+<div class="gmap">
+  <ng-map id="map" default-style="false" zoom="11" center="[45.1250, -92.6044]"  >
+
     </ul>
   </div>
 
@@ -47,6 +57,7 @@
           <i class="fa fa-tree"></i>
         </div>
       </custom-marker>
+
 
       <custom-marker id="x{{place.id}}" ng-if="mc.showTrip" ng-repeat="place in mc.selectedTripPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
         <div class="marker">

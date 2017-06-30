@@ -7,13 +7,13 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
 
   //Register with email and password
   self.registerWithEmail = function(email, password) {
-    if (!email || !password) {
-      alert('email and password required to register');
+    if (!email) {
+      alert('email to register');
       return console.log('email and password required!');
     }
     console.log('registering:', email, password);
-    self.loggedIn = true;
-    self.loggedOut = false;
+    // self.loggedIn = true;
+    // self.loggedOut = false;
 
     auth.$createUserWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
@@ -27,7 +27,6 @@ myApp.controller("FirebaseCtrl", function($firebaseAuth, $http, $uibModal) {
       alert('please use a valid email and password that is at least 6 characters long');
     });
   }; //end register and sign in with email
-
 
   //Sign in with Email
   self.signInWithEmail = function(email, password) {

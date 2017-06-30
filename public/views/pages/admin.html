@@ -2,6 +2,7 @@
   <h1 class="adminHeader">St. Croix Valley Regional Tourism Alliance</h1>
   <h2 class="adminHeader">Interactive Map Admin Page</h2><br>
   <p class="adminHeader" ng-show="fc.loggedIn">Welcome, {{fc.adminName}}!
+  <a href="/"><button id="viewMap" class="btn btn-warning adminBtn" ng-show="fc.loggedIn">View Map</button></a>
   <button class="btn btn-warning adminBtn" ng-click="fc.addAdmin()" ng-show="fc.loggedIn">Add Admin</button>
   <button class="btn btn-warning adminBtn" ng-click="fc.editAdmin()" ng-show="fc.loggedIn">Edit/Delete Admin</button>
   <button class="btn btn-danger adminBtn" ng-click="fc.logOut()" ng-show="fc.loggedIn">Log Out</button></p>
@@ -10,14 +11,17 @@
 <div class="container">
   <div ng-hide="fc.loggedIn">
     <div id="adminLogin">
-      <h4>email:</h4>
+      <!-- <h4>email:</h4>
       <input type="text" ng-model="fc.email">
       <h4>password: </h4>
-      <input type="password" ng-model="fc.password"><br><br>
-      <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> <span class="space"></span>or<span class="space"></span>
+
+      <input type="password" ng-model="fc.password"><br><br> -->
+
+      <!-- <button class="btn" ng-click="fc.signInWithEmail(fc.email, fc.password)">Sign In</button> <span class="space"></span>or<span class="space"></span> -->
+
       <button id="signInGoogle" class="btn" type="submit" ng-click="fc.logIn()"><img id="googleButton" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" alt="Submit"> Sign in with Google</button><br><br>
-      <h5> Not registered? </h5>
-      <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button>
+      <!-- <h5> Not registered? </h5> -->
+      <!-- <button class="btn" ng-click="fc.registerWithEmail(fc.email, fc.password)">Register and Sign In as New User</button> -->
     </div>
   </div>
 </div>
