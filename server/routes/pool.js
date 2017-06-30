@@ -166,14 +166,14 @@ pool.connect(function (err, connection, done) {
 
 // getLocationByTripId
 router.get('/getLocationByTripId/:id', function(req, res){
-  console.log('in GET Location By Trip Id');
+  console.log('in GET Location By Trip Id: req.params', req.params);
   pool.connect(function(err, connection, done){
      if(err){
        console.log(err);
        res.sendStatus(500);
      } else {
        console.log('no err from get Location By Trip Id');
-       connection.query("SELECT * FROM trips JOIN locations_trips ON trips.id = locations_trips.trips_id JOIN locations ON locations.id = locations_trips.locations_id WHERE trip.id =" + req.params.trip.id ,
+       connection.query("SELECT * FROM trips JOIN locations_trips ON trips.id = locations_trips.trips_id JOIN locations ON locations.id = locations_trips.locations_id WHERE trips.id ="+req.params.id,
        function (err, results) {
          if(err){
            console.log('error grabbing locations from trips');

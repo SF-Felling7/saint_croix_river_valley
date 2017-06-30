@@ -6,11 +6,13 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.showLodging = true;
   vm.showNature = true;
   vm.showShopping = true;
+  vm.showTrip = false;
 
   vm.diningPins = [];
   vm.lodgingPins = [];
   vm.naturePins = [];
   vm.shoppingPins = [];
+  vm.selectedTripPins = [];
 
   vm.diningClass = 'navButton';
   vm.shoppingClass = 'navButton';
@@ -137,10 +139,10 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.openNav = function() {
 
     console.log('toggle hamburger menu');
-    if (document.getElementById('mySidenav').style.width === '25%') {
+    if (document.getElementById('mySidenav').style.width === '33%') {
       document.getElementById('mySidenav').style.width = '0%';
     } else {
-      document.getElementById('mySidenav').style.width = '25%';
+      document.getElementById('mySidenav').style.width = '33%';
     }
     if (vm.tripsClass === 'navButton') {
       vm.tripsClass = 'off';
@@ -165,8 +167,27 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     console.log('x close button clicked');
   };
 
-  vm.suggested = function() {
-    console.log('suggested clicked');
+  vm.suggested = function(trip) {
+    console.log('suggested clicked for trip:', trip);
+    $http({
+      method: 'GET',
+      url: '/pool/getLocationByTripId/' + trip.id
+    }).then(function success(response) {
+      console.log('back from server with trip selection response: ', response);
+      vm.selectedTripPins = response.data;
+      console.log('vm.selectedTripPins: ', vm.selectedTripPins);
+      vm.showTrip = true;
+      vm.showDining = false;
+      vm.showLodging = false;
+      vm.showNature = false;
+      vm.showShopping = false;
+      vm.shoppingClass = 'off';
+      vm.diningClass = 'off';
+      vm.natureClass = 'off';
+      vm.lodgingClass = 'off';
+      vm.hideDetail();
+      vm.closeNav();
+    });
   };
 
 });

@@ -426,7 +426,7 @@ myApp.controller( 'EditAdmin', [ '$uibModalInstance', '$uibModal','$http', 'allA
 }]); // end edit delete Admin ModalInstanceController
 
 
-// modal controller
+// add place modal controller
 myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibModal', '$http', function($uibModalInstance, $uibModal, $http) {
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
@@ -464,7 +464,7 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
       console.log(response.data.results);
       if(!response.data.results[0]){
         swal("Sorry!", "We couldn't get coordinates for this address. Check spelling and try again.");
-        $uibModalInstance.dismiss('cancel');
+        // $uibModalInstance.dismiss('cancel');
       }
       console.log("returned coordinates:",response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
 
@@ -694,7 +694,7 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
         swal("Uh-oh!", "Your changes were not submitted. Try again.");
       }
     }); //END of success
-  }; //ENDING sumbitTrip Function
+  }; //ENDING submitTrip Function
 
   vm.cancel = function() {
     $uibModalInstance.dismiss('cancel');
