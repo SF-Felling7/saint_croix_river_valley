@@ -94,8 +94,8 @@
       <h3 class="modal-title title" id="modal-title">{{apmic.addPlaceTitle}}</h3>
     </div>
     <div class="modal-body" id="modal-body">
-      <form id="addPlaceForm">
-        Name: <input type="text" ng-model="apmic.place.name" placeholder="place name" maxlength="85" size="70"></br>
+      <form id="addPlaceForm" required>
+        Name: <input required type="text" ng-model="apmic.place.name" placeholder="place name" maxlength="85" size="70"></br>
         Street: <input type="text" ng-model="apmic.place.street" placeholder="street address" maxlength="85" size="70"></br>
         City: <input type="text" ng-model="apmic.place.city" placeholder="city" maxlength="35" size="35"></br>
         State: <span class="space"></span>
