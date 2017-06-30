@@ -6,49 +6,28 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.showLodging = true;
   vm.showNature = true;
   vm.showShopping = true;
+  vm.showTrip = false;
 
   vm.diningPins = [];
   vm.lodgingPins = [];
   vm.naturePins = [];
   vm.shoppingPins = [];
+  vm.selectedTripPins = [];
 
   vm.diningClass = 'navButton';
   vm.shoppingClass = 'navButton';
   vm.natureClass = 'navButton';
   vm.lodgingClass = 'navButton';
+  vm.tripsClass = 'navButton';
 
   NgMap.getMap().then(function(map) {
     vm.map = map;
   });
 
+// detailed place info modal
   vm.clicked = function(place, size, parentSelector) {
-    //use google place to search for place and return photo reference
-    // $http ({
-    //   method: 'GET',
-    //   url: 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso',
-    //   // params:{query: 200,
-    //   //       key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
-    //   //       }
-    // }).then(function success( response ){
-    //   console.log(response);
-    // });
-
-    // use google places to grab photos with returned photoreference
-    // $http ({
-    //   method: 'GET',
-    //   url: 'https://maps.googleapis.com/maps/api/place/photo',
-    //   params:{maxwidth: 200,
-    //             photoreference:'CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU',
-    //         key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
-    //         }
-    // }).then(function success( response ){
-    //   console.log(response);
-    // });
-
     var parentElem = parentSelector;
     console.log('link clicked to see more info on: ', place);
-
-
     var modalInstance = $uibModal.open({
       animation: self.animationsEnabled,
       ariaLabelledBy: 'modal-title',
@@ -156,35 +135,30 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     location.reload();
   };
 
-  var h = parseInt(window.innerHeight);
-  var w = parseInt(window.innerWidth);
-
-  vm.openRightOne = function() {
-    if (w <= 544) {
-      vm.openNav();
-    } else {
-      vm.openNavPush();
-    }
-  };
-
-  vm.closeRightOne = function() {
-    if (w <= 544) {
-      vm.closeNav();
-    } else {
-      vm.closeNavPush();
-    }
-  };
-
   // use this code if you want to slide on top of content
   vm.openNav = function() {
 
     console.log('toggle hamburger menu');
-    if (document.getElementById('mySidenav').style.width === '25%') {
+    if (document.getElementById('mySidenav').style.width === '33%') {
       document.getElementById('mySidenav').style.width = '0%';
     } else {
-      document.getElementById('mySidenav').style.width = '25%';
+      document.getElementById('mySidenav').style.width = '33%';
+    }
+    if (vm.tripsClass === 'navButton') {
+      vm.tripsClass = 'off';
+    } else {
+      vm.tripsClass = 'navButton';
     }
 
+    $http({
+      method: 'GET',
+      url: '/pool/getTrips/'
+    }).then(function success(response) {
+      console.log('getting all trips', response);
+      vm.allTrips = response.data;
+      console.log('vm.allTrips: ', vm.allTrips);
+      allTrips = vm.allTrips;
+    });
   };
 
   /* Set the width of the side navigation to 0 */
@@ -193,8 +167,27 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     console.log('x close button clicked');
   };
 
-  vm.suggested = function() {
-    console.log('suggested clicked');
+  vm.suggested = function(trip) {
+    console.log('suggested clicked for trip:', trip);
+    $http({
+      method: 'GET',
+      url: '/pool/getLocationByTripId/' + trip.id
+    }).then(function success(response) {
+      console.log('back from server with trip selection response: ', response);
+      vm.selectedTripPins = response.data;
+      console.log('vm.selectedTripPins: ', vm.selectedTripPins);
+      vm.showTrip = true;
+      vm.showDining = false;
+      vm.showLodging = false;
+      vm.showNature = false;
+      vm.showShopping = false;
+      vm.shoppingClass = 'off';
+      vm.diningClass = 'off';
+      vm.natureClass = 'off';
+      vm.lodgingClass = 'off';
+      vm.hideDetail();
+      vm.closeNav();
+    });
   };
 
 });

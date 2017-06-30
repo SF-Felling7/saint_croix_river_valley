@@ -280,7 +280,11 @@ self.shoppingPins = [];
         });  // end edit delete place modal Instance
       }  // end else
     });//ending then success
+
+
   }; // end adminTrip
+
+
 
 });  // end firebase controller
 
@@ -290,7 +294,7 @@ myApp.controller( 'AddAdmin', [ '$uibModalInstance', '$uibModal','$http', functi
   var vm = this;
   vm.addAdminTitle = 'Add an Admin';
 
-  //Add Place function
+  //Add Admin function
   vm.addAdminUser = function(email){
     console.log('email: ', email);
     if (email===undefined) {
@@ -421,7 +425,7 @@ myApp.controller( 'EditAdmin', [ '$uibModalInstance', '$uibModal','$http', 'allA
 }]); // end edit delete Admin ModalInstanceController
 
 
-// modal controller
+// add place modal controller
 myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibModal', '$http', function($uibModalInstance, $uibModal, $http) {
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
@@ -439,12 +443,13 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
       state: place.state,
       phone: place.phone,
       website: place.website,
-      imageurl: '',
       latitude:'',
       longitude:'',
       types_id: place.types_id,
+      imageurl: '',
 
     };
+    console.log('itemToSend: ', itemToSend);
 
     console.log('sending place to google to get coordinates: ', place);
     //geocode address that is entered by admin
@@ -456,13 +461,17 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
             }
     }).then(function success( response ){
       console.log(response.data.results);
+      if(!response.data.results[0]){
+        swal("Sorry!", "We couldn't get coordinates for this address. Check spelling and try again.");
+        // $uibModalInstance.dismiss('cancel');
+      }
       console.log("returned coordinates:",response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng);
 
       //set latitude and logitude in item to send equal to geocoded response
       itemToSend.latitude = response.data.results[0].geometry.location.lat;
       itemToSend.longitude = response.data.results[0].geometry.location.lng;
       var locationToSend = [response.data.results[0].geometry.location.lat,response.data.results[0].geometry.location.lng];
-
+    console.log('itemToSend after lat long addition: ', itemToSend);
 
       //send itemToSend to server for google places api
       $http ({
@@ -474,12 +483,17 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
           key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
         }
       }).then(function success(response ){
+        if(response.data===' '){
+          swal("Sorry!", "We couldn't find a photo for this address. Edit the place to add a url image manually.");
+        // } else {
+
+
         console.log("magic photo url link:",response.data);
 
         itemToSend.imageurl = response.data;
         console.log("saving Object",itemToSend);
 
-
+    console.log('itemToSend to POST to db: ', itemToSend);
         //post new item with latitude and logitude to DB
         $http ({
           method: 'POST',
@@ -494,7 +508,9 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
           } else {
             swal("Uh-oh!", "Your changes were not submitted to the map. Try again.");
             }
+
         });//ending success
+      }
       });
       //end send to server for google places
 
@@ -677,7 +693,7 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
         swal("Uh-oh!", "Your changes were not submitted. Try again.");
       }
     }); //END of success
-  }; //ENDING sumbitTrip Function
+  }; //ENDING submitTrip Function
 
   vm.cancel = function() {
     $uibModalInstance.dismiss('cancel');
