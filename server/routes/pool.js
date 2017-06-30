@@ -186,6 +186,31 @@ router.get('/getLocationByTripId/:id', function(req, res){
   });
 });
 
+// delete trip
+router.delete( '/deleteTrip/:id', function ( req, res ){
+  console.log( 'hit delete trip' );
+    pool.connect( function( err, connection, done ){
+      //check if there was an Error
+      if( err ){
+        console.log( err );
+        // respond with PROBLEM!
+        res.sendStatus( 500 );
+      }// end Error
+      else{
+        console.log('connected to db');
+        console.log('req.params.id: ', req.params.id);
+        connection.query( "DELETE FROM trips WHERE id = $1" , [req.params.id] , function(err, result) {
+            if(err) {
+              console.log('Error selecting trip to delete', err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+        } );
+      } // end no error
+    }); //end pool
+});  // end delete trip
+
 
 router.post( '/admin', function ( req, res ){
   console.log( 'hit addAdmin' );
