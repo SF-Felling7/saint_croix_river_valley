@@ -8,6 +8,11 @@
   border-radius: 10px;
 }
 
+#viewMap {
+  background-color: green;
+  border-color: green;
+}
+
 #signInGoogle{
   background-color: dodgerBlue;
   color: ivory;
