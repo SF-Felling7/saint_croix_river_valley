@@ -720,7 +720,6 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
   // vm.allPlaces = allPlaces;
   vm.allTrips = allTrips;
   vm.editDeleteTripTitle = 'Edit or Delete a Trip';
-
   // vm.changeTrip = function(trip){
   //   console.log('trip');
   //   console.log('Go! button selected to start edit/delete trip procedure');
@@ -728,17 +727,17 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
   // };
 
 
-  vm.tripSelected = false;
+  // vm.tripSelected = true;
   vm.edit = false;
-  vm.trip='';
-  vm.selectTrip = function (trip){
-    console.log('selected trip: ', trip);
-    vm.tripSelected = true;
-    vm.trip = trip;
-    console.log('vm.trip-->', vm.trip);
-    console.log('vm.trip.name: ', vm.trip.name);
-    return vm.trip;
-  };
+  // vm.trip={};
+  // vm.selectTrip = function (trip){
+  //   console.log('selected trip: ', trip);
+  //   vm.tripSelected = true;
+  //   vm.trip = trip;
+  //   console.log('vm.trip-->', vm.trip);
+  //   console.log('vm.trip.name: ', vm.trip.name);
+  //   return vm.trip;
+  // };
 
 
   vm.editInPlace = function(trip) {
@@ -755,6 +754,7 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
       name: trip.name,
       description: trip.description,
     };
+    console.log('editsToSend: ', editsToSend);
     $http ({
       method: 'PUT',
       url: '/pool/editTrip',
