@@ -213,7 +213,7 @@ router.delete( '/deleteTrip/:id', function ( req, res ){
 
 // edit trip
 // put (edit) place
-router.put( '/editTrip/', function ( req, res ){
+router.put( '/editTrip/:id', function ( req, res ){
   console.log( 'hit edit trip name and description' );
   pool.connect( function( err, connection, done ){
     //check if there was an Error
