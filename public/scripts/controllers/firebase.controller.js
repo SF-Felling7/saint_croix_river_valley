@@ -715,7 +715,7 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
 }]); // end AddTripModalInstanceController
 
 // edit / delete trip modal controller
-myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrips', function ( $uibModalInstance, $uibModal, allTrips) {
+myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrips', '$http', function ( $uibModalInstance, $uibModal, allTrips, $http) {
   var vm = this;
   // vm.allPlaces = allPlaces;
   vm.allTrips = allTrips;
@@ -757,7 +757,7 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
     console.log('editsToSend: ', editsToSend);
     $http ({
       method: 'PUT',
-      url: '/pool/editTrip',
+      url: '/pool/editTrip/' + trip.id,
       data: editsToSend
     }).then(function success( response ){
       console.log('response: ', response);
