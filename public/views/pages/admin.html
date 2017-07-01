@@ -210,17 +210,51 @@
     <div class="modal-header">
       <h3 class="modal-title title" id="modal-title">{{edt.editDeleteTripTitle}}</h3>
     </div>
+
     <div class="modal-body" id="modal-body">
+      <div ng-hide="edt.tripSelected">
+        <label for="places">Select a Trip:</label>
+        <select ng-model="edt.trip" class="form-control types_select">
+          <option value="" disabled selected class="types_select">Select</option>
+          <option value="{{trip}}" ng-repeat="trip in edt.allTrips" name="trip" class="types_select">{{trip.name}}</option>
+        </select>
+        <button ng-click="edt.selectTrip(edt.trip)" class="btn submitbutton btn-success" type="submit" value="Submit">Go!</button>
+      </div>
+
+      <table ng-show="edt.tripSelected">
+        <tr>
+          <td>{{edt.trip.name}}</td>
+          <td><button class="btn btn-primary" type="button" ng-click="edt.editInPlace(edt.trip)">Edit Place</button></td>
+          <td><button class="btn btn-danger" type="button" ng-click="edt.delete(trip.id)">Delete Place</button></td>
+        </tr>
+      </table>
+      <div ng-show="edt.edit">
+        Locations ID: {{edt.trip.id}}</br>
+        Trip Name: <input type="text" ng-model="edt.trip.name" maxlength="85" size="65"></br>
+        Description: <input type="text" ng-model="edt.trip.description" maxlength="1400" size="78"></br>
+        Trip Stops: {{edt.trip}}
+      </div>
+    </div>
+    <div class="modal-footer" ng-show="edt.tripSelected">
+      <button class="btn btn-success" type="button" ng-show="edt.edit" ng-click="edt.saveEdits(edt.trip)">Save Edits</button>
+      <button class="btn btn-danger" type="button" ng-click="edt.cancel()">Cancel/Close</button>
+    </div>
+
+
+
+
+
+    <!-- <div class="modal-body" id="modal-body">
       <select ng-model="edt.trip">
-        <option value="" disabled selected>Select Trip</option>
-        <option value="Wine Tour" selected>Wine Tour</option>
+        <option value="" disabled>Select Trip</option>
+        <option value=""></option>
         <option ng-repeat="trip in edt.allTrips" name="trip">{{trip.name}}</option>
       </select>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-success" type="button" ng-click="edt.changeTrip(edt.trip)">Go!</button>
+    </div> -->
+    <!-- <div class="modal-footer"> -->
+      <!-- <button class="btn btn-success" type="button" ng-click="edt.changeTrip(edt.trip)">Go!</button> -->
       <!-- <button class="btn btn-danger" type="button" ng-click="edt.cancel()">Cancel/Close</button>
       <button class="btn btn-primary" type="button" ng-click="">Save Trip Changes</button> -->
-    </div>
+    <!-- </div> -->
   </script>
 </div>
