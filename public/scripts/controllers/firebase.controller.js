@@ -242,9 +242,28 @@ self.shoppingPins = [];
       self.allPlaces = response.data;
       console.log('getting all places: ', self.allPlaces);
       allPlaces = self.allPlaces;
-
+      for (var i = 0; i < allPlaces.length; i++) {
+        switch (allPlaces[i].types_id) {
+          case 1:
+            self.diningPins.push(allPlaces[i]);
+            break;
+          case 2:
+            self.shoppingPins.push(allPlaces[i]);
+            break;
+          case 3:
+            self.naturePins.push(allPlaces[i]);
+            break;
+          case 4:
+            self.lodgingPins.push(allPlaces[i]);
+            break;
+        }
+      }
       // important--yet to do!
       // likely also need to run a getTrips $http call here and assign to self.allTrips then declare allTrips=self.allTrips so it can be passed through in resolve
+      console.log('after switch in adminTrip function: self.naturePins: ', self.naturePins);
+              console.log('after switch in adminTrip function: self.diningPins: ', self.diningPins);
+                      console.log('after switch in adminTrip function: self.shoppingPins: ', self.shoppingPins);
+                              console.log('after switch in adminTrip function: self.lodgingPins: ', self.lodgingPins);
 
       if (trip === 'Add Trip'){
         var modalInstance = $uibModal.open({
@@ -259,7 +278,19 @@ self.shoppingPins = [];
           resolve: {
             allPlaces: function() {
               return allPlaces;
-            }
+            },
+            diningPins: function() {
+              return self.diningPins;
+            },
+            shoppingPins: function() {
+              return self.shoppingPins;
+            },
+            naturePins: function() {
+              return self.naturePins;
+            },
+            lodgingPins: function() {
+              return self.lodgingPins;
+            },
           }
       });  // end add trip modal Instance
       } else {
@@ -327,13 +358,13 @@ myApp.controller( 'AddAdmin', [ '$uibModalInstance', '$uibModal','$http', functi
 
 }]); // end Add Admin ModalInstanceController
 
-// edit admin controller
+// edit delete admin controller
 myApp.controller( 'EditAdmin', [ '$uibModalInstance', '$uibModal','$http', 'allAdmins', function ( $uibModalInstance, $uibModal, $http, allAdmins) {
   var vm = this;
   vm.editAdminTitle = 'Edit or Delete an Admin';
   vm.allAdmins = allAdmins;
 
-  //Edit/Delete Admin function
+  //Edit Admin function
   vm.editAdminUser = function(email){
     console.log('email: ', email);
 
@@ -652,14 +683,55 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
 }]); // end Edit Delete PlaceModalInstanceController
 
 // add trip modal controller
-myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibModal', 'allPlaces', '$http', function($uibModalInstance, $uibModal, allPlaces, $http) {
+myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibModal', 'allPlaces', 'diningPins', 'shoppingPins', 'naturePins', 'lodgingPins', '$http', function($uibModalInstance, $uibModal, allPlaces, diningPins, shoppingPins, naturePins, lodgingPins, $http ) {
   var vm = this;
   vm.allPlaces = allPlaces;
   vm.addTripTitle = 'Add a Trip';
-  vm.success = false;
-  vm.failed = false;
-  vm.successMessage = 'Success!  New trip added to database.';
-  vm.failedMessage = 'Uh-oh!  New trip failed to be added to database.  Try again.';
+
+
+
+  // vm.allPins = allPins;
+  vm.diningPins = diningPins;
+  vm.shoppingPins = shoppingPins;
+  vm.naturePins = naturePins;
+  vm.lodgingPins = lodgingPins;
+  vm.typeSelected = false;
+  vm.placeType='';
+  vm.placeIcon='';
+  vm.typeSelected = false;
+  vm.selectType = function (types_id){
+    console.log('types_id: ', types_id);
+    switch (types_id) {
+      case '1':
+        vm.allPlaces = vm.diningPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Dining';
+        vm.placeIcon = 'fa-cutlery';
+        break;
+      case '2':
+        vm.allPlaces = vm.shoppingPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Shopping';
+        vm.placeIcon = 'fa-shopping-bag';
+        break;
+      case '3':
+        vm.allPlaces = vm.naturePins;
+        vm.typeSelected = true;
+        vm.placeType = 'Nature';
+        vm.placeIcon = 'fa-tree';
+        break;
+      case '4':
+        vm.allPlaces = vm.lodgingPins;
+        vm.typeSelected = true;
+        vm.placeType = 'Lodging';
+        vm.placeIcon = 'fa-bed';
+        break;
+    }
+  };
+
+
+
+
 
   vm.checkedPlaces = [];
   vm.toggleCheck = function(place) {
