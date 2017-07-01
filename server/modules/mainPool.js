@@ -30,7 +30,7 @@ if (process.env.DATABASE_URL) {
     port: (process.env.PGPORT || 5432), //env var: PGPORT
     host: (process.env.PGHOST || 'localhost'),
     max: 20, // max number of clients in the pool
-    idleTimeoutMillis: 15000, // 1.5s // how long a client is allowed to remain idle before being closed
+    idleTimeoutMillis: 30000, // 1.5s // how long a client is allowed to remain idle before being closed
   };
 }
 
