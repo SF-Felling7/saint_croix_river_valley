@@ -23,7 +23,7 @@ if (process.env.DATABASE_URL) {
 
 } else {
   //Config for pool
-  var config = {
+   config = {
     database: 'st-croix-valley',
     host: 'localhost',
     port: 5432,
