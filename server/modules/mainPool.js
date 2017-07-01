@@ -22,7 +22,7 @@ if (process.env.DATABASE_URL) {
   };
 
 } else {
-  //Config for pool
+  //Config for pooll
    config = {
     database: 'st-croix-valley',
     host: 'localhost',
