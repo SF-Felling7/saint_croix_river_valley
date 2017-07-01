@@ -683,18 +683,10 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
   var vm = this;
   vm.allPlaces = allPlaces;
   vm.addTripTitle = 'Add a Trip';
-
-
-
-  // vm.allPins = allPins;
   vm.diningPins = diningPins;
-  console.log('vm.diningPins: ', vm.diningPins);
   vm.shoppingPins = shoppingPins;
   vm.naturePins = naturePins;
   vm.lodgingPins = lodgingPins;
-  vm.typeSelected = false;
-  vm.placeType='';
-  vm.placeIcon='';
   vm.typeSelected = false;
 
   vm.selectType = function (types_id){
@@ -702,38 +694,22 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
     switch (types_id) {
       case '1':
         vm.allPlaces = vm.diningPins;
-        console.log('vm.allPlaces: ', vm.allPlaces);
         vm.typeSelected = true;
-        // vm.placeType = 'Dining';
-        // vm.placeIcon = 'fa-cutlery';
         break;
       case '2':
         vm.allPlaces = vm.shoppingPins;
-                console.log('vm.allPlaces: ', vm.allPlaces);
         vm.typeSelected = true;
-        // vm.placeType = 'Shopping';
-        // vm.placeIcon = 'fa-shopping-bag';
         break;
       case '3':
         vm.allPlaces = vm.naturePins;
-                console.log('vm.allPlaces: ', vm.allPlaces);
         vm.typeSelected = true;
-        // vm.placeType = 'Nature';
-        // vm.placeIcon = 'fa-tree';
         break;
       case '4':
         vm.allPlaces = vm.lodgingPins;
-                console.log('vm.allPlaces: ', vm.allPlaces);
         vm.typeSelected = true;
-        // vm.placeType = 'Lodging';
-        // vm.placeIcon = 'fa-bed';
         break;
     }
   };
-
-
-
-
 
   vm.checkedPlaces = [];
   vm.toggleCheck = function(place) {
@@ -746,22 +722,18 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
 
   vm.submitTrip = function(trip, checkedPlaces) {
     vm.trip = trip;
-    console.log( 'vm.trip: ', vm.trip );
     vm.checkedPlaces = checkedPlaces;
-    console.log('vm.checkedPlaces ->', vm.checkedPlaces);
 
     var tripToSend = {
       name: trip.name,
       description: trip.description,
       locations: vm.checkedPlaces
     };
-    console.log('Trip to send ->', tripToSend);
     $http({
       method: 'POST',
       url: '/pool/addTrip',
       data: tripToSend
     }).then(function success(response) {
-      console.log('response ->', response);
       if (response.status === 200) {
         swal("Success!", "You added a trip!", "success");
         $uibModalInstance.close();
@@ -782,32 +754,13 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
   // vm.allPlaces = allPlaces;
   vm.allTrips = allTrips;
   vm.editDeleteTripTitle = 'Edit or Delete a Trip';
-  // vm.changeTrip = function(trip){
-  //   console.log('trip');
-  //   console.log('Go! button selected to start edit/delete trip procedure');
-  //   // likely $http call here to get
-  // };
-
-
-  // vm.tripSelected = true;
   vm.edit = false;
-  // vm.trip={};
-  // vm.selectTrip = function (trip){
-  //   console.log('selected trip: ', trip);
-  //   vm.tripSelected = true;
-  //   vm.trip = trip;
-  //   console.log('vm.trip-->', vm.trip);
-  //   console.log('vm.trip.name: ', vm.trip.name);
-  //   return vm.trip;
-  // };
-
 
   vm.editInPlace = function(trip) {
     vm.edit = true;
     vm.trip = trip;
     console.log('vm.trip: ', vm.trip);
   };
-
 
   vm.saveEdits = function(trip) {
     console.log('edited trip to submit to db', trip.name);
@@ -822,7 +775,6 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
       url: '/pool/editTrip/' + trip.id,
       data: editsToSend
     }).then(function success( response ){
-      console.log('response: ', response);
       vm.edit = false;
       // maybe add an if/else statement here to display a success message if response of 200 is received
       if (response.status === 200){
@@ -835,7 +787,6 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
   };//end save edits for place
 
   vm.delete = function(id) {
-    console.log('id to delete', id);
     swal({
       title: "Are you sure?",
       text: "This will remove this trip from the map!",
@@ -850,7 +801,6 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
         method: 'DELETE',
         url: '/pool/deleteTrip/' + id
       }).then(function success( response ){
-        console.log('response: ', response);
         // maybe add an if/else statement here to display a success message if response of 201 is received
         if (response.status === 200){
           swal("Deleted!", "The trip was been deleted.", "success");
