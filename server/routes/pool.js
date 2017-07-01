@@ -211,6 +211,32 @@ router.delete( '/deleteTrip/:id', function ( req, res ){
     }); //end pool
 });  // end delete trip
 
+// edit trip
+// put (edit) place
+router.put( '/editTrip/', function ( req, res ){
+  console.log( 'hit edit trip name and description' );
+  pool.connect( function( err, connection, done ){
+    //check if there was an Error
+    if( err ){
+      console.log( err );
+      // respond with PROBLEM!
+      res.sendStatus( 500 );
+    }// end Error
+    else{
+      console.log('coming from edit trip connected to db');
+      console.log('req.body', req.body);
+      // need to revise to edit
+      connection.query( "UPDATE trips SET name=$1, description=$2 WHERE id=" + req.body.id, [req.body.name, req.body.description] , function(err, result) {
+        if(err) {
+          console.log('Error selecting trips to edit', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    }
+  });  // end pool
+}); //end put
 
 router.post( '/admin', function ( req, res ){
   console.log( 'hit addAdmin' );
