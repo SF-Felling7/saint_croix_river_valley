@@ -2,6 +2,8 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   var vm = this;
 
+
+
   vm.showDining = true;
   vm.showLodging = true;
   vm.showNature = true;
@@ -13,6 +15,16 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.naturePins = [];
   vm.shoppingPins = [];
   vm.selectedTripPins = [];
+
+  vm.tripCoordinate =
+  vm.wayPoints = [
+
+          {location: {lat:44.32384807250689, lng: -78.079833984375}, stopover: true},
+          {location: {lat:44.55916341529184, lng: -76.17919921875}, stopover: true},
+          // {location: {lat:44.55916341529184, lng: -76.17919921875}, stopover: true},
+          // {location: {lat:44.55916341529184, lng: -76.17919921875}, stopover: true},
+        ];
+
 
   vm.diningClass = 'navButton';
   vm.shoppingClass = 'navButton';
@@ -169,6 +181,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   vm.suggested = function(trip) {
     console.log('suggested clicked for trip:', trip);
+
     $http({
       method: 'GET',
       url: '/pool/getLocationByTripId/' + trip.id
@@ -187,9 +200,17 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.lodgingClass = 'off';
       vm.hideDetail();
       vm.closeNav();
+      vm.selectedTripPins.forEach(function(i){
+        console.log(i.latitude, i.longitude);
+        // vm.wayPoints[0].location.lat = i.latitude;
+        // vm.wayPoints[0].location.lng = i.longitude;
+
+        // vm.wayPoints.push(i.latitude, i.longitude);
+
+      });
+      console.log(vm.wayPoints[0].location.lat, vm.wayPoints[0].location.lng);
     });
   };
-
 });
 
 // modal controller

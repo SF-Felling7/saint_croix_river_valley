@@ -21,12 +21,12 @@
       <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()"><i class="fa fa-shopping-bag"></i>Shopping<span class="space"></span></button>
       <button ng-class="mc.tripsClass" ng-click="mc.openNav()"><i class="fa fa-car"></i>Trips<span class="space"></span></button>
       <button class="reset" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
-
   </ul>
 </div>
 
+
   <div class="gmap">
-    <ng-map id="map" default-style="false" zoom="11" center="[45.1250, -92.6044]">
+    <ng-map id="map" default-style="false" zoom="11" center="[44.79, -92.6044]">
 
       <custom-marker id="x{{place.id}}" ng-if="mc.showDining" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
         <div class="marker">
@@ -54,7 +54,25 @@
         <div class="marker">
           <i class="fa fa-car"></i>
         </div>
+        <!-- <directions
+                  draggable="true"
+                  panel="directions-panel"
+                  travel-mode="DRIVING"
+                  origin="current-location"
+                  destination="{{place.latitude}},{{place.longitude}}">
+        </directions> -->
+
+        <directions
+           draggable="true"
+           panel="directions-panel"
+           travel-mode="DRIVING"
+           waypoints="{{mc.wayPoints}}"
+           origin="current-location"
+           destination="2365 Carter Ave, St. Paul, MN">
+        </directions>
+
       </custom-marker>
+
 
       <info-window id="mapwindow">
         <div ng-non-bindable="">
