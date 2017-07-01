@@ -174,6 +174,9 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   vm.suggested = function(trip) {
     console.log('suggested clicked for trip:', trip);
+    //for road trip on map
+    vm.wayPoints = [];
+    vm.lastStop = [];
 
     $http({
       method: 'GET',
@@ -195,11 +198,9 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.hideDetail();
       vm.closeNav();
 
-      //for road trip on map
-        vm.wayPoints = [];
-        vm.lastStop = [];
-      console.log(vm.wayPoints);
-      console.log(vm.lastStop);
+
+      console.log("stops on trip",vm.wayPoints);
+      console.log("last stop on trip",vm.lastStop);
       //for each thing in a trip get coordinates
       vm.selectedTripPins.forEach(function(i){
         console.log(i.latitude, i.longitude);
