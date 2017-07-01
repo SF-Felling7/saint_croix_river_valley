@@ -8,7 +8,7 @@ var request = require ('request');
 var router = express.Router();
 var pool = require('../modules/mainPool');
 
-
+//
 router.get('/', function(req, res){
   console.log('SEARCHING GOOGLE PLACES FOR : ',req.query.query, req.query.location[0], req.query.location[1], req.query.key);
 
