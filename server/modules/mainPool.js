@@ -5,10 +5,11 @@ var url = require('url');
 var config = {};
 
 if (process.env.DATABASE_URL) {
+  console.log( 'process.env.DATABASE_URL' + process.env.DATABASE_URL );
   // Heroku gives a url, not a connection object
   // https://github.com/brianc/node-pg-pool
   var params = url.parse(process.env.DATABASE_URL);
-  var auth = params.auth.split(':postgres://izoheysuasdywf:9a7914f7e0635a54f5108a706ce89a8c57b006fe4e8343f21275b22ffba3701d@ec2-23-23-86-179.compute-1.amazonaws.com:5432/d83cre2ehmbmhs');
+  var auth = params.auth.split(':');
 
   config = {
     user: auth[0],
