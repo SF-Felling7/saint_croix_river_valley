@@ -234,48 +234,6 @@ self.shoppingPins = [];
   self.adminTrip = function(trip, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
-
-<<<<<<< HEAD
-    $http({
-      method: 'GET',
-      url: '/pool/getPlaces'
-    }).then(function success(response) {
-      self.allPlaces = response.data;
-      console.log('getting all places: ', self.allPlaces);
-      allPlaces = self.allPlaces;
-      for (var i = 0; i < allPlaces.length; i++) {
-        switch (allPlaces[i].types_id) {
-          case 1:
-            self.diningPins.push(allPlaces[i]);
-            break;
-          case 2:
-            self.shoppingPins.push(allPlaces[i]);
-            break;
-          case 3:
-            self.naturePins.push(allPlaces[i]);
-            break;
-          case 4:
-            self.lodgingPins.push(allPlaces[i]);
-            break;
-        }
-      }
-=======
-    // $http({
-    //   method: 'GET',
-    //   url: '/pool/getPlaces'
-    // }).then(function success(response) {
-    //   self.allPlaces = response.data;
-    //   console.log('getting all places: ', self.allPlaces);
-    //   allPlaces = self.allPlaces;
-
->>>>>>> master
-      // important--yet to do!
-      // likely also need to run a getTrips $http call here and assign to self.allTrips then declare allTrips=self.allTrips so it can be passed through in resolve
-      console.log('after switch in adminTrip function: self.naturePins: ', self.naturePins);
-              console.log('after switch in adminTrip function: self.diningPins: ', self.diningPins);
-                      console.log('after switch in adminTrip function: self.shoppingPins: ', self.shoppingPins);
-                              console.log('after switch in adminTrip function: self.lodgingPins: ', self.lodgingPins);
-
       if (trip === 'Add Trip'){
         $http({
           method: 'GET',
@@ -284,6 +242,22 @@ self.shoppingPins = [];
           self.allPlaces = response.data;
           console.log('getting all places: ', self.allPlaces);
           allPlaces = self.allPlaces;
+          for (var i = 0; i < allPlaces.length; i++) {
+            switch (allPlaces[i].types_id) {
+              case 1:
+                self.diningPins.push(allPlaces[i]);
+                break;
+              case 2:
+                self.shoppingPins.push(allPlaces[i]);
+                break;
+              case 3:
+                self.naturePins.push(allPlaces[i]);
+                break;
+              case 4:
+                self.lodgingPins.push(allPlaces[i]);
+                break;
+            }
+          }
         var modalInstance = $uibModal.open({
           animation: self.animationsEnabled,
           ariaLabelledBy: 'modal-title',
@@ -311,7 +285,7 @@ self.shoppingPins = [];
             },
           }
         });  // end add trip modal Instance
-      });
+      }); // end if
     } else {
         $http({
           method: 'GET',
@@ -337,13 +311,10 @@ self.shoppingPins = [];
         });  // end edit delete place modal Instance
       });  // end else
     }//ending then success
+  };  // end adminTrip
 
+}); // end firebase controller
 
-  }; // end adminTrip
-
-
-
-});  // end firebase controller
 
 
 // add admin modal controller
@@ -717,6 +688,7 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
 
   // vm.allPins = allPins;
   vm.diningPins = diningPins;
+  console.log('vm.diningPins: ', vm.diningPins);
   vm.shoppingPins = shoppingPins;
   vm.naturePins = naturePins;
   vm.lodgingPins = lodgingPins;
@@ -724,32 +696,37 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
   vm.placeType='';
   vm.placeIcon='';
   vm.typeSelected = false;
+
   vm.selectType = function (types_id){
     console.log('types_id: ', types_id);
     switch (types_id) {
       case '1':
         vm.allPlaces = vm.diningPins;
+        console.log('vm.allPlaces: ', vm.allPlaces);
         vm.typeSelected = true;
-        vm.placeType = 'Dining';
-        vm.placeIcon = 'fa-cutlery';
+        // vm.placeType = 'Dining';
+        // vm.placeIcon = 'fa-cutlery';
         break;
       case '2':
         vm.allPlaces = vm.shoppingPins;
+                console.log('vm.allPlaces: ', vm.allPlaces);
         vm.typeSelected = true;
-        vm.placeType = 'Shopping';
-        vm.placeIcon = 'fa-shopping-bag';
+        // vm.placeType = 'Shopping';
+        // vm.placeIcon = 'fa-shopping-bag';
         break;
       case '3':
         vm.allPlaces = vm.naturePins;
+                console.log('vm.allPlaces: ', vm.allPlaces);
         vm.typeSelected = true;
-        vm.placeType = 'Nature';
-        vm.placeIcon = 'fa-tree';
+        // vm.placeType = 'Nature';
+        // vm.placeIcon = 'fa-tree';
         break;
       case '4':
         vm.allPlaces = vm.lodgingPins;
+                console.log('vm.allPlaces: ', vm.allPlaces);
         vm.typeSelected = true;
-        vm.placeType = 'Lodging';
-        vm.placeIcon = 'fa-bed';
+        // vm.placeType = 'Lodging';
+        // vm.placeIcon = 'fa-bed';
         break;
     }
   };
@@ -767,10 +744,12 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
     }
   };
 
-  vm.submitTrip = function(trip) {
-    console.log('checked place ->', vm.checkedPlaces);
-    console.log( 'trip', trip );
-    console.log('place ->', vm.checkedPlaces);
+  vm.submitTrip = function(trip, checkedPlaces) {
+    vm.trip = trip;
+    console.log( 'vm.trip: ', vm.trip );
+    vm.checkedPlaces = checkedPlaces;
+    console.log('vm.checkedPlaces ->', vm.checkedPlaces);
+
     var tripToSend = {
       name: trip.name,
       description: trip.description,
@@ -785,7 +764,7 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
       console.log('response ->', response);
       if (response.status === 200) {
         swal("Success!", "You added a trip!", "success");
-        $uibModalInstance.dismiss('cancel');
+        $uibModalInstance.close();
       } else {
         swal("Uh-oh!", "Your changes were not submitted. Try again.");
       }

@@ -181,17 +181,7 @@
       <h3 class="modal-title title" id="modal-title">{{atmic.addTripTitle}}</h3>
     </div>
     <div class="modal-body" id="modal-body">
-      <div>
-        <label for="places">Select a Category:</label>
-        <select ng-model="atmic.types_id" class="form-control types_select">
-          <option value="" disabled selected class="types_select">Select</option>
-          <option value="1" name="Dining" class="types_select">Dining</option>
-          <option value="2" name="Shopping" class="types_select">Shopping</option>
-          <option value="3" name="Nature" class="types_select">Nature</option>
-          <option value="4" name="Lodging" class="types_select">Lodging</option>
-        </select>
-        <button ng-click="atmic.selectType(atmic.types_id)" class="btn submitbutton btn-success" type="submit" value="Submit">Select Place from this Category</button>
-      </div>
+
       <div>
           Name:<input type="text" ng-model="atmic.trip.name"/>
           Description:<input type="text" ng-model="atmic.trip.description"/><br><br>
@@ -202,16 +192,30 @@
            <li ng-repeat="place in atmic.checkedPlaces track by $index">{{place.name}}</li>
          </ol>
        </div>
-       <hr /> 
+       <hr />
+       <div>
+         <label for="places">Select a Category:
+         <select ng-model="atmic.types_id" class="form-control types_select">
+           <option value="" disabled selected class="types_select">Select</option>
+           <option value="1" name="Dining" class="types_select">Dining</option>
+           <option value="2" name="Shopping" class="types_select">Shopping</option>
+           <option value="3" name="Nature" class="types_select">Nature</option>
+           <option value="4" name="Lodging" class="types_select">Lodging</option>
+         </select></label>
+         <button ng-click="atmic.selectType(atmic.types_id)" class="btn submitbutton btn-primary" type="submit" value="Submit">Change Category View</button>
+       </div>
       <ul>
-        <li ng-repeat="place in atmic.allPlaces">
+        <li ng-show="atmic.typeSelected" ng-repeat="place in atmic.allPlaces">
           <label><input type='checkbox' ng-checked="atmic.checkedPlaces.indexOf(place) != -1" ng-click="atmic.toggleCheck(place)" /> {{place.name}}</label>
         </li>
       </ul>
     </div>
+    <hr />
+
+
     <div class="modal-footer">
       <button class="btn btn-warn" type="button" ng-click="atmic.cancel()">Cancel/Close</button>
-      <button class="btn btn-primary" type="button" ng-click="atmic.submitTrip(atmic.trip)">Add Trip</button>
+      <button class="btn btn-success" type="button" ng-click="atmic.submitTrip(atmic.trip, atmic.checkedPlaces)">Add Trip</button>
     </div>
   </script>
 </div>
