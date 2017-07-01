@@ -1,12 +1,13 @@
 <div id="mySidenav" class="sidenav">
-  <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
+  <!-- <li class="closebtn" ng-click="mc.closeNav()">&times;</li> -->
   <h3><i class="fa fa-car"></i> Suggested Trips</h3>
   <nav>
     <ul ng-repeat="trip in mc.allTrips">
-      <li ng-click="mc.suggested(trip)">{{trip.name}}</li>
-      <ul>
-        <li>{{trip.description}}</li>
-      </ul>
+      <li ng-click="mc.suggested(trip)" class="tripName">{{trip.name}}
+        <ul class="tripDescription">
+          <li>Trip Description: {{trip.description}}</li>
+        </ul>
+      </li>
     </ul>
   </nav>
 </div>

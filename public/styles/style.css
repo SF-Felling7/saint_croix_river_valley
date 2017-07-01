@@ -1,5 +1,4 @@
-
-  #adminLogin {
+#adminLogin {
   margin-left: 420;
 }
 
@@ -63,12 +62,8 @@
   border-radius: 10px;
 }
 
-ul li ul li {
-    display: none;
-}
-
-ul li:hover ul li {
-    display: block;
+.tripDescription{
+  display:none;
 }
 
 .gmap {
@@ -194,8 +189,13 @@ ul, li {
 }
 
 .sidenav li:hover {
-  background-color: blue;
-  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.sidenav li:hover .tripDescription {
+  display: block;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -206,10 +206,13 @@ ul, li {
   .sidenav li {
     font-size: 18px;
   }
+  .main{
+    padding: 0px;
+  }
 }
 
 @media screen and (max-width: 544px) {
-  #main {
+  .main {
     padding: 0px;
   }
 }
