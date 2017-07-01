@@ -54,13 +54,6 @@
         <div class="marker">
           <i class="fa fa-car"></i>
         </div>
-        <!-- <directions
-                  draggable="true"
-                  panel="directions-panel"
-                  travel-mode="DRIVING"
-                  origin="current-location"
-                  destination="{{place.latitude}},{{place.longitude}}">
-        </directions> -->
 
         <directions
            draggable="true"
@@ -68,7 +61,7 @@
            travel-mode="DRIVING"
            waypoints="{{mc.wayPoints}}"
            origin="current-location"
-           destination="2365 Carter Ave, St. Paul, MN">
+           destination="{{mc.lastStop}}">
         </directions>
 
       </custom-marker>

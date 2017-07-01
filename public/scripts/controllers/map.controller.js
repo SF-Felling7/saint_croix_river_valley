@@ -16,14 +16,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.shoppingPins = [];
   vm.selectedTripPins = [];
 
-  vm.tripCoordinate =
-  vm.wayPoints = [
 
-          {location: {lat:44.32384807250689, lng: -78.079833984375}, stopover: true},
-          {location: {lat:44.55916341529184, lng: -76.17919921875}, stopover: true},
-          // {location: {lat:44.55916341529184, lng: -76.17919921875}, stopover: true},
-          // {location: {lat:44.55916341529184, lng: -76.17919921875}, stopover: true},
-        ];
 
 
   vm.diningClass = 'navButton';
@@ -187,6 +180,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       url: '/pool/getLocationByTripId/' + trip.id
     }).then(function success(response) {
       console.log('back from server with trip selection response: ', response);
+
       vm.selectedTripPins = response.data;
       console.log('vm.selectedTripPins: ', vm.selectedTripPins);
       vm.showTrip = true;
@@ -200,15 +194,38 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.lodgingClass = 'off';
       vm.hideDetail();
       vm.closeNav();
+
+      //for road trip on map
+        vm.wayPoints = [];
+        vm.lastStop = [];
+      console.log(vm.wayPoints);
+      console.log(vm.lastStop);
+      //for each thing in a trip get coordinates
       vm.selectedTripPins.forEach(function(i){
         console.log(i.latitude, i.longitude);
-        // vm.wayPoints[0].location.lat = i.latitude;
-        // vm.wayPoints[0].location.lng = i.longitude;
+        var stopLat = Number.parseFloat(i.latitude,10 );
+        var stopLng = Number.parseFloat(i.longitude,10 );
+        console.log(stopLat, stopLng);
 
-        // vm.wayPoints.push(i.latitude, i.longitude);
+        //put coordinates in the stopToSend Object!
+        var stopToSend = {location: {lat:stopLat, lng: stopLng}, stopover: true};
+        console.log("STOPS TO ADD TO WAYPOINTS",stopToSend);
+        vm.wayPoints.push(stopToSend);
+
+        console.log(vm.wayPoints);
+
+        //make last place in trip the final stop on route in map
+        console.log(vm.wayPoints[vm.wayPoints.length - 1].location.lat);
+        console.log(vm.wayPoints[vm.wayPoints.length - 1].location.lng);
+        var finalStopLat=vm.wayPoints[vm.wayPoints.length - 1].location.lat;
+        var finalStopLng=vm.wayPoints[vm.wayPoints.length - 1].location.lng;
+
+        //push coordinates of final stop into last stop array!!
+        vm.lastStop.push(finalStopLat,finalStopLng);
+        console.log(vm.lastStop);
 
       });
-      console.log(vm.wayPoints[0].location.lat, vm.wayPoints[0].location.lng);
+
     });
   };
 });
