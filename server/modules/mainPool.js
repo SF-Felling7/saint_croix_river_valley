@@ -23,12 +23,14 @@ if (process.env.DATABASE_URL) {
   };
 
 } else {
-  //Config for pooll
-   config = {
-    database: 'st-croix-valley',
-    host: 'localhost',
-    port: 5432,
-    max: 20
+  config = {
+    user: (process.env.PGUSER || ''), //env var: PGUSER
+    database: (process.env.PGDATABASE || 'st-croix-valley'), //env var: PGDATABASE
+    password: (process.env.PGPASSWORD || ''), //env var: PGPASSWORD
+    port: (process.env.PGPORT || 5432), //env var: PGPORT
+    host: (process.env.PGHOST || 'localhost'),
+    max: 20, // max number of clients in the pool
+    idleTimeoutMillis: 15000, // 1.5s // how long a client is allowed to remain idle before being closed
   };
 }
 
