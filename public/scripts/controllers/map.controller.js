@@ -18,11 +18,15 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.shoppingClass = 'navButton';
   vm.natureClass = 'navButton';
   vm.lodgingClass = 'navButton';
-  vm.tripsClass = 'navButton';
+  vm.tripsClass = 'off';
 
   NgMap.getMap().then(function(map) {
     vm.map = map;
   });
+
+  vm.options = {
+    clickableIcons: "false"
+  };
 
 // detailed place info modal
   vm.clicked = function(place, size, parentSelector) {

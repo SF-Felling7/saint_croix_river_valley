@@ -234,19 +234,30 @@ self.shoppingPins = [];
   self.adminTrip = function(trip, size, parentSelector){
     var parentElem = parentSelector;
     console.log('admin trip button clicked for action: ', trip);
-
-    $http({
-      method: 'GET',
-      url: '/pool/getPlaces'
-    }).then(function success(response) {
-      self.allPlaces = response.data;
-      console.log('getting all places: ', self.allPlaces);
-      allPlaces = self.allPlaces;
-
-      // important--yet to do!
-      // likely also need to run a getTrips $http call here and assign to self.allTrips then declare allTrips=self.allTrips so it can be passed through in resolve
-
       if (trip === 'Add Trip'){
+        $http({
+          method: 'GET',
+          url: '/pool/getPlaces'
+        }).then(function success(response) {
+          self.allPlaces = response.data;
+          console.log('getting all places: ', self.allPlaces);
+          allPlaces = self.allPlaces;
+          for (var i = 0; i < allPlaces.length; i++) {
+            switch (allPlaces[i].types_id) {
+              case 1:
+                self.diningPins.push(allPlaces[i]);
+                break;
+              case 2:
+                self.shoppingPins.push(allPlaces[i]);
+                break;
+              case 3:
+                self.naturePins.push(allPlaces[i]);
+                break;
+              case 4:
+                self.lodgingPins.push(allPlaces[i]);
+                break;
+            }
+          }
         var modalInstance = $uibModal.open({
           animation: self.animationsEnabled,
           ariaLabelledBy: 'modal-title',
@@ -259,10 +270,30 @@ self.shoppingPins = [];
           resolve: {
             allPlaces: function() {
               return allPlaces;
-            }
+            },
+            diningPins: function() {
+              return self.diningPins;
+            },
+            shoppingPins: function() {
+              return self.shoppingPins;
+            },
+            naturePins: function() {
+              return self.naturePins;
+            },
+            lodgingPins: function() {
+              return self.lodgingPins;
+            },
           }
-      });  // end add trip modal Instance
-      } else {
+        });  // end add trip modal Instance
+      }); // end if
+    } else {
+        $http({
+          method: 'GET',
+          url: '/pool/getTrips'
+        }).then(function success(response) {
+          self.allTrips = response.data;
+          console.log('getting all trips: ', self.allTrips);
+          allTrips = self.allTrips;
         var editDeleteModalInstance = $uibModal.open({
           animation: self.animationsEnabled,
           ariaLabelledBy: 'modal-title',
@@ -273,20 +304,17 @@ self.shoppingPins = [];
           size: size,
           appendTo: parentElem,
           resolve: {
-            allPlaces: function() {
-              return allPlaces;
+            allTrips: function() {
+              return allTrips;
             }
           }
         });  // end edit delete place modal Instance
-      }  // end else
-    });//ending then success
+      });  // end else
+    }//ending then success
+  };  // end adminTrip
 
+}); // end firebase controller
 
-  }; // end adminTrip
-
-
-
-});  // end firebase controller
 
 
 // add admin modal controller
@@ -327,13 +355,13 @@ myApp.controller( 'AddAdmin', [ '$uibModalInstance', '$uibModal','$http', functi
 
 }]); // end Add Admin ModalInstanceController
 
-// edit admin controller
+// edit delete admin controller
 myApp.controller( 'EditAdmin', [ '$uibModalInstance', '$uibModal','$http', 'allAdmins', function ( $uibModalInstance, $uibModal, $http, allAdmins) {
   var vm = this;
   vm.editAdminTitle = 'Edit or Delete an Admin';
   vm.allAdmins = allAdmins;
 
-  //Edit/Delete Admin function
+  //Edit Admin function
   vm.editAdminUser = function(email){
     console.log('email: ', email);
 
@@ -485,6 +513,7 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
       }).then(function success(response ){
         //if no photo post to db anyway
         if(response.data===' '){
+
           $http ({
             method: 'POST',
             url: '/pool/addPlace',
@@ -500,6 +529,7 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
               }
           });//ending success for post without photo
         }
+
 
         //if photo exists post to db with photo url
         else {
@@ -544,7 +574,6 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
 myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPins', 'diningPins', 'shoppingPins', 'naturePins', 'lodgingPins', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPins, diningPins, shoppingPins, naturePins, lodgingPins, $routeParams ) {
   var vm = this;
   vm.title = 'Edit or Delete a Place';
-  // vm.allPlaces = allPlaces;
   vm.allPins = allPins;
   vm.diningPins = diningPins;
   vm.shoppingPins = shoppingPins;
@@ -663,14 +692,37 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
 }]); // end Edit Delete PlaceModalInstanceController
 
 // add trip modal controller
-myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibModal', 'allPlaces', '$http', function($uibModalInstance, $uibModal, allPlaces, $http) {
+myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibModal', 'allPlaces', 'diningPins', 'shoppingPins', 'naturePins', 'lodgingPins', '$http', function($uibModalInstance, $uibModal, allPlaces, diningPins, shoppingPins, naturePins, lodgingPins, $http ) {
   var vm = this;
   vm.allPlaces = allPlaces;
   vm.addTripTitle = 'Add a Trip';
-  vm.success = false;
-  vm.failed = false;
-  vm.successMessage = 'Success!  New trip added to database.';
-  vm.failedMessage = 'Uh-oh!  New trip failed to be added to database.  Try again.';
+  vm.diningPins = diningPins;
+  vm.shoppingPins = shoppingPins;
+  vm.naturePins = naturePins;
+  vm.lodgingPins = lodgingPins;
+  vm.typeSelected = false;
+
+  vm.selectType = function (types_id){
+    console.log('types_id: ', types_id);
+    switch (types_id) {
+      case '1':
+        vm.allPlaces = vm.diningPins;
+        vm.typeSelected = true;
+        break;
+      case '2':
+        vm.allPlaces = vm.shoppingPins;
+        vm.typeSelected = true;
+        break;
+      case '3':
+        vm.allPlaces = vm.naturePins;
+        vm.typeSelected = true;
+        break;
+      case '4':
+        vm.allPlaces = vm.lodgingPins;
+        vm.typeSelected = true;
+        break;
+    }
+  };
 
   vm.checkedPlaces = [];
   vm.toggleCheck = function(place) {
@@ -681,25 +733,23 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
     }
   };
 
-  vm.submitTrip = function(trip) {
-    console.log('checked place ->', vm.checkedPlaces);
-    console.log( 'trip', trip );
-    console.log('place ->', vm.checkedPlaces);
+  vm.submitTrip = function(trip, checkedPlaces) {
+    vm.trip = trip;
+    vm.checkedPlaces = checkedPlaces;
+
     var tripToSend = {
       name: trip.name,
       description: trip.description,
       locations: vm.checkedPlaces
     };
-    console.log('Trip to send ->', tripToSend);
     $http({
       method: 'POST',
       url: '/pool/addTrip',
       data: tripToSend
     }).then(function success(response) {
-      console.log('response ->', response);
       if (response.status === 200) {
         swal("Success!", "You added a trip!", "success");
-        $uibModalInstance.dismiss('cancel');
+        $uibModalInstance.close();
       } else {
         swal("Uh-oh!", "Your changes were not submitted. Try again.");
       }
@@ -712,17 +762,75 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
 }]); // end AddTripModalInstanceController
 
 // edit / delete trip modal controller
-myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allPlaces', function ( $uibModalInstance, $uibModal, allPlaces ) {
+myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrips', '$http', function ( $uibModalInstance, $uibModal, allTrips, $http) {
   var vm = this;
-  vm.allPlaces = allPlaces;
-  // vm.allTrips = allTrips;
+  // vm.allPlaces = allPlaces;
+  vm.allTrips = allTrips;
   vm.editDeleteTripTitle = 'Edit or Delete a Trip';
+  vm.edit = false;
 
-  vm.changeTrip = function(trip){
-    console.log('trip');
-    console.log('Go! button selected to start edit/delete trip procedure');
-    // likely $http call here to get
+  vm.editInPlace = function(trip) {
+    vm.edit = true;
+    vm.trip = trip;
+    console.log('vm.trip: ', vm.trip);
   };
+
+  vm.saveEdits = function(trip) {
+    console.log('edited trip to submit to db', trip.name);
+    var editsToSend = {
+      id: trip.id,
+      name: trip.name,
+      description: trip.description,
+    };
+    console.log('editsToSend: ', editsToSend);
+    $http ({
+      method: 'PUT',
+      url: '/pool/editTrip/' + trip.id,
+      data: editsToSend
+    }).then(function success( response ){
+      vm.edit = false;
+      // maybe add an if/else statement here to display a success message if response of 200 is received
+      if (response.status === 200){
+        swal("Success!", "Your changes were submitted to the map!", "success");
+          $uibModalInstance.close();
+      } else {
+        swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+      }
+    });//ending success
+  };//end save edits for place
+
+  vm.delete = function(id) {
+    swal({
+      title: "Are you sure?",
+      text: "This will remove this trip from the map!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    },
+    function(){
+      $http ({
+        method: 'DELETE',
+        url: '/pool/deleteTrip/' + id
+      }).then(function success( response ){
+        // maybe add an if/else statement here to display a success message if response of 201 is received
+        if (response.status === 200){
+          swal("Deleted!", "The trip was been deleted.", "success");
+            $uibModalInstance.close();
+        } else {
+          swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
+        }
+      });//ending success
+    });
+  };//end delete Item
+
+
+
+
+
+
+
 
   vm.cancel = function () {
     $uibModalInstance.dismiss('cancel');

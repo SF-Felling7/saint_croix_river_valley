@@ -191,15 +191,28 @@
            <li ng-repeat="place in atmic.checkedPlaces track by $index">{{place.name}}</li>
          </ol>
        </div>
+       <hr />
+       <div>
+         <label for="places">Select a Category:
+         <select ng-model="atmic.types_id" class="form-control types_select">
+           <option value="" disabled selected class="types_select">Select</option>
+           <option value="1" name="Dining" class="types_select">Dining</option>
+           <option value="2" name="Shopping" class="types_select">Shopping</option>
+           <option value="3" name="Nature" class="types_select">Nature</option>
+           <option value="4" name="Lodging" class="types_select">Lodging</option>
+         </select></label>
+         <button ng-click="atmic.selectType(atmic.types_id)" class="btn submitbutton btn-primary" type="submit" value="Submit">Change Category View</button>
+       </div>
       <ul>
-        <li ng-repeat="place in atmic.allPlaces">
+        <li ng-show="atmic.typeSelected" ng-repeat="place in atmic.allPlaces">
           <label><input type='checkbox' ng-checked="atmic.checkedPlaces.indexOf(place) != -1" ng-click="atmic.toggleCheck(place)" /> {{place.name}}</label>
         </li>
       </ul>
     </div>
+    <hr />
     <div class="modal-footer">
       <button class="btn btn-warn" type="button" ng-click="atmic.cancel()">Cancel/Close</button>
-      <button class="btn btn-primary" type="button" ng-click="atmic.submitTrip(atmic.trip)">Add Trip</button>
+      <button class="btn btn-success" type="button" ng-click="atmic.submitTrip(atmic.trip, atmic.checkedPlaces)">Add Trip</button>
     </div>
   </script>
 </div>
@@ -210,17 +223,25 @@
     <div class="modal-header">
       <h3 class="modal-title title" id="modal-title">{{edt.editDeleteTripTitle}}</h3>
     </div>
+
     <div class="modal-body" id="modal-body">
-      <select ng-model="edt.trip">
-        <option value="" disabled selected>Select Trip</option>
-        <option value="Wine Tour" selected>Wine Tour</option>
-        <option ng-repeat="trip in edt.allTrips" name="trip">{{trip.name}}</option>
-      </select>
+      <table ng-hide="edt.edit">
+        <tr ng-repeat="trip in edt.allTrips">
+          <td >{{trip.name}}</td>
+          <td><button class="btn btn-primary" type="button" ng-click="edt.editInPlace(trip)">Edit Place</button></td>
+          <td><button class="btn btn-danger" type="button" ng-click="edt.delete(trip.id)">Delete Place</button></td>
+        </tr>
+      </table>
+      <div ng-show="edt.edit">
+        Locations ID: {{edt.trip.id}}</br>
+        Trip Name: <input type="text" ng-model="edt.trip.name" maxlength="85" size="65"></br>
+        Description: <input type="text" ng-model="edt.trip.description" maxlength="1400" size="78"></br>
+        <!-- Trip Stops: {{edt.trip}} -->
+      </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-success" type="button" ng-click="edt.changeTrip(edt.trip)">Go!</button>
-      <!-- <button class="btn btn-danger" type="button" ng-click="edt.cancel()">Cancel/Close</button>
-      <button class="btn btn-primary" type="button" ng-click="">Save Trip Changes</button> -->
+    <div class="modal-footer" ng-show="edt.edit">
+      <button class="btn btn-success" type="button" ng-click="edt.saveEdits(edt.trip)">Save Edits</button>
+      <button class="btn btn-danger" type="button" ng-click="edt.cancel()">Cancel/Close</button>
     </div>
   </script>
 </div>
