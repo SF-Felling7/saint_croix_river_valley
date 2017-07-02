@@ -22,11 +22,16 @@
       <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()"><i class="fa fa-shopping-bag"></i>Shopping<span class="space"></span></button>
       <button ng-class="mc.tripsClass" ng-click="mc.openNav()"><i class="fa fa-car"></i>Trips<span class="space"></span></button>
       <button class="reset" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
-    </ul>
-  </div>
+
+  </ul>
+</div>
+
+
 
   <div class="gmap">
-    <ng-map id="map" default-style="false" zoom="11" center="[45.1250, -92.6044]" on-click="mc.map.hideInfoWindow('mapwindow')" options="{{mc.options}}">
+
+    <ng-map id="map" default-style="false" zoom="11" center="[44.79, -92.6044]" on-click="mc.map.hideInfoWindow('mapwindow')" options="{{mc.options}}">
+
 
       <custom-marker id="x{{place.id}}" ng-if="mc.showDining" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
         <div class="marker">
@@ -56,6 +61,15 @@
         </div>
       </custom-marker>
 
+      <directions
+         draggable="true"
+         panel="directions-panel"
+         travel-mode="DRIVING"
+         waypoints="{{mc.wayPoints}}"
+         origin="current-location"
+         destination="{{mc.lastStop}}">
+      </directions>
+      
       <info-window id="mapwindow">
         <div ng-non-bindable="">
           <h3>{{mc.place.name}}</h3><br/>
@@ -64,6 +78,10 @@
       </info-window>
 
     </ng-map>
+
+    <div id="directions-panel" style="width: 28%; float:left; height: 100%; overflow: auto; padding: 0px 5px">
+    </div>
+
   </div>
 </div>
 
