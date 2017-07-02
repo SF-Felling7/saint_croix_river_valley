@@ -425,7 +425,7 @@ myApp.controller( 'EditAdmin', [ '$uibModalInstance', '$uibModal','$http', 'allA
 }]); // end edit delete Admin ModalInstanceController
 
 
-// add place modal controller
+// /////////add place modal controller
 myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibModal', '$http', function($uibModalInstance, $uibModal, $http) {
   var vm = this;
   vm.addPlaceTitle = 'Add a Place';
@@ -473,7 +473,7 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
       var locationToSend = [response.data.results[0].geometry.location.lat,response.data.results[0].geometry.location.lng];
     console.log('itemToSend after lat long addition: ', itemToSend);
 
-      //send itemToSend to server for google places api
+      //send itemToSend to server for google places api to get coordinates
       $http ({
         method: 'GET',
         url: '/googlePlaces',
@@ -483,17 +483,30 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
           key:'AIzaSyBtaJxh1FdQnwtakxhSCxKkdYSRp35VWso'
         }
       }).then(function success(response ){
+        //if no photo post to db anyway
         if(response.data===' '){
-          swal("Sorry!", "We couldn't find a photo for this address. Edit the place to add a url image manually.");
-
+          $http ({
+            method: 'POST',
+            url: '/pool/addPlace',
+            data: itemToSend
+          }).then(function success( response ){
+            console.log('response: ', response);
+            document.getElementById('addPlaceForm').reset();
+            if (response.status === 201){
+              swal("Success!", "You added a place to the map! We couldn't find a photo though. Edit the place to add a url image manually", "success");
+                $uibModalInstance.close();
+            } else {
+              swal("Uh-oh!", "Your changes were not submitted to the map. Try again.");
+              }
+          });//ending success for post without photo
         }
+
+        //if photo exists post to db with photo url
         else {
         console.log("magic photo url link:",response.data);
-
         itemToSend.imageurl = response.data;
-        console.log("saving Object",itemToSend);
+        console.log('itemToSend to POST to db: ', itemToSend);
 
-    console.log('itemToSend to POST to db: ', itemToSend);
         //post new item with latitude and logitude to DB
         $http ({
           method: 'POST',
@@ -508,26 +521,24 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
           } else {
             swal("Uh-oh!", "Your changes were not submitted to the map. Try again.");
             }
+        });
+      }//ending success post with photo
 
-        });//ending success
-      }
       });
-      //end send to server for google places
+      //end send to server for google places to get coordinates
 
     }, function error(response){
       console.log('nope');
-
       document.getElementById('addPlaceForm').reset();
+      });//end geocode
 
-
-    });//end geocode
-  };//end add place
-
+  };//END ADD PLACE FUNCTION
   vm.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
 
-}]); // end AddPlaceModalInstanceController
+}]); ////////////////// end AddPlaceModalInstanceController
+
 
 // edit delete place modal controller
 myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPins', 'diningPins', 'shoppingPins', 'naturePins', 'lodgingPins', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPins, diningPins, shoppingPins, naturePins, lodgingPins, $routeParams ) {
