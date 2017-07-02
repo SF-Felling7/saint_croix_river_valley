@@ -24,6 +24,10 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     vm.map = map;
   });
 
+  vm.options = {
+    clickableIcons: "false"
+  };
+
 // detailed place info modal
   vm.clicked = function(place, size, parentSelector) {
     var parentElem = parentSelector;
