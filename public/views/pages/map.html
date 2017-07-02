@@ -54,19 +54,17 @@
         <div class="marker">
           <i class="fa fa-car"></i>
         </div>
-
-        <directions
-           draggable="true"
-           panel="directions-panel"
-           travel-mode="DRIVING"
-           waypoints="{{mc.wayPoints}}"
-           origin="current-location"
-           destination="{{mc.lastStop}}">
-        </directions>
-
       </custom-marker>
 
-
+      <directions
+         draggable="true"
+         panel="directions-panel"
+         travel-mode="DRIVING"
+         waypoints="{{mc.wayPoints}}"
+         origin="current-location"
+         destination="{{mc.lastStop}}">
+      </directions>
+      
       <info-window id="mapwindow">
         <div ng-non-bindable="">
           <h3>{{mc.place.name}}</h3><br/>

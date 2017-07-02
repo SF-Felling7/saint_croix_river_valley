@@ -2,8 +2,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   var vm = this;
 
-
-
   vm.showDining = true;
   vm.showLodging = true;
   vm.showNature = true;
@@ -15,9 +13,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.naturePins = [];
   vm.shoppingPins = [];
   vm.selectedTripPins = [];
-
-
-
 
   vm.diningClass = 'navButton';
   vm.shoppingClass = 'navButton';
@@ -142,6 +137,9 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   // use this code if you want to slide on top of content
   vm.openNav = function() {
+    vm.wayPoints = [];
+    vm.lastStop = [];
+    console.log(vm.wayPoints, vm.lastStop);
 
     console.log('toggle hamburger menu');
     if (document.getElementById('mySidenav').style.width === '33%') {
@@ -177,15 +175,16 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     //for road trip on map
     vm.wayPoints = [];
     vm.lastStop = [];
-
+    console.log("STOPS ON TRIP:",vm.wayPoints);
+    console.log("LAST STOP ON TRIP",vm.lastStop);
     $http({
       method: 'GET',
       url: '/pool/getLocationByTripId/' + trip.id
     }).then(function success(response) {
-      console.log('back from server with trip selection response: ', response);
+      // console.log('back from server with trip selection response: ', response);
 
       vm.selectedTripPins = response.data;
-      console.log('vm.selectedTripPins: ', vm.selectedTripPins);
+      // console.log('vm.selectedTripPins: ', vm.selectedTripPins);
       vm.showTrip = true;
       vm.showDining = false;
       vm.showLodging = false;
@@ -199,34 +198,27 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.closeNav();
 
 
-      console.log("stops on trip",vm.wayPoints);
-      console.log("last stop on trip",vm.lastStop);
-      //for each thing in a trip get coordinates
       vm.selectedTripPins.forEach(function(i){
-        console.log(i.latitude, i.longitude);
         var stopLat = Number.parseFloat(i.latitude,10 );
         var stopLng = Number.parseFloat(i.longitude,10 );
-        console.log(stopLat, stopLng);
 
         //put coordinates in the stopToSend Object!
         var stopToSend = {location: {lat:stopLat, lng: stopLng}, stopover: true};
-        console.log("STOPS TO ADD TO WAYPOINTS",stopToSend);
         vm.wayPoints.push(stopToSend);
-
-        console.log(vm.wayPoints);
-
-        //make last place in trip the final stop on route in map
-        console.log(vm.wayPoints[vm.wayPoints.length - 1].location.lat);
-        console.log(vm.wayPoints[vm.wayPoints.length - 1].location.lng);
-        var finalStopLat=vm.wayPoints[vm.wayPoints.length - 1].location.lat;
-        var finalStopLng=vm.wayPoints[vm.wayPoints.length - 1].location.lng;
-
-        //push coordinates of final stop into last stop array!!
-        vm.lastStop.push(finalStopLat,finalStopLng);
-        console.log(vm.lastStop);
-
       });
+      //make last place in trip the final stop on route in map
+      var finalStopLat=vm.wayPoints[vm.wayPoints.length - 1].location.lat;
+      var finalStopLng=vm.wayPoints[vm.wayPoints.length - 1].location.lng;
 
+      //push coordinates of final stop into last stop array!!
+      vm.lastStop.push(finalStopLat,finalStopLng);
+      console.log(vm.wayPoints);
+      console.log(vm.lastStop);
+      
+      // vm.wayPoints = [];
+      // vm.lastStop = [];
+      // console.log("STOPS ON TRIP:",vm.wayPoints);
+      // console.log("LAST STOP ON TRIP",vm.lastStop);
     });
   };
 });
