@@ -513,7 +513,7 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
       }).then(function success(response ){
         if(response.data===' '){
           swal("Sorry!", "We couldn't find a photo for this address. Edit the place to add a url image manually.");
-        // } else {
+        } else {
 
 
         console.log("magic photo url link:",response.data);
