@@ -26,7 +26,7 @@
 #map {
   height: 1850px;
   width: 1100px;
-  /*border: solid 5px black;*/ 
+  /*border: solid 5px black;*/
   text-align: center;
 }
 
@@ -75,6 +75,7 @@ body {
   background-color: Lightblue;
   margin: 0px;
   padding: 0px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .fa {
