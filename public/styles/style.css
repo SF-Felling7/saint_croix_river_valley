@@ -24,7 +24,7 @@
 }
 
 #map {
-  margin-left: 40px;
+  /*margin-left: 40px;*/
   height: 1850px;
   width: 1100px;
   /*border: solid 5px black;*/
@@ -103,7 +103,7 @@ i {
 
 #menu {
   margin: 0;
-  width: 1200px;
+  width: 1150px;
   background-color: lightblue;
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;

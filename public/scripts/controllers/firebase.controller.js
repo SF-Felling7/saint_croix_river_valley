@@ -521,7 +521,7 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
             console.log('response: ', response);
             document.getElementById('addPlaceForm').reset();
             if (response.status === 201){
-              swal("Success!", "You added a place to the map! We couldn't find a photo though. Edit the place to add a url image manually", "success");
+              swal("Success!", "You added a place to the map--but we couldn't find a photo. Edit the place to add a url image manually.", "success");
                 $uibModalInstance.close();
             } else {
               swal("Uh-oh!", "Your changes were not submitted to the map. Try again.");
