@@ -124,7 +124,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     }
   };
 
-
   vm.toggleShopping = function() {
     vm.showShopping = !vm.showShopping;
     console.log(vm.showShopping);
@@ -141,10 +140,8 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   // use this code if you want to slide on top of content
   vm.openNav = function() {
-    vm.wayPoints = [];
-    vm.lastStop = [];
-    console.log(vm.wayPoints, vm.lastStop);
-
+    //set directions to false before getting the trip
+    vm.directions=false;
     console.log('toggle hamburger menu');
     if (document.getElementById('mySidenav').style.width === '33%') {
       document.getElementById('mySidenav').style.width = '0%';
@@ -168,11 +165,13 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     });
   };
 
+
   /* Set the width of the side navigation to 0 */
   vm.closeNav = function() {
     document.getElementById('mySidenav').style.width = '0';
     console.log('x close button clicked');
   };
+
 
   vm.suggested = function(trip) {
     console.log('suggested clicked for trip:', trip);
@@ -201,7 +200,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.hideDetail();
       vm.closeNav();
 
-
+      //find coordinates for each place and convert to number
       vm.selectedTripPins.forEach(function(i){
         var stopLat = Number.parseFloat(i.latitude,10 );
         var stopLng = Number.parseFloat(i.longitude,10 );
@@ -218,11 +217,8 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.lastStop.push(finalStopLat,finalStopLng);
       console.log(vm.wayPoints);
       console.log(vm.lastStop);
-      
-      // vm.wayPoints = [];
-      // vm.lastStop = [];
-      // console.log("STOPS ON TRIP:",vm.wayPoints);
-      // console.log("LAST STOP ON TRIP",vm.lastStop);
+
+      vm.directions=true;
     });
   };
 });

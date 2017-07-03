@@ -316,7 +316,6 @@ self.shoppingPins = [];
 }); // end firebase controller
 
 
-
 // add admin modal controller
 myApp.controller( 'AddAdmin', [ '$uibModalInstance', '$uibModal','$http', function ( $uibModalInstance, $uibModal, $http ) {
   var vm = this;
@@ -530,7 +529,6 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
           });//ending success for post without photo
         }
 
-
         //if photo exists post to db with photo url
         else {
         console.log("magic photo url link:",response.data);
@@ -568,7 +566,6 @@ myApp.controller('AddPlaceModalInstanceController', ['$uibModalInstance', '$uibM
   };
 
 }]); ////////////////// end AddPlaceModalInstanceController
-
 
 // edit delete place modal controller
 myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http', 'allPins', 'diningPins', 'shoppingPins', 'naturePins', 'lodgingPins', '$routeParams', function ( $uibModalInstance, $uibModal, $http, allPins, diningPins, shoppingPins, naturePins, lodgingPins, $routeParams ) {
@@ -648,7 +645,6 @@ myApp.controller( 'EditDeletePlace', [ '$uibModalInstance', '$uibModal','$http',
     vm.place = place;
     console.log('vm.place: ', vm.place);
   };
-
 
   vm.saveEdits = function(place) {
     console.log('edited place to submit to db', place.name);
@@ -736,24 +732,28 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
   vm.submitTrip = function(trip, checkedPlaces) {
     vm.trip = trip;
     vm.checkedPlaces = checkedPlaces;
-
-    var tripToSend = {
-      name: trip.name,
-      description: trip.description,
-      locations: vm.checkedPlaces
-    };
-    $http({
-      method: 'POST',
-      url: '/pool/addTrip',
-      data: tripToSend
-    }).then(function success(response) {
-      if (response.status === 200) {
-        swal("Success!", "You added a trip!", "success");
-        $uibModalInstance.close();
-      } else {
-        swal("Uh-oh!", "Your changes were not submitted. Try again.");
-      }
-    }); //END of success
+    if (!trip || checkedPlaces.length === 0) {
+      swal("Uh-oh!", "Please enter all the fields for the trip. Try again!");
+    }
+    else {
+      var tripToSend = {
+        name: trip.name,
+        description: trip.description,
+        locations: vm.checkedPlaces
+      };
+      $http({
+        method: 'POST',
+        url: '/pool/addTrip',
+        data: tripToSend
+      }).then(function success(response) {
+        if (response.status === 200) {
+          swal("Success!", "You added a trip!", "success");
+          $uibModalInstance.close();
+        } else {
+          swal("Uh-oh!", "Your changes were not submitted. Try again.");
+        }
+      }); //END of success for post
+    }//end else statement
   }; //ENDING submitTrip Function
 
   vm.cancel = function() {
@@ -824,13 +824,6 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
       });//ending success
     });
   };//end delete Item
-
-
-
-
-
-
-
 
   vm.cancel = function () {
     $uibModalInstance.dismiss('cancel');
