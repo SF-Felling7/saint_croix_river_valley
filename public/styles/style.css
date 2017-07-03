@@ -146,6 +146,8 @@ i {
 
 /* The side navigation menu */
 .sidenav {
+  border-style: solid;
+  border-width: 1.5px;
   margin-top: 106px;
   padding-top: 30px;
   height: 100%;
@@ -168,7 +170,9 @@ i {
 }
 
 .directionsSidenav {
-  margin-top: 106px;
+  border-style: solid;
+  border-width: 1.5px;
+  margin-top: 216px;
   padding-top: 30px;
   height: 100%;
   /* 100% Full-height */
@@ -277,7 +281,6 @@ ul, li {
 .fa-car {
   color: indigo;
 }
-
 
 .dropdown-content {
   display: none;
