@@ -26,12 +26,9 @@
   </ul>
 </div>
 
-
-
   <div class="gmap">
 
     <ng-map id="map" default-style="false" zoom="11" center="[44.79, -92.6044]" on-click="mc.map.hideInfoWindow('mapwindow')" options="{{mc.options}}">
-
 
       <custom-marker id="x{{place.id}}" ng-if="mc.showDining" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
         <div class="marker">
@@ -79,7 +76,7 @@
 
     </ng-map>
 
-    <div id="directions-panel" style="width: 28%; float:left; height: 100%; overflow: auto; padding: 0px 5px">
+    <div ng-show="mc.directions" class="directionsSidenav" id="directions-panel" style="width: 28%; float:left; height: 100%; overflow: auto; padding: 0px 5px">
     </div>
 
   </div>
