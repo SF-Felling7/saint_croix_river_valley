@@ -141,9 +141,6 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   // use this code if you want to slide on top of content
   vm.openNav = function() {
-    vm.wayPoints = [];
-    vm.lastStop = [];
-    console.log(vm.wayPoints, vm.lastStop);
 
     console.log('toggle hamburger menu');
     if (document.getElementById('mySidenav').style.width === '33%') {
@@ -201,7 +198,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.hideDetail();
       vm.closeNav();
 
-
+      //find coordinates for each place and convert to number
       vm.selectedTripPins.forEach(function(i){
         var stopLat = Number.parseFloat(i.latitude,10 );
         var stopLng = Number.parseFloat(i.longitude,10 );
@@ -218,7 +215,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.lastStop.push(finalStopLat,finalStopLng);
       console.log(vm.wayPoints);
       console.log(vm.lastStop);
-      
+
       // vm.wayPoints = [];
       // vm.lastStop = [];
       // console.log("STOPS ON TRIP:",vm.wayPoints);
