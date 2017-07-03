@@ -26,7 +26,7 @@
 #map {
   height: 1850px;
   width: 1100px;
-  border: solid 5px black;
+  /*border: solid 5px black;*/ 
   text-align: center;
 }
 
@@ -101,7 +101,7 @@ i {
 
 #menu {
   margin: 0;
-  width: 1100px;
+  width: 1200px;
   background-color: lightblue;
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
