@@ -228,8 +228,8 @@
       <table ng-hide="edt.edit">
         <tr ng-repeat="trip in edt.allTrips">
           <td >{{trip.name}}</td>
-          <td><button class="btn btn-primary" type="button" ng-click="edt.editInPlace(trip)">Edit Place</button></td>
-          <td><button class="btn btn-danger" type="button" ng-click="edt.delete(trip.id)">Delete Place</button></td>
+          <td><button class="btn btn-primary" type="button" ng-click="edt.editInPlace(trip)">Edit Trip</button></td>
+          <td><button class="btn btn-danger" type="button" ng-click="edt.delete(trip.id)">Delete Trip</button></td>
         </tr>
       </table>
       <div ng-show="edt.edit">
