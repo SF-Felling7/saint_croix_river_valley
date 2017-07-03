@@ -143,10 +143,10 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     //set directions to false before getting the trip
     vm.directions=false;
     console.log('toggle hamburger menu');
-    if (document.getElementById('mySidenav').style.width === '33%') {
+    if (document.getElementById('mySidenav').style.width === '25%') {
       document.getElementById('mySidenav').style.width = '0%';
     } else {
-      document.getElementById('mySidenav').style.width = '33%';
+      document.getElementById('mySidenav').style.width = '25%';
     }
     if (vm.tripsClass === 'navButton') {
       vm.tripsClass = 'off';

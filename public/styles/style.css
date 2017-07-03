@@ -28,6 +28,8 @@
   height: 1850px;
   width: 1100px;
   /*border: solid 5px black;*/
+  margin-top: 68px;
+  border-style: groove;
   text-align: center;
 }
 
@@ -147,10 +149,10 @@ i {
 
 /* The side navigation menu */
 .sidenav {
-  border-style: solid;
+  border-style: ridge;
   border-width: 1.5px;
-  margin-top: 106px;
-  padding-top: 30px;
+  margin-top: 107px;
+  padding-top: 6px;
   height: 100%;
   /* 100% Full-height */
   width: 0;
@@ -171,9 +173,9 @@ i {
 }
 
 .directionsSidenav {
-  border-style: solid;
+  border-style: ridge;
   border-width: 1.5px;
-  margin-top: 216px;
+  margin-top: 107px;
   padding-top: 30px;
   height: 100%;
   /* 100% Full-height */
@@ -281,6 +283,10 @@ ul, li {
 
 .fa-car {
   color: indigo;
+}
+
+.carImage {
+  height: 55px;
 }
 
 .dropdown-content {
