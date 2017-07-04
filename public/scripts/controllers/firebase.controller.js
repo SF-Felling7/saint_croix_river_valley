@@ -168,6 +168,10 @@ self.shoppingPins = [];
       self.allPins = response.data;
       console.log('self.allPins: ', self.allPins);
       allPins = self.allPins;
+      self.diningPins = [];
+      self.shoppingPins = [];
+      self.naturePins = [];
+      self.lodgingPins = [];
       for (var i = 0; i < allPins.length; i++) {
         switch (allPins[i].types_id) {
           case 1:
@@ -242,6 +246,10 @@ self.shoppingPins = [];
           self.allPlaces = response.data;
           console.log('getting all places: ', self.allPlaces);
           allPlaces = self.allPlaces;
+          self.diningPins = [];
+          self.shoppingPins = [];
+          self.naturePins = [];
+          self.lodgingPins = [];
           for (var i = 0; i < allPlaces.length; i++) {
             switch (allPlaces[i].types_id) {
               case 1:
@@ -702,6 +710,7 @@ myApp.controller('AddTripModalInstanceController', ['$uibModalInstance', '$uibMo
     console.log('types_id: ', types_id);
     switch (types_id) {
       case '1':
+        vm.allPlaces = [];
         vm.allPlaces = vm.diningPins;
         vm.typeSelected = true;
         break;
@@ -816,7 +825,7 @@ myApp.controller( 'EditDeleteTrip', [ '$uibModalInstance', '$uibModal', 'allTrip
       }).then(function success( response ){
         // maybe add an if/else statement here to display a success message if response of 201 is received
         if (response.status === 200){
-          swal("Deleted!", "The trip was been deleted.", "success");
+          swal("Deleted!", "The trip has been deleted.", "success");
             $uibModalInstance.close();
         } else {
           swal("Uh-oh!", "Your changes were not submitted to the database.  Try again.");
