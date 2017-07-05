@@ -180,8 +180,8 @@ router.get('/getLocationByTripId/:id', function(req, res){
      } else {
        console.log('no err from get Location By Trip Id');
        connection.query("SELECT * FROM trips JOIN locations_trips ON trips.id = locations_trips.trips_id JOIN locations ON locations.id = locations_trips.locations_id WHERE trips.id ="+req.params.id,
-       done();
        function (err, results) {
+         done();
          if(err){
            console.log('error grabbing locations from trips');
            res.sendStatus(500);
