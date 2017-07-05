@@ -25,12 +25,16 @@
 
 #map {
   /*margin-left: 40px;*/
-  height: 1850px;
-  width: 1100px;
+  height: 600px;
+  width: 900px;
+  border: solid 5px black;
+  margin-top: 68px;
+  border-style: groove;
+  float: left;
   /*border: solid 5px black;*/
   margin-top: 170px;
-  border-style: groove;
-  text-align: center;
+
+  
 }
 
 #title {
