@@ -14,17 +14,17 @@
 
 <div class="main">
   <div id="menu" class="navbar-fixed-top">
-    <ul>
-      <a href="http://saintcroixriver.com/"><img src="../styles/logo.png" id="logo"><span class="space"></span></a>
-      <button ng-class="mc.diningClass" ng-click="mc.toggleDining()"><i class="fa fa-cutlery"></i>Dining<span class="space"></span></button>
-      <button ng-class="mc.lodgingClass" ng-click="mc.toggleLodging()"><i class="fa fa-bed"></i>Lodging<span class="space"></span></button>
-      <button ng-class="mc.natureClass" ng-click="mc.toggleNature()"><i class="fa fa-tree"></i>Nature<span class="space"></span></button>
-      <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()"><i class="fa fa-shopping-bag"></i>Shopping<span class="space"></span></button>
-      <button ng-class="mc.tripsClass" ng-click="mc.openNav()"><i class="fa fa-car"></i>Trips<span class="space"></span></button>
-      <button class="reset" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
 
-  </ul>
-</div>
+      <a href="http://saintcroixriver.com/" class="col-xs-3 col-sm-3"><img src="../styles/logo.png" id="logo"><span class="space"></span></a>
+      <div class="col-xs-9 col-sm-9">
+        <button ng-class="mc.diningClass" ng-click="mc.toggleDining()" class="col-xs-3 col-sm-3"><i class="fa fa-cutlery"></i>Dining<span class="space"></span></button>
+        <button ng-class="mc.lodgingClass" ng-click="mc.toggleLodging()" class="col-xs-3 col-sm-3"><i class="fa fa-bed"></i>Lodging<span class="space"></span></button>
+        <button ng-class="mc.tripsClass" ng-click="mc.openNav()" class="col-xs-3 col-sm-3"><i class="fa fa-car"></i>Trips<span class="space"></span></button>
+        <button ng-class="mc.natureClass" ng-click="mc.toggleNature()" class="col-xs-3 col-sm-3"><i class="fa fa-tree"></i>Nature<span class="space"></span></button>
+        <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()" class="col-xs-3 col-sm-3"><i class="fa fa-shopping-bag"></i>Shopping<span class="space"></span></button>
+        <button class="reset col-xs-3 col-sm-3" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
+      </div>
+  </div>
 
   <div class="gmap">
 
