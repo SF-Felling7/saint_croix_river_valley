@@ -176,6 +176,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
   vm.suggested = function(trip) {
     console.log('suggested clicked for trip:', trip);
     //for road trip on map
+    vm.trip = trip;
     vm.wayPoints = [];
     vm.lastStop = [];
     console.log("STOPS ON TRIP:",vm.wayPoints);
@@ -200,8 +201,13 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.hideDetail();
       vm.closeNav();
 
+
       //find coordinates for each place and convert to number
+      vm.locationsInTrip = [];
+
       vm.selectedTripPins.forEach(function(i){
+        vm.locationsInTrip.push(i.name);
+
         var stopLat = Number.parseFloat(i.latitude,10 );
         var stopLng = Number.parseFloat(i.longitude,10 );
 
@@ -209,9 +215,13 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
         var stopToSend = {location: {lat:stopLat, lng: stopLng}, stopover: true};
         vm.wayPoints.push(stopToSend);
       });
+       vm.locationsInTripString = vm.locationsInTrip.join(", ");
       //make last place in trip the final stop on route in map
       var finalStopLat=vm.wayPoints[vm.wayPoints.length - 1].location.lat;
       var finalStopLng=vm.wayPoints[vm.wayPoints.length - 1].location.lng;
+
+      //chop final location from wayPoints
+      vm.wayPoints.splice(vm.wayPoints.length-1,1);
 
       //push coordinates of final stop into last stop array!!
       vm.lastStop.push(finalStopLat,finalStopLng);

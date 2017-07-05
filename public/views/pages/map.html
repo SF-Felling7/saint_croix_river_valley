@@ -64,7 +64,8 @@
          travel-mode="DRIVING"
          waypoints="{{mc.wayPoints}}"
          origin="current-location"
-         destination="{{mc.lastStop}}">
+         destination="{{mc.lastStop}}"
+         >
       </directions>
 
       <info-window id="mapwindow">
@@ -77,6 +78,8 @@
     </ng-map>
 
     <div ng-show="mc.directions" class="directionsSidenav" id="directions-panel" style="width: 25%; float:left; height: 100%; overflow: auto; padding: 0px 5px">
+      <h2>{{mc.trip.name}}</h2>
+      <h4><span id="tripStop">Trip Stops: </span>{{mc.locationsInTripString}} </h4>
     </div>
 
   </div>
