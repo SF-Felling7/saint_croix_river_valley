@@ -104,6 +104,7 @@ i {
 }
 
 #menu {
+  z-index: 1;
   margin: 0;
   width: 1150px;
   background-color: lightblue;
@@ -173,11 +174,12 @@ i {
 }
 
 .directionsSidenav {
+  height: 100%;
+  text-align: left;
   border-style: ridge;
   border-width: 1.5px;
-  margin-top: 107px;
+  /*margin-top: 107px;*/
   padding-top: 30px;
-  height: 100%;
   /* 100% Full-height */
   width: 0;
   /* 0 width - change this with JavaScript */
@@ -194,6 +196,11 @@ i {
   /* Place content 60px from the top */
   transition: 0.5s;
   /* 0.5 second transition effect to slide in the sidenav */
+}
+
+#tripStop {
+  font-weight: bold;
+  font-size: 21px;
 }
 
 /* Position and style the close button (top right corner) */
@@ -215,6 +222,7 @@ ul, li {
 
 .sidenav li {
   font-size: 18px;
+
   /*padding: 8px 8px 8px 32px;*/
   transition: 0.3s
 }
@@ -226,6 +234,15 @@ ul, li {
 
 .sidenav li:hover .tripDescription {
   display: block;
+
+}
+
+.tripName {
+  font-weight: bold;
+}
+
+.tripDescription{
+  font-weight: normal;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
