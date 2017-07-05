@@ -20,6 +20,7 @@ router.get( '/getPlaces', function ( req, res ){
       console.log('connected to db');
       // send query for everything in the 'locations' table and grab everything
       connection.query( "SELECT * FROM locations", function(err, result) {
+        done();
         if(err) {
           console.log('Error selecting locations', err);
           res.sendStatus(500);
@@ -45,6 +46,7 @@ router.post( '/addPlace', function ( req, res ){
         console.log('in add place');
         console.log('adding place:', req.body);
         connection.query( "INSERT INTO locations (name, street, city, state, zipcode, website, phone, description, imageurl, latitude, longitude, types_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.website, req.body.phone, req.body.description, req.body.imageurl, req.body.latitude, req.body.longitude, req.body.types_id] , function(err, result) {
+            done();
             if(err) {
               console.log('Error selecting locations', err);
               res.sendStatus(500);
@@ -71,6 +73,7 @@ router.put( '/editPlace/', function ( req, res ){
       console.log('req.body', req.body);
       // need to revise to edit
       connection.query( "UPDATE locations SET name=$1, street=$2, city=$3, state=$4, zipcode=$5, phone=$6, website=$7, description=$8, latitude=$9, longitude=$10, types_id=$11, imageurl=$12 WHERE id=" + req.body.id, [req.body.name, req.body.street, req.body.city, req.body.state, req.body.zipcode, req.body.phone, req.body.website, req.body.description, req.body.latitude, req.body.longitude, req.body.types_id, req.body.imageurl] , function(err, result) {
+        done();
         if(err) {
           console.log('Error selecting locations', err);
           res.sendStatus(500);
@@ -96,6 +99,7 @@ router.delete( '/deletePlace/:id', function ( req, res ){
         console.log('connected to db');
         console.log('req.params.id: ', req.params.id);
         connection.query( "DELETE FROM locations WHERE id = $1" , [req.params.id] , function(err, result) {
+            done();
             if(err) {
               console.log('Error selecting locations', err);
               res.sendStatus(500);
@@ -122,6 +126,7 @@ router.post( '/addTrip', function( req, res ) {
       connection.query( " INSERT INTO trips (name, description)  VALUES ( $1, $2 ) RETURNING id", [req.body.name, req.body.description],
 
       function(err, result) {
+        done();
         if(err) {
           console.log('Error selecting locations', err);
           res.sendStatus(500);
@@ -153,6 +158,7 @@ pool.connect(function (err, connection, done) {
   } else {
     console.log('no err for get trips');
     connection.query("SELECT * FROM trips", function (err, results) {
+      done();
       if(err){
         console.log('Error grabbing trips', err);
         res.sendStatus(500);
@@ -174,6 +180,7 @@ router.get('/getLocationByTripId/:id', function(req, res){
      } else {
        console.log('no err from get Location By Trip Id');
        connection.query("SELECT * FROM trips JOIN locations_trips ON trips.id = locations_trips.trips_id JOIN locations ON locations.id = locations_trips.locations_id WHERE trips.id ="+req.params.id,
+       done();
        function (err, results) {
          if(err){
            console.log('error grabbing locations from trips');
@@ -200,6 +207,7 @@ router.delete( '/deleteTrip/:id', function ( req, res ){
         console.log('connected to db');
         console.log('req.params.id: ', req.params.id);
         connection.query( "DELETE FROM trips WHERE id = $1" , [req.params.id] , function(err, result) {
+          done();
             if(err) {
               console.log('Error selecting trip to delete', err);
               res.sendStatus(500);
@@ -227,6 +235,7 @@ router.put( '/editTrip/:id', function ( req, res ){
       console.log('req.body', req.body);
       // need to revise to edit
       connection.query( "UPDATE trips SET name=$1, description=$2 WHERE id=" + req.body.id, [req.body.name, req.body.description] , function(err, result) {
+        done();
         if(err) {
           console.log('Error selecting trips to edit', err);
           res.sendStatus(500);
@@ -250,6 +259,7 @@ router.post( '/admin', function ( req, res ){
       else{
         console.log('in add admin-->adding admin:', req.body.email);
         connection.query( "INSERT INTO admins (email, admin) VALUES ($1, $2)", [req.body.email, req.body.admin] , function(err, result) {
+            done();
             if(err) {
               console.log('Error selecting locations', err);
               res.sendStatus(500);
@@ -273,6 +283,7 @@ router.get( '/admin', function ( req, res ){
       else{
         console.log('in get admins');
         connection.query( "SELECT * FROM admins", function(err, result) {
+            done();
             if(err) {
               console.log('Error selecting locations', err);
               res.sendStatus(500);
@@ -297,6 +308,7 @@ router.delete( '/admin/:id', function ( req, res ){
         console.log('connected to db');
         console.log('req.params.id: ', req.params.id);
         connection.query( "DELETE FROM admins WHERE id = $1" , [req.params.id] , function(err, result) {
+            done();
             if(err) {
               console.log('Error selecting locations', err);
               res.sendStatus(500);
@@ -322,6 +334,7 @@ router.put( '/admin/', function ( req, res ){
       console.log('req.body', req.body);
       // need to revise to edit
       connection.query( "UPDATE admins SET email=$1, admin=$2 WHERE id=" + req.body.id, [req.body.email, req.body.admin] , function(err, result) {
+        done();
         if(err) {
           console.log('Error selecting locations', err);
           res.sendStatus(500);

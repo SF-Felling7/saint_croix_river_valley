@@ -23,6 +23,7 @@ router.get ('/getAllPins', function (req, res){
       console.log('connected to db');
       // send query for dining in the 'locations' table and grab everything with types_id 1
       connection.query( "SELECT * FROM locations", function(err, result) {
+          done();
           if(err) {
             console.log('Error selecting locations', err);
             res.sendStatus(500);
