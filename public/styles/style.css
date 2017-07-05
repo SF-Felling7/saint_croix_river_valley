@@ -28,7 +28,7 @@
   height: 1850px;
   width: 1100px;
   /*border: solid 5px black;*/
-  margin-top: 68px;
+  margin-top: 170px;
   border-style: groove;
   text-align: center;
 }
@@ -55,9 +55,10 @@
 
 /*logo image button on map.html*/
 #logo {
-  height: 75px;
+  height: 167px;
   border: solid 3px black;
   border-radius: 10px;
+  margin: 10px;
 }
 
 #logo:hover {
@@ -104,18 +105,21 @@ i {
 }
 
 #menu {
-  margin: 0;
+  padding-left: 20px;
   width: 1150px;
   background-color: lightblue;
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
   text-align: left;
-  padding: 8px;
   border-radius: 8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -o-border-radius: 8px;
+}
+
+#menu button {
+  height: 75px;
 }
 
 #menu ul {
@@ -128,8 +132,8 @@ i {
 
 #menu button {
      display: inline-block;
-     padding: 8px;
-     margin: 10px;
+     margin: 8px;
+
 }
 
 #menu i {
@@ -239,12 +243,14 @@ ul, li {
   .main{
     padding: 0px;
   }
+
 }
 
 @media screen and (max-width: 544px) {
   .main {
     padding: 0px;
   }
+
 }
 
 .form-group {
