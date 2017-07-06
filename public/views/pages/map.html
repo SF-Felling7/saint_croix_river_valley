@@ -13,7 +13,8 @@
 </div>
 
 <div class="main">
-  <div id="menu" class="navbar-fixed-top">
+  <!-- non-mobile screen -->
+  <div id="menu" class="navbar-fixed-top hidden-xs">
       <div class="col-xs-3 col-sm-3">
         <a href="http://saintcroixriver.com/" class="col-xs-3 col-sm-3"><img src="../styles/logo.png" id="logo"><span class="space"></span></a>
       </div>
@@ -28,6 +29,17 @@
         <button ng-class="mc.natureClass" ng-click="mc.toggleNature()" class="col-xs-3 col-sm-2"><i class="fa fa-tree"></i>Nature<span class="space"></span></button>
         <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()" class="col-xs-3 col-sm-2"><i class="fa fa-shopping-bag"></i>Shopping<span class="space"></span></button>
         <button class="reset col-xs-3 col-sm-2" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
+      </div>
+  </div>
+  <!-- small screen menu -->
+  <div id="menu" class="navbar-fixed-top visible-xs">
+      <div class="col-xs-12">
+        <button ng-class="mc.diningClass" ng-click="mc.toggleDining()" class="col-xs-5"><i class="fa fa-cutlery"></i>Dining</button>
+        <button ng-class="mc.lodgingClass" ng-click="mc.toggleLodging()" class="col-xs-5"><i class="fa fa-bed"></i>Lodging</button>
+        <button ng-class="mc.natureClass" ng-click="mc.toggleNature()" class="col-xs-5"><i class="fa fa-tree"></i>Nature</button>
+        <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()" class="col-xs-5"><i class="fa fa-shopping-bag"></i>Shopping</button>
+        <button ng-class="mc.tripsClass" ng-click="mc.openNav()" class="col-xs-5"><i class="fa fa-car"></i>Trips</button>
+        <button class="reset col-xs-5" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset</button>
       </div>
   </div>
 

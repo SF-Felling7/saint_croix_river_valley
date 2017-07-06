@@ -8,11 +8,6 @@
   border-radius: 10px;
 }
 
-#viewMap {
-  background-color: green;
-  border-color: green;
-}
-
 #signInGoogle{
   background-color: dodgerBlue;
   color: ivory;
@@ -130,9 +125,7 @@ i {
   -o-border-radius: 8px;
 }
 
-#menu button {
-  height: 75px;
-}
+
 
 #menu ul {
      margin: 0;
@@ -146,6 +139,7 @@ i {
      display: inline-block;
      margin: 8px;
      margin-right: 25px;
+     height: 75px;
 
 }
 
@@ -274,14 +268,24 @@ ul, li {
   .main{
     padding: 0px;
   }
-
+  #menu button {
+    margin-right: 8px;
+  }
+  #menu button {
+    height: 10%;
+  }
 }
 
 @media screen and (max-width: 544px) {
   .main {
     padding: 0px;
   }
-
+  #menu button {
+    margin-right: 8px;
+  }
+  #menu button {
+    height: 10%;
+  }
 }
 
 .form-group {
