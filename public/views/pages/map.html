@@ -33,7 +33,7 @@
 
   <div class="gmap">
 
-    <ng-map id="map" default-style="false" zoom="12" center="[45.004467,-92.752988]" on-click="mc.map.hideInfoWindow('mapwindow')" options="{{mc.options}}">
+    <ng-map id="map" default-style="false" zoom="11" center="[45.004467,-92.752988]" on-click="mc.map.hideInfoWindow('mapwindow')" options="{{mc.options}}">
 
       <custom-marker id="x{{place.id}}" ng-if="mc.showDining" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
         <div class="marker">
