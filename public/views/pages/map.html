@@ -1,5 +1,5 @@
 <div id="mySidenav" class="sidenav">
-  <!-- <li class="closebtn" ng-click="mc.closeNav()">&times;</li> -->
+  <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
   <h3><i class="fa fa-car"></i> Suggested Trips</h3>
   <nav>
     <ul ng-repeat="trip in mc.allTrips">
@@ -14,20 +14,26 @@
 
 <div class="main">
   <div id="menu" class="navbar-fixed-top">
-      <a href="http://saintcroixriver.com/" class="col-xs-3 col-sm-3"><img src="../styles/logo.png" id="logo"><span class="space"></span></a>
+      <div class="col-xs-3 col-sm-3">
+        <a href="http://saintcroixriver.com/" class="col-xs-3 col-sm-3"><img src="../styles/logo.png" id="logo"><span class="space"></span></a>
+      </div>
       <div class="col-xs-9 col-sm-9">
-        <button ng-class="mc.diningClass" ng-click="mc.toggleDining()" class="col-xs-3 col-sm-3"><i class="fa fa-cutlery"></i>Dining<span class="space"></span></button>
-        <button ng-class="mc.lodgingClass" ng-click="mc.toggleLodging()" class="col-xs-3 col-sm-3"><i class="fa fa-bed"></i>Lodging<span class="space"></span></button>
-        <button ng-class="mc.tripsClass" ng-click="mc.openNav()" class="col-xs-3 col-sm-3"><i class="fa fa-car"></i>Trips<span class="space"></span></button>
-        <button ng-class="mc.natureClass" ng-click="mc.toggleNature()" class="col-xs-3 col-sm-3"><i class="fa fa-tree"></i>Nature<span class="space"></span></button>
-        <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()" class="col-xs-3 col-sm-3"><i class="fa fa-shopping-bag"></i>Shopping<span class="space"></span></button>
-        <button class="reset col-xs-3 col-sm-3" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
+        <button ng-class="mc.diningClass" ng-click="mc.toggleDining()" class="col-xs-3 col-sm-2"><i class="fa fa-cutlery"></i>Dining<span class="space"></span></button>
+        <button ng-class="mc.lodgingClass" ng-click="mc.toggleLodging()" class="col-xs-3 col-sm-2"><i class="fa fa-bed"></i>Lodging<span class="space"></span></button>
+        <button ng-class="mc.tripsClass" ng-click="mc.openNav()" class="col-xs-3 col-sm-2"><i class="fa fa-car"></i>Trips<span class="space"></span></button>
+
+      </div>
+      <div class="col-xs-9 col-sm-9">
+
+        <button ng-class="mc.natureClass" ng-click="mc.toggleNature()" class="col-xs-3 col-sm-2"><i class="fa fa-tree"></i>Nature<span class="space"></span></button>
+        <button ng-class="mc.shoppingClass" ng-click="mc.toggleShopping()" class="col-xs-3 col-sm-2"><i class="fa fa-shopping-bag"></i>Shopping<span class="space"></span></button>
+        <button class="reset col-xs-3 col-sm-2" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
       </div>
   </div>
 
   <div class="gmap">
 
-    <ng-map id="map" default-style="false" zoom="11" center="[45.0120748,-92.7248161]" on-click="mc.map.hideInfoWindow('mapwindow')" options="{{mc.options}}">
+    <ng-map id="map" default-style="false" zoom="12" center="[45.004467,-92.752988]" on-click="mc.map.hideInfoWindow('mapwindow')" options="{{mc.options}}">
 
       <custom-marker id="x{{place.id}}" ng-if="mc.showDining" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
         <div class="marker">
