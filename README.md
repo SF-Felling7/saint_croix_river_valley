@@ -1,7 +1,7 @@
 # St Croix Valley Regional Tourism Alliance Interactive Map #
 
 ## Getting Started
-In order to get this application up and running on your local host you will need to have all of the dependencies installed.  To do so, you'll simply get into the cloned folder via terminal.  Once there, you can type the command, npm install.
+In order to get this application up and running on your local host you will need to have all of the dependencies installed.  To do so, you'll simply get into the cloned folder via terminal.  Once there, you can type the command: npm install.
 
 This application was built with a SQL database, so you will need to see the queries.sql file in order to set up the database.  In there you will find the queries to create the tables in the database.  You will have to add your own data to the database either through the admin page or database administrator tool (e.g. Postico).
 
@@ -10,6 +10,15 @@ The application uses a google maps API key.  In order to get your own key you wi
 * Click the Services link from the left-hand menu.
 * Activate the Google Maps API v3 service.
 * Click the API Access link from the left-hand menu.  Your API key is available from the   API Access page, in the Simple API Access section.  Maps API applications use the Key for browser apps.
+
+The application uses google firebase for authentication that includes a specific key. To get a firebase key and use it your project follow these steps:
+
+* click getting started at https://firebase.google.com/
+* click create a project - and give it an appropriate title
+* in authentication tab enable sign in with google and email/password
+* in the settings page menu click on service accounts which will take you to a new window where you can click generate new private key
+* copy your key and paste it into decoder.js
+* in config.js add your own var = config generated from the new projected you created
 
 **St Croix Valley Regional Tourism Alliance Interactive Map** is a full-stack web application that complements the St Croix Valley Regional Tourism Alliance's existing website and print visitor guide.  The map allows users to view featured places by category (Dining, Shopping, Nature, Lodging) or view suggested trips including driving directions from the user's current location.
 
