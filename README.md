@@ -1,5 +1,8 @@
 # St Croix Valley Regional Tourism Alliance Interactive Map #
-In order to get this application up and running on your local host you will need to have all of the dependencies installed.  To do so, you'll simply get into the cloned folder via terminal.  Once there, you can type the command, npm install.  
+In order to get this application up and running on your local host you will need to have all of the dependencies installed.  To do so, you'll simply get into the cloned folder via terminal.  Once there, you can type the command, npm install.
+
+This application was built with a SQL database, so you will need to see the queries.sql file in order to set up the database.  In there you will find the queries to create the tables in the database.
+
 
 **St Croix Valley Regional Tourism Alliance Interactive Map** is a full-stack web application that complements the St Croix Valley Regional Tourism Alliance's existing website and print visitor guide.  The map allows users to view featured places by category (Dining, Shopping, Nature, Lodging) or view suggested trips including driving directions from the user's current location.
 
