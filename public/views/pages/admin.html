@@ -2,9 +2,9 @@
   <h1 class="adminHeader">St. Croix Valley Regional Tourism Alliance</h1>
   <h2 class="adminHeader">Interactive Map Admin Page</h2><br>
   <p class="adminHeader" ng-show="fc.loggedIn">Welcome, {{fc.adminName}}!
-  <a href="/"><button id="viewMap" class="btn btn-warning adminBtn" ng-show="fc.loggedIn">View Map</button></a>
-  <button class="btn btn-warning adminBtn" ng-click="fc.addAdmin()" ng-show="fc.loggedIn">Add Admin</button>
-  <button class="btn btn-warning adminBtn" ng-click="fc.editAdmin()" ng-show="fc.loggedIn">Edit/Delete Admin</button>
+  <a href="/"><button class="btn btn-primary adminBtn" ng-show="fc.loggedIn">View Map</button></a>
+  <button class="btn btn-primary adminBtn" ng-click="fc.addAdmin()" ng-show="fc.loggedIn">Add Admin</button>
+  <button class="btn btn-primary adminBtn" ng-click="fc.editAdmin()" ng-show="fc.loggedIn">Edit/Delete Admin</button>
   <button class="btn btn-danger adminBtn" ng-click="fc.logOut()" ng-show="fc.loggedIn">Log Out</button></p>
 </div>
 
@@ -39,6 +39,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- add admin modal -->
 <div class="add-admin-modal container">

@@ -168,8 +168,16 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
 
   /* Set the width of the side navigation to 0 */
   vm.closeNav = function() {
-    document.getElementById('mySidenav').style.width = '0';
-    console.log('x close button clicked');
+    if (document.getElementById('mySidenav').style.width === '25%') {
+      document.getElementById('mySidenav').style.width = '0%';
+    } else {
+      document.getElementById('mySidenav').style.width = '25%';
+    }
+    if (vm.tripsClass === 'navButton') {
+      vm.tripsClass = 'off';
+    } else {
+      vm.tripsClass = 'navButton';
+    }
   };
 
 
