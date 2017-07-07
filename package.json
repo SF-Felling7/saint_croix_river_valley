@@ -25,6 +25,7 @@
     "angular-route": "^1.6.4",
     "angular-ui-bootstrap": "^2.5.0",
     "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "firebase-admin": "^5.0.0",
     "ngmap": "^1.18.4",
