@@ -1,3 +1,5 @@
+
+
 #adminLogin {
   margin-left: 420;
 }
@@ -108,6 +110,7 @@ i {
   border: solid 3px;
 }
 
+
 #menu {
 
   z-index: 1;
@@ -182,6 +185,7 @@ i {
   transition: 0.5s;
   /* 0.5 second transition effect to slide in the sidenav */
 }
+
 
 .directionsSidenav {
   height: 100%;
@@ -378,4 +382,8 @@ input {
 .adminBtn{
   display: inline block;
   margin-left: 25px;
+}
+.ng-map-info-window{
+  color: blue;
+  padding-bottom: 60px;
 }
