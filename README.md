@@ -35,7 +35,7 @@ The application uses google firebase for authentication that includes a specific
 
 
 ## Image of Application on Laptop and Mobile
-![image](<img width="860" alt="group" src="https://user-images.githubusercontent.com/25421749/28001109-c6950afc-64ef-11e7-8bae-6885bca50ebe.png">)
+<img width="860" alt="group" src="https://user-images.githubusercontent.com/25421749/28001109-c6950afc-64ef-11e7-8bae-6885bca50ebe.png">
 
 ## Built by
 * Amal Ali https://github.com/aali05
