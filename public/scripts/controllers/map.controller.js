@@ -55,11 +55,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     console.log('place.id: ', place.id);
     vm.place = place;
     vm.map.showInfoWindow('mapwindow', 'x' + place.id);
-  };
+  }; //End showDetail
 
   vm.hideDetail = function() {
     vm.map.hideInfoWindow('mapwindow');
-  };
+  }; //End hideDetail
 
   vm.getAllPins = function() {
     console.log('dining button clicked');
@@ -86,8 +86,8 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
           case 4:
             vm.lodgingPins.push(allPins[i]);
             break;
-        }
-      }
+        } //End switch statement
+      } //End for loop
     }); //ending success
   }; //ending get allPins function
   vm.getAllPins();
@@ -100,7 +100,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     } else {
       vm.diningClass = 'navButton';
     }
-  };
+  }; //End toggleDining
 
 
   vm.toggleLodging = function() {
@@ -111,7 +111,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     } else {
       vm.lodgingClass = 'navButton';
     }
-  };
+  }; //End toggleLodging
 
 
   vm.toggleNature = function() {
@@ -122,7 +122,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     } else {
       vm.natureClass = 'navButton';
     }
-  };
+  }; //End toggleNature
 
   vm.toggleShopping = function() {
     vm.showShopping = !vm.showShopping;
@@ -132,11 +132,11 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     } else {
       vm.shoppingClass = 'navButton';
     }
-  };
+  }; //End toggleShopping
 
   vm.resetMap = function() {
     location.reload();
-  };
+  }; //End resetMap
 
   // use this code if you want to slide on top of content
   vm.openNav = function() {
@@ -162,8 +162,8 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       vm.allTrips = response.data;
       console.log('vm.allTrips: ', vm.allTrips);
       allTrips = vm.allTrips;
-    });
-  };
+    }); //End success
+  }; //end openNav
 
 
   /* Set the width of the side navigation to 0 */
@@ -178,7 +178,7 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
     } else {
       vm.tripsClass = 'navButton';
     }
-  };
+  }; //End closeNav
 
 
   vm.suggested = function(trip) {
@@ -237,9 +237,9 @@ myApp.controller('MapCtrl', function($http, NgMap, $interval, $uibModal) {
       console.log(vm.lastStop);
 
       vm.directions=true;
-    });
-  };
-});
+    }); //End success
+  }; //End vm.suggested
+}); //End MapCtrl
 
 // modal controller
 myApp.controller( 'detailedPlaceInfoCtrl', [ '$uibModalInstance', '$uibModal', '$http', 'place', function ( $uibModalInstance, $uibModal, $http, place ) {
