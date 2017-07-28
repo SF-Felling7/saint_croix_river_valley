@@ -1,3 +1,4 @@
+<!-- sidenav bar to display trips -->
 <div id="mySidenav" class="sidenav">
   <li class="closebtn" ng-click="mc.closeNav()">&times;</li>
   <h3><i class="fa fa-car"></i> Suggested Trips</h3>
@@ -31,7 +32,7 @@
         <button class="reset col-xs-3 col-sm-2" ng-click="mc.resetMap()"><i class="fa fa-refresh"></i>Reset Map<span class="space"></span></button>
       </div>
   </div>
-  <!-- small screen menu -->
+  <!-- small or mobile  screen menu -->
   <div id="menu" class="navbar-fixed-top visible-xs">
       <div class="col-xs-12">
         <button ng-class="mc.diningClass" ng-click="mc.toggleDining()" class="col-xs-5"><i class="fa fa-cutlery"></i>Dining</button>
@@ -43,10 +44,10 @@
       </div>
   </div>
 
+  <!-- map -->
   <div class="gmap">
-
     <ng-map id="map" default-style="false" zoom="10" center="[45.204467,-92.752988]" on-click="mc.map.hideInfoWindow('mapwindow')" options="{{mc.options}}">
-
+      <!-- custom markers based on category -->
       <custom-marker id="x{{place.id}}" ng-if="mc.showDining" ng-repeat="place in mc.diningPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
         <div class="marker">
           <i class="fa fa-cutlery"></i>
@@ -68,13 +69,13 @@
         </div>
       </custom-marker>
 
-
+      <!-- custom marker for displaying trips -->
       <custom-marker id="x{{place.id}}" ng-if="mc.showTrip" ng-repeat="place in mc.selectedTripPins track by $index" position=[{{place.latitude}},{{place.longitude}}] on-click="mc.showDetail(place)">
         <div class="marker carImage">
           <i class="fa fa-car"></i>
         </div>
       </custom-marker>
-
+      <!-- directions for trips -->
       <directions
          draggable="true"
          panel="directions-panel"
@@ -84,21 +85,19 @@
          destination="{{mc.lastStop}}"
          >
       </directions>
-
+      <!-- info window for when icon/place is clicked -->
       <info-window id="mapwindow">
         <div ng-non-bindable="">
           <h3>{{mc.place.name}}</h3><br/>
           <a href="#" ng-click="mc.clicked(mc.place)">Click Here for More Info</a>
         </div>
       </info-window>
-
     </ng-map>
-
+    <!-- sidenav displaying trip directions -->
     <div ng-show="mc.directions" class="directionsSidenav" id="directions-panel" style="width: 25%; float:left; height: 100%; overflow: auto; padding: 0px 5px">
       <h2>{{mc.trip.name}}</h2>
       <h4><span id="tripStop">Trip Stops: </span>{{mc.locationsInTripString}} </h4>
     </div>
-
   </div>
 </div>
 
