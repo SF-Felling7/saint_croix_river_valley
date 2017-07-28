@@ -1,3 +1,4 @@
+<!-- jumbotron header -->
 <div class="jumbotron">
   <h1 class="adminHeader">St. Croix Valley Regional Tourism Alliance</h1>
   <h2 class="adminHeader">Interactive Map Admin Page</h2><br>
@@ -8,6 +9,7 @@
   <button class="btn btn-danger adminBtn" ng-click="fc.logOut()" ng-show="fc.loggedIn">Log Out</button></p>
 </div>
 
+<!-- this is displayed as default until admin is logged in -->
 <div class="container">
   <div ng-hide="fc.loggedIn">
     <div id="adminLogin">
@@ -16,6 +18,7 @@
   </div>
 </div>
 
+<!-- this is displayed once admin is logged in -->
 <div class="container" ng-show="fc.loggedIn">
   <div id="adminLanding">
     <div class="form-group col-sm-3 col-sm-offset-2">
@@ -40,7 +43,7 @@
   </div>
 </div>
 
-
+<!-- REMAINING HTML IN THIS FILE IS FOR ADMIN MODALS - CORRESPONDING CONTROLLERS FOUND IN firebase.controller.js -->
 <!-- add admin modal -->
 <div class="add-admin-modal container">
   <script type="text/ng-template" id="addAdmin.html">
